@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { Hero3D } from "@/components/Hero3D";
 import { PatutikonGallery } from "@/components/PatutikonGallery";
 import { ButcherCraft } from "@/components/ButcherCraft";
+import { InkanimusLaunch } from "@/components/InkanimusLaunch";
 import { InkanimusHub } from "@/components/InkanimusHub";
 import { BookingPortal } from "@/components/BookingPortal";
 import { Footer } from "@/components/Footer";
@@ -16,6 +17,7 @@ export default function LandingPage() {
         <Hero3D />
         <PatutikonGallery />
         <ButcherCraft />
+        <InkanimusLaunch />
         <InkanimusHub />
         <BookingPortal />
       </main>

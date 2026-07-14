@@ -14,17 +14,17 @@ export const translations = {
       title2: "Intessi la tua storia",
       title3: "in inchiostro & cromo.",
       subtitle:
-        "Patutikon — dove la geometria sacra della Polinesia incontra le icone della tua vita. Selezionane uno stile e proiettalo sulla pelle sintetica.",
+        "Patutikon — dove la geometria sacra della Polinesia incontra le icone della tua vita. Seleziona uno stile e proiettalo sull'anatomia sintetica.",
       cta_enter: "Entra nell'esperienza",
       cta_book: "Prenota una sessione",
-      selector_title: "Selettore stile",
+      selector_title: "Stile del rito",
       styles: {
         polynesian: "Polinesiano",
         cyberpunk: "Cyberpunk organico",
         anime: "Anime",
         patutikon: "Patutikon",
       },
-      hint: "Trascina per ruotare • Doppio click per resettare",
+      hint: "Trascina per ruotare",
     },
     gallery: {
       title: "La galleria Patutikon",
@@ -34,33 +34,33 @@ export const translations = {
       items: [
         {
           title: "Rick Patutikon",
-          tag: "Patutikon • Anime Icon + Tribal",
+          tag: "Patutikon • Icona anime + Tribale",
           desc: "Rick Sanchez incastonato nella geometria samoana. Icona pop fusa nel linguaggio ancestrale.",
         },
         {
-          title: "Sacred Leg Sleeve",
-          tag: "Patutiki • Traditional",
-          desc: "Full leg sleeve in black-work Patutiki. Simboli di protezione e viaggio.",
+          title: "Guardiano dei Mari",
+          tag: "Patutiki • Tradizionale",
+          desc: "Full leg sleeve in black-work Patutiki. Simboli di protezione, viaggio e appartenenza.",
+        },
+        {
+          title: "Cyber Back Rig",
+          tag: "Cyberpunk-organico",
+          desc: "Corazza dorsale meccanica con innesti cristallini rossi. Anatomia riscritta come circuito.",
+        },
+        {
+          title: "Musa d'Ombra",
+          tag: "Dark Portrait • Blackwork",
+          desc: "Ritratto gotico immerso in una cornice tribale spinata. Icona horror rinata come reliquia.",
+        },
+        {
+          title: "Cyber Tribal Leg",
+          tag: "Patutikon • Geometria Cinetica",
+          desc: "Trama esagonale che si scioglie in un'armatura tribale. Passo dopo passo, un algoritmo sacro.",
         },
         {
           title: "Neo-Sapien",
-          tag: "Cyberpunk-organic",
-          desc: "Ritratto neon con innesti cromatici. Circuiti che diventano vene.",
-        },
-        {
-          title: "Kaiju Warrior",
-          tag: "Patutikon • Movie Icon",
-          desc: "Un mostro moderno rinato attraverso le linee sacre delle Marchesi.",
-        },
-        {
-          title: "Ancestor Grid",
-          tag: "Polynesian • Geometry",
-          desc: "Pura geometria sacra. Ripetizione e ritmo dei mari del Sud.",
-        },
-        {
-          title: "Ghost in the Ink",
-          tag: "Anime • Fine line",
-          desc: "Composizione anime con lavorazioni fine-line e ombreggiature ad acquerello.",
+          tag: "Cyberpunk-organico • Portrait",
+          desc: "Maschera cromatica con circuiti che diventano vene. Il tatuaggio come interfaccia.",
         },
       ],
     },
@@ -84,14 +84,37 @@ export const translations = {
     inkanimus: {
       title: "Inkanimus Loyalty Hub",
       subtitle: "Un rituale digitale per chi porta il segno.",
+      launch: {
+        eyebrow: "// app degli adepti · v1.0",
+        title: "InkAnimus",
+        headline: "L'app che porti a casa dopo la prima sessione.",
+        lead:
+          "Un rituale digitale progettato per gli adepti del Podere 173. Traccia la guarigione, invita nuovi iniziati, scala la classifica del sangue, sblocca sconti reali sulle sessioni.",
+        bullets: [
+          "Aftercare intelligente con streak e Ink-points",
+          "Codice adepto personale per reclutare nuovi tatuandi",
+          "Sconti veri (-15% / -30%) sulle sessioni future",
+          "Battle Royale mensile: sfide artistiche votate dalla community",
+        ],
+        cta_open: "Apri InkAnimus",
+        cta_secondary: "Come funziona",
+        version_tag: "v1 · BLUE",
+        status_live: "LIVE",
+      },
       tabs: {
         aftercare: "Aftercare",
-        recruit: "Recruitment",
+        app: "App Inkanimus",
         arcade: "Battle Royale",
       },
       aftercare: {
         title: "Aftercare Companion",
         desc: "La tua routine di guarigione, giorno dopo giorno. Spunta ogni passo per non perdere Ink-points.",
+        teaser_desc:
+          "Il tuo rituale di guarigione vive dentro InkAnimus. Traccia giorno per giorno, streak e Ink-points direttamente nell'app degli adepti.",
+        teaser_label: "Anteprima rituale",
+        cta_full: "Apri InkAnimus",
+        more_in_app: "step nell'app",
+        open_short: "Apri app",
         day: "Giorno",
         streak_label: "Rituale consecutivo",
         tasks: [
@@ -104,29 +127,44 @@ export const translations = {
         ],
         completed: "Rituale completato",
       },
-      recruit: {
-        title: "Recruitment Terminal",
-        desc: "Genera il tuo codice referral. Ogni iniziato che porti al Podere ti frutta Ink-points spendibili.",
-        code_label: "Codice referral",
-        generate: "Genera codice",
-        copy: "Copia",
-        copied: "Copiato",
-        share: "Condividi",
-        balance: "Bilancio Ink-points",
-        earned: "Ink guadagnati",
-        pending: "In verifica",
-        referrals: "Iniziati portati",
+      app: {
+        badge: "// solo per iniziati del podere",
+        title: "Inkanimus — l'app degli adepti",
+        lead:
+          "Inkanimus è l'app che consegno di persona ai clienti dopo la prima sessione. Un rituale digitale per tracciare la guarigione, portare nuovi adepti al Podere e sbloccare sconti reali su sessioni future.",
+        how_title: "Come funziona",
+        steps: [
+          "Vieni in studio per la tua prima sessione al Podere 173.",
+          "Ricevi le credenziali personali e il codice adepto per accedere a Inkanimus.",
+          "Invita amici con il tuo codice: ogni loro sessione ti fa guadagnare Ink-points.",
+          "Riscatti sconti veri sulla prossima seduta o sul flash del mese.",
+        ],
+        perks_title: "I vantaggi",
+        perks: [
+          { k: "-15%", v: "Sulla prossima sessione dopo 3 adepti reclutati" },
+          { k: "-30%", v: "Flash esclusivi per i top-recruiter mensili" },
+          { k: "Priorità", v: "Slot dedicati fuori agenda pubblica" },
+          { k: "Aftercare pro", v: "Tracker rituale + reminder personalizzati" },
+        ],
+        note:
+          "L'app non è pubblica: si sblocca solo entrando nel Podere. Il codice referral non si trova qui online — te lo consegno guardandoti negli occhi.",
+        cta_open: "Apri Inkanimus",
+        cta_book: "Vieni in studio",
       },
       arcade: {
         title: "Battle Royale Arcade",
-        desc: "Sfide artistiche mensili. La community vota. I migliori salgono la classifica del sangue.",
+        desc:
+          "Sfide artistiche mensili. La community di iniziati vota il disegno migliore. I vincitori scalano la classifica del sangue e sbloccano flash esclusivi.",
         rank: "Rank",
         player: "Iniziato",
-        score: "Punti",
+        score: "Voti",
         active_challenge: "Sfida attiva",
         challenge_name: "Neo-Tribal Manga Face",
-        challenge_desc: "Ritrai un volto anime attraverso simboli tribali. Termina in 12 giorni.",
+        challenge_desc:
+          "Ritrai un volto anime attraverso simboli tribali. Termina in 12 giorni. Il vincitore riceve una sessione di 3h gratuita.",
         join: "Partecipa",
+        prize: "Premio",
+        prize_v: "Sessione 3h omaggio",
       },
     },
     booking: {
@@ -174,17 +212,17 @@ export const translations = {
       title2: "Weave your story",
       title3: "in ink & chrome.",
       subtitle:
-        "Patutikon — where Polynesian sacred geometry meets the icons of your life. Pick a style and project it onto the synthetic skin.",
+        "Patutikon — where Polynesian sacred geometry meets the icons of your life. Pick a style and project it onto the synthetic anatomy.",
       cta_enter: "Enter the experience",
       cta_book: "Book a session",
-      selector_title: "Style selector",
+      selector_title: "Ritual style",
       styles: {
         polynesian: "Polynesian",
         cyberpunk: "Cyberpunk-organic",
         anime: "Anime",
         patutikon: "Patutikon",
       },
-      hint: "Drag to rotate • Double click to reset",
+      hint: "Drag to rotate",
     },
     gallery: {
       title: "The Patutikon gallery",
@@ -198,29 +236,29 @@ export const translations = {
           desc: "Rick Sanchez set inside Samoan sacred geometry. Pop icon fused with ancestral language.",
         },
         {
-          title: "Sacred Leg Sleeve",
+          title: "Guardian of the Seas",
           tag: "Patutiki • Traditional",
-          desc: "Full leg sleeve in Patutiki black-work. Symbols of protection and voyage.",
+          desc: "Full leg sleeve in Patutiki black-work. Symbols of protection, voyage and belonging.",
+        },
+        {
+          title: "Cyber Back Rig",
+          tag: "Cyberpunk-organic",
+          desc: "Mechanical back armor with crystalline red implants. Anatomy rewritten as circuitry.",
+        },
+        {
+          title: "Shadow Muse",
+          tag: "Dark Portrait • Blackwork",
+          desc: "Gothic portrait held in a thorned tribal frame. A horror icon reborn as a relic.",
+        },
+        {
+          title: "Cyber Tribal Leg",
+          tag: "Patutikon • Kinetic Geometry",
+          desc: "Hexagonal weave melting into tribal armor. Step by step, a sacred algorithm.",
         },
         {
           title: "Neo-Sapien",
-          tag: "Cyberpunk-organic",
-          desc: "Neon portrait with chromatic implants. Circuits become veins.",
-        },
-        {
-          title: "Kaiju Warrior",
-          tag: "Patutikon • Movie Icon",
-          desc: "A modern monster reborn through the sacred lines of the Marquesas.",
-        },
-        {
-          title: "Ancestor Grid",
-          tag: "Polynesian • Geometry",
-          desc: "Pure sacred geometry. Repetition and rhythm from the South seas.",
-        },
-        {
-          title: "Ghost in the Ink",
-          tag: "Anime • Fine line",
-          desc: "Anime composition with fine-line work and watercolor shading.",
+          tag: "Cyberpunk-organic • Portrait",
+          desc: "Chromatic mask with circuits turning into veins. Tattoo as interface.",
         },
       ],
     },
@@ -244,9 +282,26 @@ export const translations = {
     inkanimus: {
       title: "Inkanimus Loyalty Hub",
       subtitle: "A digital ritual for those who carry the mark.",
+      launch: {
+        eyebrow: "// adepts' app · v1.0",
+        title: "InkAnimus",
+        headline: "The app you take home after your first session.",
+        lead:
+          "A digital ritual built for the adepts of Podere 173. Track healing, invite new initiates, climb the blood ladder, unlock real discounts on your sessions.",
+        bullets: [
+          "Smart aftercare with streaks and Ink-points",
+          "Personal adept code to recruit new clients",
+          "Real discounts (-15% / -30%) on future sessions",
+          "Monthly Battle Royale: artistic challenges voted by the community",
+        ],
+        cta_open: "Open InkAnimus",
+        cta_secondary: "How it works",
+        version_tag: "v1 · BLUE",
+        status_live: "LIVE",
+      },
       tabs: {
         aftercare: "Aftercare",
-        recruit: "Recruitment",
+        app: "Inkanimus App",
         arcade: "Battle Royale",
       },
       aftercare: {
@@ -264,29 +319,44 @@ export const translations = {
         ],
         completed: "Ritual completed",
       },
-      recruit: {
-        title: "Recruitment Terminal",
-        desc: "Generate your referral code. Every initiate you bring to the Podere earns you spendable Ink-points.",
-        code_label: "Referral code",
-        generate: "Generate code",
-        copy: "Copy",
-        copied: "Copied",
-        share: "Share",
-        balance: "Ink-points balance",
-        earned: "Ink earned",
-        pending: "Pending",
-        referrals: "Initiates brought",
+      app: {
+        badge: "// initiates of the podere only",
+        title: "Inkanimus — the adepts' app",
+        lead:
+          "Inkanimus is the app I hand to clients in person after their first session. A digital ritual to track healing, bring new adepts to the Podere, and unlock real discounts on future sessions.",
+        how_title: "How it works",
+        steps: [
+          "Come to the studio for your first session at Podere 173.",
+          "Receive your personal credentials and adept code to access Inkanimus.",
+          "Invite friends with your code: every session of theirs earns you Ink-points.",
+          "Redeem real discounts on your next session or on the flash of the month.",
+        ],
+        perks_title: "The perks",
+        perks: [
+          { k: "-15%", v: "On your next session after 3 recruited adepts" },
+          { k: "-30%", v: "Exclusive flashes for monthly top-recruiters" },
+          { k: "Priority", v: "Reserved slots outside the public schedule" },
+          { k: "Aftercare pro", v: "Ritual tracker + personalized reminders" },
+        ],
+        note:
+          "The app is not public: you unlock it only by walking into the Podere. Your referral code isn't here online — I hand it to you looking you in the eyes.",
+        cta_open: "Open Inkanimus",
+        cta_book: "Come to the studio",
       },
       arcade: {
         title: "Battle Royale Arcade",
-        desc: "Monthly artistic challenges. The community votes. The best climb the blood ladder.",
+        desc:
+          "Monthly artistic challenges. The community of initiates votes the best design. Winners climb the blood ladder and unlock exclusive flashes.",
         rank: "Rank",
         player: "Initiate",
-        score: "Score",
+        score: "Votes",
         active_challenge: "Active challenge",
         challenge_name: "Neo-Tribal Manga Face",
-        challenge_desc: "Portray an anime face through tribal symbols. Ends in 12 days.",
+        challenge_desc:
+          "Portray an anime face through tribal symbols. Ends in 12 days. The winner gets a free 3-hour session.",
         join: "Join",
+        prize: "Prize",
+        prize_v: "Free 3h session",
       },
     },
     booking: {
@@ -323,3 +393,6 @@ export const translations = {
 };
 
 export const defaultLang = "it";
+
+export const INKANIMUS_APP_URL =
+  "https://ink-animus-adepto-blue-version-22o6-9zo4u6yq3.vercel.app";
