@@ -385,13 +385,12 @@ const ArcadePanel = () => {
 
 export const InkanimusHub = () => {
   const { t } = useLang();
-  const [tab, setTab] = useState("aftercare");
+  const [tab, setTab] = useState("app");
   const [hubState, setHubState] = useState(readState);
 
   useEffect(() => writeState(hubState), [hubState]);
 
   const tabs = [
-    { id: "aftercare", label: t.inkanimus.tabs.aftercare },
     { id: "app", label: t.inkanimus.tabs.app },
     { id: "arcade", label: t.inkanimus.tabs.arcade },
   ];
@@ -453,9 +452,6 @@ export const InkanimusHub = () => {
         </div>
 
         <div className="min-h-[540px]">
-          {tab === "aftercare" && (
-            <AftercarePanel state={hubState} setState={setHubState} />
-          )}
           {tab === "app" && <AppPanel />}
           {tab === "arcade" && <ArcadePanel />}
         </div>

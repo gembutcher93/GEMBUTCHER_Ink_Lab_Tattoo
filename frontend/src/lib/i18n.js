@@ -101,6 +101,17 @@ export const translations = {
         version_tag: "v1 · BLUE",
         status_live: "LIVE",
       },
+      gate: {
+        locked_status: "Accesso riservato",
+        unlocked_status: "Accesso adepto sbloccato",
+        explanation:
+          "InkAnimus non è pubblica. La consegno personalmente in studio dopo la prima sessione. Inserisci il codice adepto che ti ho affidato per aprire l'app.",
+        placeholder: "Codice adepto",
+        unlock: "Sblocca accesso",
+        wrong: "Codice non riconosciuto",
+        relock: "Blocca di nuovo",
+        hint_cta: "Non hai ancora il codice? Prenota una sessione",
+      },
       tabs: {
         aftercare: "Aftercare",
         app: "App Inkanimus",
@@ -298,6 +309,17 @@ export const translations = {
         cta_secondary: "How it works",
         version_tag: "v1 · BLUE",
         status_live: "LIVE",
+      },
+      gate: {
+        locked_status: "Restricted access",
+        unlocked_status: "Adept access unlocked",
+        explanation:
+          "InkAnimus is not public. I hand it out personally at the studio after your first session. Enter the adept code I gave you to open the app.",
+        placeholder: "Adept code",
+        unlock: "Unlock access",
+        wrong: "Code not recognised",
+        relock: "Lock again",
+        hint_cta: "No code yet? Book a session",
       },
       tabs: {
         aftercare: "Aftercare",

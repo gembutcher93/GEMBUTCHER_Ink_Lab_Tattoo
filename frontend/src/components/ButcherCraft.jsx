@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLang } from "@/context/LangContext";
-import { MapPin } from "lucide-react";
+import { MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 
-const PORTRAIT_URL =
-  "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/ty3eomcf_Copertina_classica.webp";
+const PORTRAITS = [
+  {
+    src: "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/273zn4so_Copertina_Cyber.png",
+    label: "NEO-SAPIEN",
+    caption: { it: "Persona cyberpunk", en: "Cyberpunk persona" },
+  },
+  {
+    src: "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/ty3eomcf_Copertina_classica.webp",
+    label: "GEMBUTCHER",
+    caption: { it: "Il tatuatore, senza maschera", en: "The tattooist, unmasked" },
+  },
+];
 
 export const ButcherCraft = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const [idx, setIdx] = useState(0);
+  const current = PORTRAITS[idx];
+  const next = () => setIdx((i) => (i + 1) % PORTRAITS.length);
+  const prev = () => setIdx((i) => (i - 1 + PORTRAITS.length) % PORTRAITS.length);
 
   return (
     <section
@@ -21,15 +35,23 @@ export const ButcherCraft = () => {
       />
 
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 grid lg:grid-cols-12 gap-10">
-        {/* Portrait */}
+        {/* Portrait carousel */}
         <div className="lg:col-span-5 space-y-5">
-          <div className="glass-card corner-brackets aspect-[3/4] overflow-hidden relative rounded-2xl">
-            <img
-              src={PORTRAIT_URL}
-              alt="GemButcher"
-              className="w-full h-full object-cover"
-              style={{ filter: "grayscale(0.35) contrast(1.08) brightness(0.9)" }}
-            />
+          <div
+            className="glass-card corner-brackets aspect-[3/4] overflow-hidden relative rounded-2xl"
+            data-testid="portrait-carousel"
+          >
+            {PORTRAITS.map((p, i) => (
+              <img
+                key={p.src}
+                src={p.src}
+                alt={p.label}
+                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                  i === idx ? "opacity-100" : "opacity-0"
+                }`}
+                style={{ filter: "grayscale(0.15) contrast(1.08) brightness(0.92)" }}
+              />
+            ))}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -47,18 +69,49 @@ export const ButcherCraft = () => {
 
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
               <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">
-                <span className="text-cyan-neon">SUBJECT/</span>GEMBUTCHER
+                <span className="text-cyan-neon">SUBJECT/</span>{current.label}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
-                DOSSIER · 01
+                DOSSIER · {String(idx + 1).padStart(2, "0")} / {String(PORTRAITS.length).padStart(2, "0")}
               </span>
             </div>
+
+            {/* Prev / Next */}
+            <button
+              data-testid="portrait-prev"
+              onClick={prev}
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full border border-white/15 bg-black/40 backdrop-blur-md text-white/80 hover:text-cyan-neon hover:border-cyan-500/50 transition-colors duration-200 flex items-center justify-center z-10"
+              aria-label="previous portrait"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              data-testid="portrait-next"
+              onClick={next}
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full border border-white/15 bg-black/40 backdrop-blur-md text-white/80 hover:text-magenta-neon transition-colors duration-200 flex items-center justify-center z-10"
+              style={{ borderColor: "rgba(255,255,255,0.15)" }}
+              aria-label="next portrait"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+
             <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between">
-              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
-                Ozieri · Sardinia
+              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/70">
+                {current.caption[lang] || current.caption.it}
               </div>
-              <div className="text-white/80 font-head text-lg">
-                12<span className="text-white/40">y</span>
+              <div className="flex items-center gap-1.5">
+                {PORTRAITS.map((_, i) => (
+                  <button
+                    key={i}
+                    data-testid={`portrait-dot-${i}`}
+                    onClick={() => setIdx(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === idx ? "w-6" : "w-1.5 bg-white/25 hover:bg-white/40"
+                    }`}
+                    style={i === idx ? { backgroundColor: "var(--gb-cyan)" } : {}}
+                    aria-label={`portrait ${i + 1}`}
+                  />
+                ))}
               </div>
             </div>
           </div>
