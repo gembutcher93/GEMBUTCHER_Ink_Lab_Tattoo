@@ -38,12 +38,9 @@ const genCode = () => {
 };
 
 // ---- Aftercare Panel ----
-const AftercarePanel = () => {
+const AftercarePanel = ({ state, setState }) => {
   const { t } = useLang();
-  const [state, setState] = useState(readState);
   const [day, setDay] = useState(1);
-
-  useEffect(() => writeState(state), [state]);
 
   const dayKey = `d${day}`;
   const checked = state.aftercare[dayKey] || {};
@@ -175,12 +172,9 @@ const AftercarePanel = () => {
 };
 
 // ---- Recruitment Panel ----
-const RecruitPanel = () => {
+const RecruitPanel = ({ state, setState }) => {
   const { t } = useLang();
-  const [state, setState] = useState(readState);
   const [copied, setCopied] = useState(false);
-
-  useEffect(() => writeState(state), [state]);
 
   const code = state.referral.code;
 
@@ -394,6 +388,8 @@ const ArcadePanel = () => {
 export const InkanimusHub = () => {
   const { t } = useLang();
   const [tab, setTab] = useState("aftercare");
+  const [hubState, setHubState] = useState(readState);
+  useEffect(() => writeState(hubState), [hubState]);
 
   const tabs = [
     { id: "aftercare", label: t.inkanimus.tabs.aftercare },
@@ -440,8 +436,8 @@ export const InkanimusHub = () => {
 
         {/* Panels */}
         <div className="min-h-[500px]">
-          {tab === "aftercare" && <AftercarePanel />}
-          {tab === "recruit" && <RecruitPanel />}
+          {tab === "aftercare" && <AftercarePanel state={hubState} setState={setHubState} />}
+          {tab === "recruit" && <RecruitPanel state={hubState} setState={setHubState} />}
           {tab === "arcade" && <ArcadePanel />}
         </div>
       </div>
