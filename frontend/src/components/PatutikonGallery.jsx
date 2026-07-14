@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useLang } from "@/context/LangContext";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 
-// Ordered to match i18n gallery.items
+// Ordered to match i18n gallery.items (5 items — no duplicate portrait)
 const IMAGES = [
   // Rick Patutikon
   "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/i2j7zr51_img3%20Rick_Patutikon.webp",
@@ -14,8 +14,6 @@ const IMAGES = [
   "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/smc2ygxl_IMG20221022181905.webp",
   // Cyber Tribal Leg — hexagonal + tribal
   "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/fvm8lxn6_IMG_20240423_174328.jpg",
-  // Neo-Sapien cyberpunk portrait
-  "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/273zn4so_Copertina_Cyber.png",
 ];
 
 export const PatutikonGallery = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLang } from "@/context/LangContext";
-import { INKANIMUS_APP_URL } from "@/lib/i18n";
+import { INKANIMUS_VERSIONS } from "@/lib/i18n";
 import {
   ArrowUpRight,
   ExternalLink,
@@ -15,7 +15,8 @@ import {
 
 const BULLET_ICONS = [ShieldCheck, Users, Zap, Trophy];
 const UNLOCK_KEY = "gb.inkanimus.unlocked.v1";
-const ADEPT_PASSWORD = (process.env.REACT_APP_INKANIMUS_PASSWORD || "PODERE173").trim().toUpperCase();
+const VERSION_KEY = "gb.inkanimus.version.v1";
+const ADEPT_PASSWORD = (process.env.REACT_APP_INKANIMUS_PASSWORD || "PODERE173").trim();
 
 export const InkanimusLaunch = () => {
   const { t, lang } = useLang();
@@ -25,16 +26,28 @@ export const InkanimusLaunch = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [attempt, setAttempt] = useState("");
   const [error, setError] = useState(false);
+  const [versionId, setVersionId] = useState(INKANIMUS_VERSIONS[0].id);
+
+  const version =
+    INKANIMUS_VERSIONS.find((v) => v.id === versionId) || INKANIMUS_VERSIONS[0];
 
   useEffect(() => {
     try {
       if (localStorage.getItem(UNLOCK_KEY) === "1") setUnlocked(true);
+      const saved = localStorage.getItem(VERSION_KEY);
+      if (saved && INKANIMUS_VERSIONS.some((v) => v.id === saved)) setVersionId(saved);
     } catch {}
   }, []);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(VERSION_KEY, versionId);
+    } catch {}
+  }, [versionId]);
+
   const tryUnlock = (e) => {
     e.preventDefault();
-    const val = attempt.trim().toUpperCase();
+    const val = attempt.trim();
     if (!val) return;
     if (val === ADEPT_PASSWORD) {
       setUnlocked(true);
@@ -149,35 +162,87 @@ export const InkanimusLaunch = () => {
                 </div>
 
                 {unlocked ? (
-                  <div className="flex flex-wrap items-center gap-3" data-testid="launch-unlocked-cta">
-                    <a
-                      data-testid="launch-cta-open"
-                      href={INKANIMUS_APP_URL}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="neon-btn neon-btn--solid"
-                    >
-                      {l.cta_open}
-                      <ArrowUpRight className="w-4 h-4" />
-                    </a>
-                    <button
-                      data-testid="launch-cta-secondary"
-                      onClick={() =>
-                        document
-                          .getElementById("inkanimus")
-                          ?.scrollIntoView({ behavior: "smooth" })
-                      }
-                      className="neon-btn"
-                    >
-                      {l.cta_secondary}
-                    </button>
-                    <button
-                      data-testid="launch-relock"
-                      onClick={relock}
-                      className="ml-auto text-white/40 hover:text-white/70 text-[11px] font-mono uppercase tracking-[0.25em] transition-colors duration-200"
-                    >
-                      {g.relock}
-                    </button>
+                  <div className="space-y-4" data-testid="launch-unlocked-cta">
+                    {/* Version selector */}
+                    <div>
+                      <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 mb-2.5">
+                        {g.pick_version}
+                      </div>
+                      <div className="flex flex-wrap gap-2" data-testid="launch-version-selector">
+                        {INKANIMUS_VERSIONS.map((v) => {
+                          const active = v.id === versionId;
+                          return (
+                            <button
+                              key={v.id}
+                              data-testid={`launch-version-${v.id}`}
+                              onClick={() => setVersionId(v.id)}
+                              className="group relative flex items-center gap-2.5 rounded-full border px-4 py-2 transition-colors duration-200"
+                              style={{
+                                borderColor: active ? v.color : "rgba(255,255,255,0.10)",
+                                background: active ? v.colorSoft : "rgba(255,255,255,0.02)",
+                                boxShadow: active
+                                  ? `0 8px 24px -10px ${v.color}`
+                                  : "none",
+                              }}
+                            >
+                              <span
+                                className="w-2 h-2 rounded-full"
+                                style={{
+                                  backgroundColor: v.color,
+                                  boxShadow: `0 0 10px ${v.color}`,
+                                }}
+                              />
+                              <span
+                                className="font-head text-sm tracking-[0.06em]"
+                                style={{ color: active ? v.color : "rgba(255,255,255,0.75)" }}
+                              >
+                                {v.label}
+                              </span>
+                              <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/40">
+                                {v.subtitle}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      <a
+                        data-testid="launch-cta-open"
+                        href={version.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="neon-btn"
+                        style={{
+                          background: version.color,
+                          color: "#050506",
+                          borderColor: "transparent",
+                          boxShadow: `0 12px 32px -8px ${version.color}`,
+                        }}
+                      >
+                        {l.cta_open} · {version.label}
+                        <ArrowUpRight className="w-4 h-4" />
+                      </a>
+                      <button
+                        data-testid="launch-cta-secondary"
+                        onClick={() =>
+                          document
+                            .getElementById("inkanimus")
+                            ?.scrollIntoView({ behavior: "smooth" })
+                        }
+                        className="neon-btn"
+                      >
+                        {l.cta_secondary}
+                      </button>
+                      <button
+                        data-testid="launch-relock"
+                        onClick={relock}
+                        className="ml-auto text-white/40 hover:text-white/70 text-[11px] font-mono uppercase tracking-[0.25em] transition-colors duration-200"
+                      >
+                        {g.relock}
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div className="space-y-3">
@@ -249,18 +314,18 @@ export const InkanimusLaunch = () => {
             <div className="lg:col-span-5 relative p-8 md:p-12 lg:p-14 flex items-center justify-center min-h-[420px]">
               <div
                 aria-hidden
-                className="absolute inset-0 pointer-events-none"
+                className="absolute inset-0 pointer-events-none transition-opacity duration-500"
                 style={{
-                  background:
-                    "radial-gradient(circle at 60% 40%, rgba(34,211,238,0.10), transparent 60%), radial-gradient(circle at 30% 80%, rgba(249,115,22,0.08), transparent 60%)",
+                  background: `radial-gradient(circle at 60% 40%, ${version.colorSoft}, transparent 60%), radial-gradient(circle at 30% 80%, rgba(249,115,22,0.06), transparent 60%)`,
                 }}
               />
 
               <div
                 data-testid="launch-app-mock"
-                className={`relative w-[240px] md:w-[260px] aspect-[9/19] rounded-[36px] border border-white/10 bg-gradient-to-b from-white/[0.03] to-black/60 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.9)] overflow-hidden transition-[filter] duration-500 ${
+                className={`relative w-[240px] md:w-[260px] aspect-[9/19] rounded-[36px] border bg-gradient-to-b from-white/[0.03] to-black/60 shadow-[0_60px_120px_-30px_rgba(0,0,0,0.9)] overflow-hidden transition-[filter,border-color] duration-500 ${
                   unlocked ? "" : "grayscale-[0.4]"
                 }`}
+                style={{ borderColor: unlocked ? version.color + "55" : "rgba(255,255,255,0.10)" }}
               >
                 {/* notch */}
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-6 rounded-full bg-black/80 z-20" />
@@ -275,16 +340,25 @@ export const InkanimusLaunch = () => {
                 >
                   <div className="p-4 space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="font-head text-[11px] tracking-[0.22em] text-cyan-neon">
+                      <div
+                        className="font-head text-[11px] tracking-[0.22em]"
+                        style={{ color: version.color }}
+                      >
                         INKANIMUS
                       </div>
                       <div className="font-mono text-[8px] uppercase tracking-widest text-white/40">
-                        adept·73
+                        {version.label.toLowerCase()}·v1
                       </div>
                     </div>
 
-                    <div className="rounded-xl border border-white/5 bg-white/[0.03] p-3">
-                      <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/40">
+                    <div
+                      className="rounded-xl border p-3"
+                      style={{
+                        borderColor: version.color + "33",
+                        background: version.colorSoft,
+                      }}
+                    >
+                      <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/50">
                         Ink-points
                       </div>
                       <div className="font-head text-2xl text-white mt-1">
@@ -295,8 +369,7 @@ export const InkanimusLaunch = () => {
                           className="h-full rounded-full"
                           style={{
                             width: "62%",
-                            background:
-                              "linear-gradient(90deg, var(--gb-cyan), var(--gb-orange))",
+                            background: `linear-gradient(90deg, ${version.color}, var(--gb-orange))`,
                           }}
                         />
                       </div>
@@ -312,7 +385,7 @@ export const InkanimusLaunch = () => {
                             className="w-3 h-3 rounded-md border flex items-center justify-center"
                             style={{
                               borderColor: i < 2 ? "transparent" : "rgba(255,255,255,0.2)",
-                              background: i < 2 ? "var(--gb-cyan)" : "transparent",
+                              background: i < 2 ? version.color : "transparent",
                             }}
                           >
                             {i < 2 && <span className="text-black text-[7px] font-bold">✓</span>}
@@ -328,7 +401,10 @@ export const InkanimusLaunch = () => {
                       <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/40">
                         Codice adepto
                       </div>
-                      <div className="font-mono text-sm text-magenta-neon mt-1 tracking-widest">
+                      <div
+                        className="font-mono text-sm mt-1 tracking-widest"
+                        style={{ color: unlocked ? version.color : "var(--gb-orange)" }}
+                      >
                         {unlocked ? "GB-K7RX92" : "•••-•••••"}
                       </div>
                     </div>
@@ -362,18 +438,18 @@ export const InkanimusLaunch = () => {
               </div>
 
               <div className="absolute bottom-6 left-6 md:left-10 font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
-                <span className="text-cyan-neon">{l.version_tag}</span>
+                <span style={{ color: version.color }}>v1 · {version.label.toUpperCase()}</span>
               </div>
 
               {unlocked ? (
                 <a
-                  href={INKANIMUS_APP_URL}
+                  href={version.url}
                   target="_blank"
                   rel="noreferrer"
                   data-testid="launch-domain-link"
-                  className="absolute bottom-6 right-6 md:right-10 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 hover:text-cyan-neon transition-colors duration-200"
+                  className="absolute bottom-6 right-6 md:right-10 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 hover:text-white/90 transition-colors duration-200"
                 >
-                  ink-animus-adepto…vercel.app
+                  ink-animus-adepto-{version.id}…
                   <ExternalLink className="w-3 h-3" />
                 </a>
               ) : (

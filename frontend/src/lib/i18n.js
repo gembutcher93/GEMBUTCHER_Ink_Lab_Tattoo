@@ -57,11 +57,6 @@ export const translations = {
           tag: "Patutikon • Geometria Cinetica",
           desc: "Trama esagonale che si scioglie in un'armatura tribale. Passo dopo passo, un algoritmo sacro.",
         },
-        {
-          title: "Neo-Sapien",
-          tag: "Cyberpunk-organico • Portrait",
-          desc: "Maschera cromatica con circuiti che diventano vene. Il tatuaggio come interfaccia.",
-        },
       ],
     },
     craft: {
@@ -111,6 +106,7 @@ export const translations = {
         wrong: "Codice non riconosciuto",
         relock: "Blocca di nuovo",
         hint_cta: "Non hai ancora il codice? Prenota una sessione",
+        pick_version: "// scegli la tua versione",
       },
       tabs: {
         aftercare: "Aftercare",
@@ -266,11 +262,6 @@ export const translations = {
           tag: "Patutikon • Kinetic Geometry",
           desc: "Hexagonal weave melting into tribal armor. Step by step, a sacred algorithm.",
         },
-        {
-          title: "Neo-Sapien",
-          tag: "Cyberpunk-organic • Portrait",
-          desc: "Chromatic mask with circuits turning into veins. Tattoo as interface.",
-        },
       ],
     },
     craft: {
@@ -320,6 +311,7 @@ export const translations = {
         wrong: "Code not recognised",
         relock: "Lock again",
         hint_cta: "No code yet? Book a session",
+        pick_version: "// pick your version",
       },
       tabs: {
         aftercare: "Aftercare",
@@ -416,5 +408,32 @@ export const translations = {
 
 export const defaultLang = "it";
 
-export const INKANIMUS_APP_URL =
-  "https://ink-animus-adepto-blue-version-22o6-9zo4u6yq3.vercel.app";
+export const INKANIMUS_VERSIONS = [
+  {
+    id: "blue",
+    label: "Blue",
+    subtitle: "Cyberpunk",
+    color: "#22d3ee",
+    colorSoft: "rgba(34,211,238,0.16)",
+    url: "https://ink-animus-adepto-blue-version-22o6.vercel.app/",
+  },
+  {
+    id: "bio",
+    label: "Bio",
+    subtitle: "Organic",
+    color: "#22c55e",
+    colorSoft: "rgba(34,197,94,0.16)",
+    url: "https://ink-animus-adepto-bio-version.vercel.app/",
+  },
+  {
+    id: "sakura",
+    label: "Sakura",
+    subtitle: "Blossom",
+    color: "#ec4899",
+    colorSoft: "rgba(236,72,153,0.16)",
+    url: "https://ink-animus-adepto-sakura-version.vercel.app/",
+  },
+];
+
+// Legacy alias — default = blue
+export const INKANIMUS_APP_URL = INKANIMUS_VERSIONS[0].url;
