@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLang } from "@/context/LangContext";
 import { INKANIMUS_VERSIONS } from "@/lib/i18n";
 import {
@@ -432,6 +432,7 @@ export const InkanimusLaunch = () => {
           onPick={(id) => setVersionId(id)}
           selected={versionId}
           strings={g}
+          gateStrings={g}
         />
       )}
     </section>
@@ -439,7 +440,27 @@ export const InkanimusLaunch = () => {
 };
 
 /* -------- Cyberpunk 2077 style download terminal modal -------- */
-const DownloadModal = ({ onClose, onPick, selected, strings }) => {
+const DownloadModal = ({ onClose, onPick, selected, strings, gateStrings }) => {
+  const [authed, setAuthed] = useState(false);
+  const [pw, setPw] = useState("");
+  const [err, setErr] = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (!authed && inputRef.current) inputRef.current.focus();
+  }, [authed]);
+
+  const tryAuth = (e) => {
+    e.preventDefault();
+    if (pw.trim() === ADEPT_PASSWORD) {
+      setAuthed(true);
+      setErr(false);
+    } else {
+      setErr(true);
+      setTimeout(() => setErr(false), 2200);
+    }
+  };
+
   return (
     <div
       data-testid="download-modal"
@@ -509,12 +530,69 @@ const DownloadModal = ({ onClose, onPick, selected, strings }) => {
         {/* Subtitle */}
         <div className="px-6 md:px-8 pt-5">
           <p className="text-white/60 text-sm md:text-[15px] max-w-2xl leading-relaxed">
-            {strings.modal_subtitle}
+            {authed ? strings.modal_subtitle : gateStrings.explanation}
           </p>
         </div>
 
-        {/* Version grid */}
-        <div className="px-6 md:px-8 py-6 grid sm:grid-cols-3 gap-4">
+        {/* Body */}
+        {!authed ? (
+          <div className="px-6 md:px-8 py-8" data-testid="modal-gate">
+            <form onSubmit={tryAuth} className="max-w-md mx-auto space-y-4">
+              <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.32em] text-magenta-neon justify-center">
+                <Lock className="w-3.5 h-3.5" />
+                {gateStrings.locked_status}
+              </div>
+
+              <div className="relative">
+                <KeyRound className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40" />
+                <input
+                  ref={inputRef}
+                  data-testid="modal-gate-input"
+                  type="password"
+                  value={pw}
+                  onChange={(e) => setPw(e.target.value)}
+                  placeholder={gateStrings.placeholder}
+                  className="cyber-input pl-11 pr-4 font-mono tracking-[0.18em] text-center"
+                  style={
+                    err
+                      ? {
+                          borderColor: "var(--gb-orange-line)",
+                          boxShadow: "0 0 0 4px rgba(249,115,22,0.08)",
+                        }
+                      : {}
+                  }
+                  autoComplete="off"
+                  spellCheck={false}
+                />
+              </div>
+
+              <button
+                data-testid="modal-gate-submit"
+                type="submit"
+                className="neon-btn neon-btn--solid-orange w-full"
+              >
+                <Unlock className="w-4 h-4" />
+                {gateStrings.unlock}
+              </button>
+
+              <div className="min-h-[18px] text-center">
+                {err && (
+                  <p
+                    data-testid="modal-gate-error"
+                    className="text-magenta-neon font-mono text-[11px] uppercase tracking-[0.25em]"
+                  >
+                    {gateStrings.wrong}
+                  </p>
+                )}
+              </div>
+
+              <p className="text-white/40 font-mono text-[10px] uppercase tracking-[0.22em] text-center pt-2">
+                {gateStrings.hint_cta}
+              </p>
+            </form>
+          </div>
+        ) : (
+          <div className="px-6 md:px-8 py-6 grid sm:grid-cols-3 gap-4" data-testid="modal-versions">
           {INKANIMUS_VERSIONS.map((v, i) => {
             const active = v.id === selected;
             return (
@@ -590,12 +668,13 @@ const DownloadModal = ({ onClose, onPick, selected, strings }) => {
               </div>
             );
           })}
-        </div>
+          </div>
+        )}
 
         {/* Footer note */}
         <div className="border-t border-white/5 px-6 md:px-8 py-4 flex items-center justify-between gap-4">
           <p className="text-white/45 text-xs leading-relaxed max-w-md">
-            {strings.modal_note}
+            {authed ? strings.modal_note : ""}
           </p>
           <button
             data-testid="download-modal-close-2"
