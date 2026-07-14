@@ -15,9 +15,9 @@ export const Navbar = () => {
   }, []);
 
   const links = [
-    { id: "hero", label: t.nav.experience },
-    { id: "gallery", label: t.nav.gallery },
     { id: "craft", label: t.nav.craft },
+    { id: "gallery", label: t.nav.gallery },
+    { id: "hero", label: t.nav.experience },
     { id: "inkanimus", label: t.nav.inkanimus },
     { id: "booking", label: t.nav.booking },
   ];

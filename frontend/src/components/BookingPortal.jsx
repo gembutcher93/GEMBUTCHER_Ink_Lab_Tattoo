@@ -108,7 +108,7 @@ export const BookingPortal = () => {
                 className="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-6"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(34,211,238,0.15), transparent 70%)",
+                    "radial-gradient(circle, rgba(0, 255, 179,0.15), transparent 70%)",
                   border: "1px solid var(--gb-cyan-line)",
                 }}
               >

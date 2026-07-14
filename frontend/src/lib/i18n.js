@@ -61,7 +61,7 @@ export const translations = {
       ],
     },
     craft: {
-      title: "L'arte dell'Inchiostro",
+      title: "Nato nell'inchiostro",
       p1:
         "GemButcher è tatuatore per vocazione, InkMaster per necessità. Nato tra le pietre di Ozieri, opera dal Podere 173 traducendo storie personali in cicatrici sacre.",
       p2:
@@ -281,7 +281,7 @@ export const translations = {
       ],
     },
     craft: {
-      title: "The art of Ink",
+      title: "Born in ink",
       p1:
         "GemButcher is a tattooist by vocation, an InkMaster by necessity. Born among the stones of Ozieri, he operates from Podere 173 translating personal stories into sacred scars.",
       p2:
@@ -443,8 +443,8 @@ export const INKANIMUS_VERSIONS = [
     id: "blue",
     label: "Blue",
     subtitle: "Cyberpunk",
-    color: "#22d3ee",
-    colorSoft: "rgba(34,211,238,0.16)",
+    color: "#00ffb3",
+    colorSoft: "rgba(0, 255, 179,0.16)",
     url: "https://ink-animus-adepto-blue-version-22o6.vercel.app/",
   },
   {

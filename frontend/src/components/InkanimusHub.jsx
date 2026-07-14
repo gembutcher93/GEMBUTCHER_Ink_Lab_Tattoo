@@ -74,7 +74,7 @@ const AftercarePanel = ({ state, setState }) => {
           <div
             className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0"
             style={{
-              background: "radial-gradient(circle, rgba(34,211,238,0.18), transparent 70%)",
+              background: "radial-gradient(circle, rgba(0, 255, 179,0.18), transparent 70%)",
               border: "1px solid var(--gb-cyan-line)",
             }}
           >

@@ -140,7 +140,7 @@ export const InkanimusLaunch = () => {
                           className="mt-0.5 w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
                           style={{
                             background:
-                              "linear-gradient(180deg, rgba(34,211,238,0.14), rgba(34,211,238,0.02))",
+                              "linear-gradient(180deg, rgba(0, 255, 179,0.14), rgba(0, 255, 179,0.02))",
                             border: "1px solid var(--gb-cyan-line)",
                           }}
                         >
@@ -231,7 +231,7 @@ export const InkanimusLaunch = () => {
                             error
                               ? {
                                   borderColor: "var(--gb-orange-line)",
-                                  boxShadow: "0 0 0 4px rgba(249,115,22,0.08)",
+                                  boxShadow: "0 0 0 4px rgba(255, 45, 149,0.08)",
                                 }
                               : {}
                           }
@@ -280,7 +280,7 @@ export const InkanimusLaunch = () => {
                 aria-hidden
                 className="absolute inset-0 pointer-events-none transition-opacity duration-500"
                 style={{
-                  background: `radial-gradient(circle at 60% 40%, ${version.colorSoft}, transparent 60%), radial-gradient(circle at 30% 80%, rgba(249,115,22,0.06), transparent 60%)`,
+                  background: `radial-gradient(circle at 60% 40%, ${version.colorSoft}, transparent 60%), radial-gradient(circle at 30% 80%, rgba(255, 45, 149,0.06), transparent 60%)`,
                 }}
               />
 
@@ -385,7 +385,7 @@ export const InkanimusLaunch = () => {
                     <div
                       className="w-14 h-14 rounded-full flex items-center justify-center"
                       style={{
-                        background: "radial-gradient(circle, rgba(249,115,22,0.2), transparent 70%)",
+                        background: "radial-gradient(circle, rgba(255, 45, 149,0.2), transparent 70%)",
                         border: "1px solid var(--gb-orange-line)",
                       }}
                     >
@@ -481,9 +481,9 @@ const DownloadModal = ({ onClose, onPick, selected, strings, gateStrings }) => {
         style={{
           background:
             "linear-gradient(180deg, rgba(10,10,14,0.98) 0%, rgba(5,5,6,0.98) 100%)",
-          border: "1px solid rgba(34,211,238,0.35)",
+          border: "1px solid rgba(0, 255, 179,0.35)",
           boxShadow:
-            "0 0 0 1px rgba(34,211,238,0.15), 0 40px 120px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)",
+            "0 0 0 1px rgba(0, 255, 179,0.15), 0 40px 120px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)",
         }}
       >
         {/* Corner brackets */}
@@ -557,7 +557,7 @@ const DownloadModal = ({ onClose, onPick, selected, strings, gateStrings }) => {
                     err
                       ? {
                           borderColor: "var(--gb-orange-line)",
-                          boxShadow: "0 0 0 4px rgba(249,115,22,0.08)",
+                          boxShadow: "0 0 0 4px rgba(255, 45, 149,0.08)",
                         }
                       : {}
                   }
@@ -607,7 +607,7 @@ const DownloadModal = ({ onClose, onPick, selected, strings, gateStrings }) => {
                       style={{
                         color: "var(--gb-cyan)",
                         border: "1px solid var(--gb-cyan-line)",
-                        background: "rgba(34,211,238,0.08)",
+                        background: "rgba(0, 255, 179,0.08)",
                       }}
                     >
                       1
@@ -620,7 +620,7 @@ const DownloadModal = ({ onClose, onPick, selected, strings, gateStrings }) => {
                       style={{
                         color: "var(--gb-cyan)",
                         border: "1px solid var(--gb-cyan-line)",
-                        background: "rgba(34,211,238,0.08)",
+                        background: "rgba(0, 255, 179,0.08)",
                       }}
                     >
                       2
@@ -638,7 +638,7 @@ const DownloadModal = ({ onClose, onPick, selected, strings, gateStrings }) => {
                       style={{
                         color: "var(--gb-orange)",
                         border: "1px solid var(--gb-orange-line)",
-                        background: "rgba(249,115,22,0.08)",
+                        background: "rgba(255, 45, 149,0.08)",
                       }}
                     >
                       3

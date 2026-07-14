@@ -19,7 +19,7 @@ export const Footer = () => {
           <img
             src={LOGO_URL}
             alt="GemButcher"
-            className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]"
+            className="w-10 h-10 object-contain drop-shadow-[0_0_8px_rgba(0, 255, 179,0.5)]"
           />
           <div>
             <div className="font-head text-lg text-white tracking-[0.22em]">

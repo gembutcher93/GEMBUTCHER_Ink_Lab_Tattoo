@@ -26,21 +26,77 @@ export const ButcherCraft = () => {
     <section
       id="craft"
       data-testid="craft-section"
-      className="relative py-28 md:py-36 overflow-hidden"
+      className="relative pt-28 pb-24 md:pt-32 md:pb-32 min-h-screen overflow-hidden"
     >
+      {/* Cyberpunk grid backdrop */}
+      <div className="hero-grid-bg" />
+
+      {/* Ambient glows */}
       <div
         aria-hidden
-        className="absolute -top-40 -left-20 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.10] pointer-events-none"
+        className="absolute -top-40 -left-20 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.12] pointer-events-none"
         style={{ backgroundColor: "var(--gb-orange)" }}
       />
+      <div
+        aria-hidden
+        className="absolute -bottom-20 -right-32 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.10] pointer-events-none"
+        style={{ backgroundColor: "var(--gb-cyan)" }}
+      />
 
-      <div className="max-w-[1440px] mx-auto px-5 md:px-10 grid lg:grid-cols-12 gap-10">
-        {/* Portrait carousel */}
-        <div className="lg:col-span-5 space-y-5">
-          <div
-            className="glass-card corner-brackets aspect-[3/4] overflow-hidden relative rounded-2xl"
-            data-testid="portrait-carousel"
-          >
+      <div className="relative max-w-[1440px] mx-auto px-5 md:px-10">
+        {/* --- KINETIC HERO TITLE --- */}
+        <div className="pb-10 md:pb-14 flex items-end justify-between flex-wrap gap-6">
+          <div className="space-y-5 max-w-3xl">
+            <div className="flex items-center gap-3 font-mono text-[11px] text-white/50 uppercase tracking-[0.35em]">
+              <span className="dot dot-cyan" />
+              <span>// ozieri — sardegna — italia · podere 173</span>
+            </div>
+            <div className="kinetic-title" data-testid="kinetic-hero-title">
+              <span className="kinetic-title__layer text-[3.6rem] sm:text-[5rem] md:text-[7rem] lg:text-[8.5rem] xl:text-[9.5rem]">
+                GEMBUTCHER
+              </span>
+              <span className="kinetic-title__mint kinetic-title__layer text-[3.6rem] sm:text-[5rem] md:text-[7rem] lg:text-[8.5rem] xl:text-[9.5rem]" aria-hidden>
+                GEMBUTCHER
+              </span>
+              <span className="kinetic-title__magenta kinetic-title__layer text-[3.6rem] sm:text-[5rem] md:text-[7rem] lg:text-[8.5rem] xl:text-[9.5rem]" aria-hidden>
+                GEMBUTCHER
+              </span>
+            </div>
+            <div className="pt-2 font-head text-2xl md:text-3xl lg:text-4xl text-white/90 tracking-tight leading-[1.05]">
+              {t.craft.title.split(" ").map((w, i) => (
+                <span key={i} className={i === 2 ? "text-magenta-neon italic" : ""}>
+                  {w}{" "}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right-side spec column — cinematic dossier chips */}
+          <div className="flex flex-col gap-2 min-w-[240px]">
+            <div className="glass-card px-4 py-3 rounded-xl flex items-center justify-between">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/40">SUBJECT</span>
+              <span className="font-head text-sm text-cyan-neon">GEMBUTCHER</span>
+            </div>
+            <div className="glass-card px-4 py-3 rounded-xl flex items-center justify-between">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/40">LOC</span>
+              <span className="font-head text-sm text-white/90">40.5876° N</span>
+            </div>
+            <div className="glass-card px-4 py-3 rounded-xl flex items-center justify-between">
+              <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/40">STATUS</span>
+              <span className="flex items-center gap-1.5 text-magenta-neon font-head text-sm">
+                <span className="dot dot-orange" />ACTIVE
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-12 gap-10">
+          {/* Portrait carousel */}
+          <div className="lg:col-span-5 space-y-5">
+            <div
+              className="glass-card corner-brackets aspect-[3/4] overflow-hidden relative rounded-2xl"
+              data-testid="portrait-carousel"
+            >
             {PORTRAITS.map((p, i) => (
               <img
                 key={p.src}
@@ -63,7 +119,7 @@ export const ButcherCraft = () => {
               className="absolute inset-0 pointer-events-none"
               style={{
                 background:
-                  "radial-gradient(circle at 78% 12%, rgba(249,115,22,0.20), transparent 55%)",
+                  "radial-gradient(circle at 78% 12%, rgba(255, 45, 149,0.20), transparent 55%)",
               }}
             />
 
@@ -138,12 +194,8 @@ export const ButcherCraft = () => {
         {/* Text */}
         <div className="lg:col-span-7 space-y-7 lg:pt-4">
           <div className="font-mono text-[11px] text-cyan-neon uppercase tracking-[0.35em]">
-            03 / L'ARTE DELL'INCHIOSTRO
+            01 / NATO NELL'INCHIOSTRO
           </div>
-          <h2 className="font-head font-bold text-4xl md:text-5xl lg:text-[3.75rem] leading-[1.05] tracking-tight">
-            <span className="text-white/95">L'arte dell'</span>
-            <span className="text-magenta-neon italic">Inchiostro</span>
-          </h2>
 
           <div className="space-y-5 text-white/70 leading-relaxed max-w-2xl text-[15px] md:text-base">
             <p>{t.craft.p1}</p>
@@ -175,7 +227,7 @@ export const ButcherCraft = () => {
                 className="absolute inset-0 opacity-30"
                 style={{
                   backgroundImage:
-                    "linear-gradient(rgba(34,211,238,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.18) 1px, transparent 1px)",
+                    "linear-gradient(rgba(0, 255, 179,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 255, 179,0.18) 1px, transparent 1px)",
                   backgroundSize: "24px 24px",
                 }}
               />
@@ -186,7 +238,7 @@ export const ButcherCraft = () => {
               >
                 <path
                   d="M 0 100 Q 100 70 200 90 T 400 40"
-                  stroke="rgba(34,211,238,0.45)"
+                  stroke="rgba(0, 255, 179,0.45)"
                   strokeWidth="1"
                   fill="none"
                 />
@@ -214,6 +266,7 @@ export const ButcherCraft = () => {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>

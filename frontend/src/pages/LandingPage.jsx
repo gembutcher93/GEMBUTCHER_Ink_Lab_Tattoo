@@ -14,9 +14,9 @@ export default function LandingPage() {
     <div data-testid="landing-page" className="bg-obsidian text-white min-h-screen relative">
       <Navbar />
       <main>
-        <Hero3D />
-        <PatutikonGallery />
         <ButcherCraft />
+        <PatutikonGallery />
+        <Hero3D />
         <InkanimusLaunch />
         <InkanimusHub />
         <BookingPortal />

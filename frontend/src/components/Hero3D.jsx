@@ -97,11 +97,11 @@ const ArmModel = ({ style }) => {
       if (child.isMesh) {
         const emissiveHex =
           style === "cyberpunk"
-            ? "#f97316"
+            ? "#ff2d95"
             : style === "patutikon"
-            ? "#22d3ee"
+            ? "#00ffb3"
             : style === "polynesian"
-            ? "#22d3ee"
+            ? "#00ffb3"
             : "#111826";
         child.material = new THREE.MeshStandardMaterial({
           map,
@@ -141,7 +141,7 @@ const LoadingCube = () => {
   return (
     <mesh ref={ref}>
       <boxGeometry args={[0.6, 0.6, 0.6]} />
-      <meshBasicMaterial color="#22d3ee" wireframe />
+      <meshBasicMaterial color="#00ffb3" wireframe />
     </mesh>
   );
 };
@@ -154,7 +154,7 @@ const Scene = ({ style }) => (
       intensity={32}
       angle={0.65}
       penumbra={0.7}
-      color="#22d3ee"
+      color="#00ffb3"
       castShadow
     />
     <spotLight
@@ -162,7 +162,7 @@ const Scene = ({ style }) => (
       intensity={24}
       angle={0.65}
       penumbra={0.8}
-      color="#f97316"
+      color="#ff2d95"
     />
     <pointLight position={[0, 6, -3]} intensity={16} color="#ffffff" distance={18} />
     <Suspense fallback={<LoadingCube />}>
@@ -296,7 +296,7 @@ export const Hero3D = () => {
                     active
                       ? {
                           background: "var(--gb-cyan)",
-                          boxShadow: "0 8px 26px -8px rgba(34,211,238,0.6)",
+                          boxShadow: "0 8px 26px -8px rgba(0, 255, 179,0.6)",
                         }
                       : {}
                   }
