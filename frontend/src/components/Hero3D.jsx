@@ -1,271 +1,173 @@
-import React, { useRef, useMemo, useState, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Float } from "@react-three/drei";
+import React, { useRef, useMemo, useState, Suspense, useEffect } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { OrbitControls, Float, useTexture } from "@react-three/drei";
+import { OBJLoader } from "three-stdlib";
 import * as THREE from "three";
 import { useLang } from "@/context/LangContext";
 import { ArrowRight } from "lucide-react";
 
-/* -------- Tattoo textures (clean, cinematic, no glitch) -------- */
-const drawPolynesian = (ctx, w, h) => {
-  ctx.lineCap = "butt";
-  ctx.lineJoin = "miter";
-  ctx.strokeStyle = "#22d3ee";
-  ctx.lineWidth = 3;
-  ctx.fillStyle = "#22d3ee";
-  // Bold Marquesan zigzag columns
-  for (let x = 0; x < w; x += 84) {
-    ctx.beginPath();
-    for (let y = 0; y < h; y += 22) {
-      ctx.moveTo(x + 8, y);
-      ctx.lineTo(x + 40, y + 11);
-      ctx.lineTo(x + 8, y + 22);
-    }
-    ctx.stroke();
-  }
-  // Solid vertical spine
-  ctx.fillRect(w / 2 - 2, 0, 4, h);
-  // Circular sun motifs
-  for (let y = 90; y < h; y += 260) {
-    ctx.beginPath();
-    ctx.arc(w / 2, y, 22, 0, Math.PI * 2);
-    ctx.lineWidth = 4;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(w / 2, y, 8, 0, Math.PI * 2);
-    ctx.fill();
-  }
+const OBJ_URL =
+  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/8k8t8gsc_11535_arm_V3_.obj";
+
+const TEXTURES = {
+  default: {
+    color:
+      "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/1c3nkxuc__11535_arm_V3_FINALdefault-color.webp",
+  },
+  polynesian: {
+    color:
+      "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/oym8zk3u__11535_arm_V3_FINALpolynesian-color.webp",
+  },
+  cyberpunk: {
+    color:
+      "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/ymbxx386__11535_arm_V3_FINALcybertattoo-color.webp",
+  },
+  patutikon: {
+    color:
+      "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/qt9rqmrk__11535_arm_V3_FINALpatutikon-color.webp",
+  },
 };
 
-const drawCyberpunk = (ctx, w, h) => {
-  ctx.strokeStyle = "#f97316";
-  ctx.lineCap = "square";
-  ctx.lineWidth = 2;
-  // Orthogonal circuit paths — precise, no shadow blur
-  const grid = 32;
-  for (let i = 0; i < 40; i++) {
-    ctx.beginPath();
-    let x = Math.round((Math.random() * w) / grid) * grid;
-    let y = Math.round((Math.random() * h) / grid) * grid;
-    ctx.moveTo(x, y);
-    for (let j = 0; j < 5; j++) {
-      const dir = Math.floor(Math.random() * 4);
-      if (dir === 0) x += grid * 2;
-      if (dir === 1) x -= grid * 2;
-      if (dir === 2) y += grid * 2;
-      if (dir === 3) y -= grid * 2;
-      ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-    // Node
-    ctx.fillStyle = "#22d3ee";
-    ctx.fillRect(x - 3, y - 3, 6, 6);
-  }
-  // Long central spine
-  ctx.strokeStyle = "#f97316";
-  ctx.lineWidth = 4;
-  ctx.beginPath();
-  ctx.moveTo(w / 2, 0);
-  ctx.lineTo(w / 2, h);
-  ctx.stroke();
-};
+const ROUGHNESS_URL =
+  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/dffvjzoz__11535_arm_V3_FINALdefault-roughness.webp";
+const METALLIC_URL =
+  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/ffuty8ur__11535_arm_V3_FINALdefault-metallic.webp";
 
-const drawAnime = (ctx, w, h) => {
-  ctx.strokeStyle = "#f97316";
-  ctx.lineWidth = 2;
-  ctx.lineCap = "round";
-  // Clean radiating speed lines
-  for (let i = 0; i < 24; i++) {
-    ctx.beginPath();
-    const y = (i * h) / 24;
-    ctx.moveTo(0, y);
-    ctx.lineTo(w, y);
-    ctx.stroke();
-  }
-  ctx.strokeStyle = "#22d3ee";
-  ctx.lineWidth = 3;
-  // Sakura five-petal flowers
-  for (let i = 0; i < 8; i++) {
-    const cx = 60 + Math.random() * (w - 120);
-    const cy = 60 + Math.random() * (h - 120);
-    const s = 22;
-    for (let a = 0; a < 5; a++) {
-      const ang = (Math.PI * 2 * a) / 5;
-      ctx.beginPath();
-      ctx.ellipse(
-        cx + Math.cos(ang) * s * 0.6,
-        cy + Math.sin(ang) * s * 0.6,
-        s * 0.55,
-        s * 0.28,
-        ang,
-        0,
-        Math.PI * 2
-      );
-      ctx.stroke();
-    }
-  }
-};
+const STYLE_KEYS = ["default", "polynesian", "cyberpunk", "patutikon"];
 
-const drawPatutikon = (ctx, w, h) => {
-  drawPolynesian(ctx, w, h);
-  // Central portrait medallion
-  ctx.strokeStyle = "#f97316";
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.arc(w / 2, h * 0.5, 90, 0, Math.PI * 2);
-  ctx.stroke();
-  // Inner outlined face
-  ctx.strokeStyle = "#22d3ee";
-  ctx.lineWidth = 2.5;
-  ctx.beginPath();
-  ctx.arc(w / 2, h * 0.5, 60, 0, Math.PI * 2);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.moveTo(w / 2 - 18, h * 0.48);
-  ctx.lineTo(w / 2 - 18, h * 0.52);
-  ctx.moveTo(w / 2 + 18, h * 0.48);
-  ctx.lineTo(w / 2 + 18, h * 0.52);
-  ctx.stroke();
-  // Emanating radii
-  ctx.strokeStyle = "#f97316";
-  ctx.lineWidth = 2;
-  for (let a = 0; a < 24; a++) {
-    const ang = (Math.PI * 2 * a) / 24;
-    ctx.beginPath();
-    ctx.moveTo(w / 2 + Math.cos(ang) * 100, h * 0.5 + Math.sin(ang) * 100);
-    ctx.lineTo(w / 2 + Math.cos(ang) * 130, h * 0.5 + Math.sin(ang) * 130);
-    ctx.stroke();
-  }
-};
-
-const styleDrawers = {
-  polynesian: drawPolynesian,
-  cyberpunk: drawCyberpunk,
-  anime: drawAnime,
-  patutikon: drawPatutikon,
-};
-
-const useTattooTexture = (style) =>
-  useMemo(() => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 512;
-    canvas.height = 1024;
-    const ctx = canvas.getContext("2d");
-    // Deep skin (matte, cinematic)
-    ctx.fillStyle = "#0a0a0d";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    (styleDrawers[style] || drawPolynesian)(ctx, canvas.width, canvas.height);
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-    tex.anisotropy = 8;
-    tex.colorSpace = THREE.SRGBColorSpace;
-    return tex;
-  }, [style]);
-
-/* -------- Anatomical arm via LatheGeometry -------- */
-const armProfilePoints = () => {
-  // Points define silhouette from top (shoulder) down to wrist.
-  // (radius, y)
-  const raw = [
-    [0.02, 2.15], // top cap
-    [0.55, 1.95], // shoulder / deltoid
-    [0.45, 1.55], // upper arm top
-    [0.48, 1.10], // bicep peak
-    [0.42, 0.70], // bicep taper
-    [0.34, 0.20], // elbow
-    [0.34, -0.05], // elbow bottom
-    [0.40, -0.30], // brachioradialis / forearm top
-    [0.32, -0.80], // forearm middle
-    [0.26, -1.30], // forearm lower
-    [0.22, -1.70], // wrist
-    [0.20, -1.85], // wrist cap
-    [0.02, -1.95],
-  ];
-  return raw.map(([r, y]) => new THREE.Vector2(r, y));
-};
-
-const Arm = ({ style }) => {
+const ArmModel = ({ style }) => {
   const group = useRef();
-  const tex = useTattooTexture(style);
+  const obj = useLoader(OBJLoader, OBJ_URL);
+
+  // Load all textures once — swap only the color map per style
+  const [colorDefault, colorPoly, colorCyber, colorPatu, roughMap, metalMap] =
+    useTexture([
+      TEXTURES.default.color,
+      TEXTURES.polynesian.color,
+      TEXTURES.cyberpunk.color,
+      TEXTURES.patutikon.color,
+      ROUGHNESS_URL,
+      METALLIC_URL,
+    ]);
+
+  const colorMapByStyle = useMemo(
+    () => ({
+      default: colorDefault,
+      polynesian: colorPoly,
+      cyberpunk: colorCyber,
+      patutikon: colorPatu,
+    }),
+    [colorDefault, colorPoly, colorCyber, colorPatu]
+  );
+
+  // Configure textures once
+  useEffect(() => {
+    [colorDefault, colorPoly, colorCyber, colorPatu].forEach((t) => {
+      if (!t) return;
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.flipY = false;
+      t.anisotropy = 8;
+    });
+    [roughMap, metalMap].forEach((t) => {
+      if (!t) return;
+      t.flipY = false;
+      t.anisotropy = 8;
+    });
+  }, [colorDefault, colorPoly, colorCyber, colorPatu, roughMap, metalMap]);
+
+  // Center + scale + apply material each time style changes
+  const processed = useMemo(() => {
+    const cloned = obj.clone(true);
+    // Compute bounding box to center + normalize scale
+    const box = new THREE.Box3().setFromObject(cloned);
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    const targetHeight = 2.1;
+    const scale = targetHeight / (size.y || 1);
+    cloned.scale.setScalar(scale);
+    cloned.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+    return cloned;
+  }, [obj]);
+
+  useEffect(() => {
+    const map = colorMapByStyle[style] || colorDefault;
+    processed.traverse((child) => {
+      if (child.isMesh) {
+        const emissiveHex =
+          style === "cyberpunk"
+            ? "#f97316"
+            : style === "patutikon"
+            ? "#22d3ee"
+            : style === "polynesian"
+            ? "#22d3ee"
+            : "#111826";
+        child.material = new THREE.MeshStandardMaterial({
+          map,
+          roughnessMap: roughMap,
+          metalnessMap: metalMap,
+          roughness: 0.85,
+          metalness: 0.35,
+          emissive: new THREE.Color(emissiveHex),
+          emissiveIntensity: style === "default" ? 0.02 : 0.28,
+          emissiveMap: style === "default" ? null : map,
+        });
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  }, [processed, style, colorMapByStyle, colorDefault, roughMap, metalMap]);
 
   useFrame((_, delta) => {
-    if (group.current) group.current.rotation.y += delta * 0.12;
+    if (group.current) group.current.rotation.y += delta * 0.05;
   });
 
-  const emissive = style === "cyberpunk" || style === "anime" ? "#f97316" : "#22d3ee";
-  const armGeom = useMemo(() => new THREE.LatheGeometry(armProfilePoints(), 64), []);
-
   return (
-    <group ref={group} rotation={[0.08, 0, 0.14]}>
-      {/* Arm body */}
-      <mesh geometry={armGeom} castShadow>
-        <meshStandardMaterial
-          map={tex}
-          emissive={emissive}
-          emissiveMap={tex}
-          emissiveIntensity={0.7}
-          roughness={0.55}
-          metalness={0.25}
-        />
-      </mesh>
-
-      {/* Chrome wrist band */}
-      <mesh position={[0, -1.72, 0]}>
-        <torusGeometry args={[0.24, 0.02, 12, 48]} />
-        <meshStandardMaterial color="#f5f5f5" metalness={1} roughness={0.15} />
-      </mesh>
-
-      {/* Palm */}
-      <group position={[0, -2.15, 0]}>
-        <mesh>
-          <boxGeometry args={[0.42, 0.36, 0.2]} />
-          <meshStandardMaterial color="#0d0d11" roughness={0.6} metalness={0.35} />
-        </mesh>
-        {/* Fingers */}
-        {[-0.14, -0.05, 0.05, 0.14].map((x, i) => (
-          <group key={i} position={[x, -0.28, 0]}>
-            <mesh>
-              <cylinderGeometry args={[0.038, 0.03, 0.42, 14]} />
-              <meshStandardMaterial color="#0f0f13" roughness={0.65} metalness={0.35} />
-            </mesh>
-            <mesh position={[0, -0.24, 0]}>
-              <sphereGeometry args={[0.038, 10, 10]} />
-              <meshStandardMaterial color="#0f0f13" roughness={0.65} metalness={0.35} />
-            </mesh>
-          </group>
-        ))}
-        {/* Thumb */}
-        <group position={[0.22, -0.02, 0]} rotation={[0, 0, -0.7]}>
-          <mesh>
-            <cylinderGeometry args={[0.04, 0.032, 0.32, 12]} />
-            <meshStandardMaterial color="#0f0f13" roughness={0.65} metalness={0.35} />
-          </mesh>
-          <mesh position={[0, -0.18, 0]}>
-            <sphereGeometry args={[0.04, 10, 10]} />
-            <meshStandardMaterial color="#0f0f13" roughness={0.65} metalness={0.35} />
-          </mesh>
-        </group>
-      </group>
-
-      {/* Thin cyan tracer rings */}
-      {[1.5, 0.5, -0.4, -1.2].map((y, i) => (
-        <mesh key={`ring-${i}`} position={[0, y, 0]} rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[0.48 - Math.abs(y) * 0.06, 0.004, 8, 64]} />
-          <meshBasicMaterial color={emissive} transparent opacity={0.85} />
-        </mesh>
-      ))}
+    <group ref={group} rotation={[-Math.PI / 2, -0.3, 0]} position={[0, 0, 0]}>
+      <primitive object={processed} />
     </group>
+  );
+};
+
+const LoadingCube = () => {
+  const ref = useRef();
+  useFrame((_, d) => {
+    if (ref.current) {
+      ref.current.rotation.x += d * 0.8;
+      ref.current.rotation.y += d * 1.1;
+    }
+  });
+  return (
+    <mesh ref={ref}>
+      <boxGeometry args={[0.6, 0.6, 0.6]} />
+      <meshBasicMaterial color="#22d3ee" wireframe />
+    </mesh>
   );
 };
 
 const Scene = ({ style }) => (
   <>
-    <ambientLight intensity={0.18} />
-    <spotLight position={[5, 4, 5]} intensity={28} angle={0.6} penumbra={0.7} color="#22d3ee" castShadow />
-    <spotLight position={[-5, -2, 3]} intensity={22} angle={0.6} penumbra={0.8} color="#f97316" />
-    <pointLight position={[0, 6, -3]} intensity={14} color="#ffffff" distance={16} />
-    <Suspense fallback={null}>
-      <Float speed={1.15} rotationIntensity={0.18} floatIntensity={0.55}>
-        <Arm style={style} />
+    <ambientLight intensity={0.28} />
+    <spotLight
+      position={[5, 4, 5]}
+      intensity={32}
+      angle={0.65}
+      penumbra={0.7}
+      color="#22d3ee"
+      castShadow
+    />
+    <spotLight
+      position={[-5, -2, 3]}
+      intensity={24}
+      angle={0.65}
+      penumbra={0.8}
+      color="#f97316"
+    />
+    <pointLight position={[0, 6, -3]} intensity={16} color="#ffffff" distance={18} />
+    <Suspense fallback={<LoadingCube />}>
+      <Float speed={1.05} rotationIntensity={0.15} floatIntensity={0.45}>
+        <ArmModel style={style} />
       </Float>
     </Suspense>
   </>
@@ -274,7 +176,6 @@ const Scene = ({ style }) => (
 export const Hero3D = () => {
   const { t } = useLang();
   const [style, setStyle] = useState("patutikon");
-  const styleKeys = ["polynesian", "cyberpunk", "anime", "patutikon"];
 
   return (
     <section
@@ -327,7 +228,6 @@ export const Hero3D = () => {
             </button>
           </div>
 
-          {/* Micro spec bar */}
           <div className="pt-6 flex items-center gap-6 text-[11px] font-mono uppercase tracking-[0.28em] text-white/40">
             <span>Est. 2013</span>
             <span className="w-px h-3 bg-white/15" />
@@ -343,10 +243,9 @@ export const Hero3D = () => {
             data-testid="hero-3d-viewport"
             className="relative aspect-[4/5] md:aspect-[5/5] lg:aspect-[4/5] w-full rounded-2xl overflow-hidden glass-card corner-brackets"
           >
-            {/* Precise HUD */}
             <div className="absolute top-4 left-4 right-4 flex items-start justify-between z-20 pointer-events-none">
               <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">
-                <span className="text-cyan-neon">MDL/</span>NEO-SAPIEN
+                <span className="text-cyan-neon">MDL/</span>NEO-SAPIEN.arm.v3
               </div>
               <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/60">
                 STYLE :: <span className="text-magenta-neon">{style}</span>
@@ -363,9 +262,9 @@ export const Hero3D = () => {
             </div>
 
             <Canvas
-              camera={{ position: [0, 0.2, 6.2], fov: 42 }}
+              camera={{ position: [0, 0, 7.5], fov: 40 }}
               dpr={[1, 2]}
-              gl={{ antialias: true, alpha: true }}
+              gl={{ antialias: true, alpha: true, physicallyCorrectLights: true }}
               style={{ background: "transparent" }}
             >
               <Scene style={style} />
@@ -374,16 +273,14 @@ export const Hero3D = () => {
                 enableZoom={false}
                 minPolarAngle={Math.PI / 3.2}
                 maxPolarAngle={Math.PI / 1.6}
+                target={[0, 0, 0]}
               />
             </Canvas>
           </div>
 
-          {/* Style selector — clean pills, docked below */}
-          <div
-            data-testid="style-selector"
-            className="mt-5 flex flex-wrap gap-2"
-          >
-            {styleKeys.map((k) => {
+          {/* Style selector */}
+          <div data-testid="style-selector" className="mt-5 flex flex-wrap gap-2">
+            {STYLE_KEYS.map((k) => {
               const active = style === k;
               return (
                 <button
@@ -405,10 +302,10 @@ export const Hero3D = () => {
                   }
                 >
                   <span
-                    className={`absolute left-3 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full transition-colors duration-200 ${
-                      active ? "bg-black/60" : "bg-white/25 group-hover:bg-cyan-neon"
-                    }`}
-                    style={active ? { backgroundColor: "rgba(0,0,0,0.55)" } : {}}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-1 h-1 rounded-full"
+                    style={{
+                      background: active ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.25)",
+                    }}
                   />
                   <span className="pl-3">{t.hero.styles[k]}</span>
                 </button>

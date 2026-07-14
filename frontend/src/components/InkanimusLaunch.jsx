@@ -11,6 +11,7 @@ import {
   Lock,
   Unlock,
   KeyRound,
+  X,
 } from "lucide-react";
 
 const BULLET_ICONS = [ShieldCheck, Users, Zap, Trophy];
@@ -27,9 +28,24 @@ export const InkanimusLaunch = () => {
   const [attempt, setAttempt] = useState("");
   const [error, setError] = useState(false);
   const [versionId, setVersionId] = useState(INKANIMUS_VERSIONS[0].id);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const version =
     INKANIMUS_VERSIONS.find((v) => v.id === versionId) || INKANIMUS_VERSIONS[0];
+
+  // Close modal on ESC
+  useEffect(() => {
+    if (!modalOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setModalOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [modalOpen]);
 
   useEffect(() => {
     try {
@@ -163,67 +179,15 @@ export const InkanimusLaunch = () => {
 
                 {unlocked ? (
                   <div className="space-y-4" data-testid="launch-unlocked-cta">
-                    {/* Version selector */}
-                    <div>
-                      <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 mb-2.5">
-                        {g.pick_version}
-                      </div>
-                      <div className="flex flex-wrap gap-2" data-testid="launch-version-selector">
-                        {INKANIMUS_VERSIONS.map((v) => {
-                          const active = v.id === versionId;
-                          return (
-                            <button
-                              key={v.id}
-                              data-testid={`launch-version-${v.id}`}
-                              onClick={() => setVersionId(v.id)}
-                              className="group relative flex items-center gap-2.5 rounded-full border px-4 py-2 transition-colors duration-200"
-                              style={{
-                                borderColor: active ? v.color : "rgba(255,255,255,0.10)",
-                                background: active ? v.colorSoft : "rgba(255,255,255,0.02)",
-                                boxShadow: active
-                                  ? `0 8px 24px -10px ${v.color}`
-                                  : "none",
-                              }}
-                            >
-                              <span
-                                className="w-2 h-2 rounded-full"
-                                style={{
-                                  backgroundColor: v.color,
-                                  boxShadow: `0 0 10px ${v.color}`,
-                                }}
-                              />
-                              <span
-                                className="font-head text-sm tracking-[0.06em]"
-                                style={{ color: active ? v.color : "rgba(255,255,255,0.75)" }}
-                              >
-                                {v.label}
-                              </span>
-                              <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-white/40">
-                                {v.subtitle}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
                     <div className="flex flex-wrap items-center gap-3">
-                      <a
+                      <button
                         data-testid="launch-cta-open"
-                        href={version.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="neon-btn"
-                        style={{
-                          background: version.color,
-                          color: "#050506",
-                          borderColor: "transparent",
-                          boxShadow: `0 12px 32px -8px ${version.color}`,
-                        }}
+                        onClick={() => setModalOpen(true)}
+                        className="neon-btn neon-btn--solid"
                       >
-                        {l.cta_open} · {version.label}
-                        <ArrowUpRight className="w-4 h-4" />
-                      </a>
+                        <Unlock className="w-4 h-4" />
+                        {g.reveal_downloads}
+                      </button>
                       <button
                         data-testid="launch-cta-secondary"
                         onClick={() =>
@@ -442,16 +406,14 @@ export const InkanimusLaunch = () => {
               </div>
 
               {unlocked ? (
-                <a
-                  href={version.url}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  onClick={() => setModalOpen(true)}
                   data-testid="launch-domain-link"
                   className="absolute bottom-6 right-6 md:right-10 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 hover:text-white/90 transition-colors duration-200"
                 >
-                  ink-animus-adepto-{version.id}…
-                  <ExternalLink className="w-3 h-3" />
-                </a>
+                  {g.reveal_downloads}
+                  <ArrowUpRight className="w-3 h-3" />
+                </button>
               ) : (
                 <div className="absolute bottom-6 right-6 md:right-10 flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/30">
                   <Lock className="w-3 h-3" />
@@ -462,6 +424,189 @@ export const InkanimusLaunch = () => {
           </div>
         </div>
       </div>
+
+      {/* Download Terminal Modal */}
+      {modalOpen && unlocked && (
+        <DownloadModal
+          onClose={() => setModalOpen(false)}
+          onPick={(id) => setVersionId(id)}
+          selected={versionId}
+          strings={g}
+        />
+      )}
     </section>
   );
 };
+
+/* -------- Cyberpunk 2077 style download terminal modal -------- */
+const DownloadModal = ({ onClose, onPick, selected, strings }) => {
+  return (
+    <div
+      data-testid="download-modal"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Backdrop */}
+      <button
+        aria-label="close"
+        onClick={onClose}
+        className="absolute inset-0 bg-black/85 backdrop-blur-xl cursor-default"
+      />
+
+      {/* Panel */}
+      <div
+        className="relative w-full max-w-[900px] rounded-[6px] overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(10,10,14,0.98) 0%, rgba(5,5,6,0.98) 100%)",
+          border: "1px solid rgba(34,211,238,0.35)",
+          boxShadow:
+            "0 0 0 1px rgba(34,211,238,0.15), 0 40px 120px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.06)",
+        }}
+      >
+        {/* Corner brackets */}
+        {[
+          "top-2 left-2 border-t border-l",
+          "top-2 right-2 border-t border-r",
+          "bottom-2 left-2 border-b border-l",
+          "bottom-2 right-2 border-b border-r",
+        ].map((pos, i) => (
+          <span
+            key={i}
+            aria-hidden
+            className={`absolute w-4 h-4 pointer-events-none ${pos}`}
+            style={{ borderColor: "var(--gb-cyan)" }}
+          />
+        ))}
+
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-white/5 px-6 md:px-8 py-4">
+          <div className="flex items-center gap-3">
+            <span
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: "var(--gb-cyan)", boxShadow: "0 0 10px var(--gb-cyan)" }}
+            />
+            <div>
+              <div className="font-head text-sm md:text-base text-white tracking-[0.22em] uppercase">
+                {strings.modal_title}
+              </div>
+              <div className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45 mt-0.5">
+                inkanimus / distribution.node
+              </div>
+            </div>
+          </div>
+          <button
+            data-testid="download-modal-close"
+            onClick={onClose}
+            className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/60 hover:text-cyan-neon hover:border-cyan-500/40 transition-colors duration-200"
+            aria-label="close"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Subtitle */}
+        <div className="px-6 md:px-8 pt-5">
+          <p className="text-white/60 text-sm md:text-[15px] max-w-2xl leading-relaxed">
+            {strings.modal_subtitle}
+          </p>
+        </div>
+
+        {/* Version grid */}
+        <div className="px-6 md:px-8 py-6 grid sm:grid-cols-3 gap-4">
+          {INKANIMUS_VERSIONS.map((v, i) => {
+            const active = v.id === selected;
+            return (
+              <div
+                key={v.id}
+                data-testid={`download-version-${v.id}`}
+                className="relative rounded-[4px] border overflow-hidden transition-colors duration-200 group"
+                style={{
+                  borderColor: active ? v.color : "rgba(255,255,255,0.08)",
+                  background: "rgba(255,255,255,0.02)",
+                  boxShadow: active ? `inset 0 0 0 1px ${v.color}55, 0 20px 40px -20px ${v.color}` : "none",
+                }}
+              >
+                {/* Number strip */}
+                <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
+                    ver.{String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ backgroundColor: v.color, boxShadow: `0 0 10px ${v.color}` }}
+                  />
+                </div>
+
+                {/* Color slab */}
+                <div
+                  className="h-24 relative overflow-hidden"
+                  style={{
+                    background: `radial-gradient(circle at 30% 20%, ${v.colorSoft}, transparent 70%), linear-gradient(180deg, ${v.color}22 0%, transparent 100%)`,
+                  }}
+                >
+                  <div
+                    aria-hidden
+                    className="absolute inset-0 opacity-40"
+                    style={{
+                      backgroundImage: `linear-gradient(${v.color}33 1px, transparent 1px), linear-gradient(90deg, ${v.color}33 1px, transparent 1px)`,
+                      backgroundSize: "16px 16px",
+                    }}
+                  />
+                  <div
+                    className="absolute bottom-2 left-3 font-head text-3xl tracking-[-0.02em]"
+                    style={{ color: v.color, textShadow: `0 0 24px ${v.color}` }}
+                  >
+                    {v.label}
+                  </div>
+                </div>
+
+                {/* Body */}
+                <div className="px-4 py-4 space-y-3">
+                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
+                    {v.subtitle}
+                  </div>
+                  <a
+                    data-testid={`download-open-${v.id}`}
+                    href={v.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => onPick(v.id)}
+                    className="flex items-center justify-between gap-2 rounded-full border px-4 py-2.5 transition-colors duration-200 group/btn"
+                    style={{
+                      background: v.color,
+                      color: "#050506",
+                      borderColor: "transparent",
+                      boxShadow: `0 10px 22px -10px ${v.color}`,
+                    }}
+                  >
+                    <span className="font-head text-[11px] uppercase tracking-[0.18em]">
+                      {strings.modal_open_cta}
+                    </span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Footer note */}
+        <div className="border-t border-white/5 px-6 md:px-8 py-4 flex items-center justify-between gap-4">
+          <p className="text-white/45 text-xs leading-relaxed max-w-md">
+            {strings.modal_note}
+          </p>
+          <button
+            data-testid="download-modal-close-2"
+            onClick={onClose}
+            className="text-white/40 hover:text-white/80 text-[11px] font-mono uppercase tracking-[0.25em] transition-colors duration-200"
+          >
+            {strings.modal_close}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+

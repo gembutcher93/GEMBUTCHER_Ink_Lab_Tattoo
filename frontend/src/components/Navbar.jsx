@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLang } from "@/context/LangContext";
 
 const LOGO_URL =
-  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/hbws9cyw_icon-admin-512.png";
+  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/9zwdzt75_logo.png";
 
 export const Navbar = () => {
   const { lang, setLang, t } = useLang();

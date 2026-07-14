@@ -138,11 +138,11 @@ export const ButcherCraft = () => {
         {/* Text */}
         <div className="lg:col-span-7 space-y-7 lg:pt-4">
           <div className="font-mono text-[11px] text-cyan-neon uppercase tracking-[0.35em]">
-            03 / the butcher's craft
+            03 / L'ARTE DELL'INCHIOSTRO
           </div>
           <h2 className="font-head font-bold text-4xl md:text-5xl lg:text-[3.75rem] leading-[1.05] tracking-tight">
-            <span className="text-white/95">L'arte del </span>
-            <span className="text-magenta-neon italic">Macellaio</span>
+            <span className="text-white/95">L'arte dell'</span>
+            <span className="text-magenta-neon italic">Inchiostro</span>
           </h2>
 
           <div className="space-y-5 text-white/70 leading-relaxed max-w-2xl text-[15px] md:text-base">

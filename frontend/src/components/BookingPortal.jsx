@@ -57,10 +57,11 @@ export const BookingPortal = () => {
   const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`;
 
   const styleOptions = [
+    { v: "patutikon", label: t.hero.styles.patutikon },
     { v: "polynesian", label: t.hero.styles.polynesian },
     { v: "cyberpunk", label: t.hero.styles.cyberpunk },
     { v: "anime", label: t.hero.styles.anime },
-    { v: "patutikon", label: t.hero.styles.patutikon },
+    { v: "default", label: t.hero.styles.default },
   ];
 
   return (

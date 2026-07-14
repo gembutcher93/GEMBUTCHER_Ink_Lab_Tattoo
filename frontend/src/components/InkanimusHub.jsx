@@ -10,6 +10,7 @@ import {
   Waves,
   Sparkles,
   ExternalLink,
+  Lock,
   MapPin,
   Shield,
   Gift,
@@ -213,15 +214,16 @@ const AppPanel = () => {
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <a
+          <button
             data-testid="inkanimus-app-open"
-            href={INKANIMUS_APP_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="neon-btn"
+            onClick={() =>
+              document.getElementById("inkanimus-launch")?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="neon-btn neon-btn--solid"
           >
-            {a.cta_open} <ExternalLink className="w-4 h-4" />
-          </a>
+            <Lock className="w-4 h-4" />
+            {a.cta_open}
+          </button>
           <button
             data-testid="inkanimus-app-book"
             onClick={() =>

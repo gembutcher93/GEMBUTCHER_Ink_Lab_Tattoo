@@ -3,7 +3,7 @@ import { useLang } from "@/context/LangContext";
 import { Instagram, MessageCircle, Youtube } from "lucide-react";
 
 const LOGO_URL =
-  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/hbws9cyw_icon-admin-512.png";
+  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/9zwdzt75_logo.png";
 
 export const Footer = () => {
   const { t } = useLang();

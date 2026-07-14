@@ -4,7 +4,7 @@ export const translations = {
     nav: {
       experience: "3D Experience",
       gallery: "Gallery",
-      craft: "Il Macellaio",
+      craft: "InkMaster",
       inkanimus: "Inkanimus",
       booking: "Prenota",
     },
@@ -19,8 +19,9 @@ export const translations = {
       cta_book: "Prenota una sessione",
       selector_title: "Stile del rito",
       styles: {
+        default: "Naturale",
         polynesian: "Polinesiano",
-        cyberpunk: "Cyberpunk organico",
+        cyberpunk: "Cyberpunk",
         anime: "Anime",
         patutikon: "Patutikon",
       },
@@ -60,9 +61,9 @@ export const translations = {
       ],
     },
     craft: {
-      title: "L'arte del Macellaio",
+      title: "L'arte dell'Inchiostro",
       p1:
-        "GemButcher è tatuatore per vocazione, macellaio d'inchiostro per necessità. Nato tra le pietre di Ozieri, opera dal Podere 173 traducendo storie personali in cicatrici sacre.",
+        "GemButcher è tatuatore per vocazione, InkMaster per necessità. Nato tra le pietre di Ozieri, opera dal Podere 173 traducendo storie personali in cicatrici sacre.",
       p2:
         "La sua ricerca ha dato vita al Patutikon: un ibrido esoterico che innesta le icone della cultura pop dentro l'ossatura geometrica del tatuaggio polinesiano tradizionale. Ogni sessione è un rito, ogni ago un verso.",
       p3:
@@ -88,8 +89,8 @@ export const translations = {
         bullets: [
           "Aftercare intelligente con streak e Ink-points",
           "Codice adepto personale per reclutare nuovi tatuandi",
-          "Sconti veri (-15% / -30%) sulle sessioni future",
-          "Battle Royale mensile: sfide artistiche votate dalla community",
+          "Bonus reali: 50€ ai primi 5, poi grado Mentore",
+          "Gare a premi annuali sui giochi Inkanimus",
         ],
         cta_open: "Apri InkAnimus",
         cta_secondary: "Come funziona",
@@ -107,6 +108,12 @@ export const translations = {
         relock: "Blocca di nuovo",
         hint_cta: "Non hai ancora il codice? Prenota una sessione",
         pick_version: "// scegli la tua versione",
+        reveal_downloads: "Rivela download",
+        modal_title: "Terminale Download",
+        modal_subtitle: "Tre versioni. Un rituale. Scegli la tua estetica.",
+        modal_close: "Chiudi terminale",
+        modal_open_cta: "Scarica",
+        modal_note: "Ogni versione è la stessa app con estetica differente. Sincronizzata ai tuoi Ink-points.",
       },
       tabs: {
         aftercare: "Aftercare",
@@ -148,10 +155,10 @@ export const translations = {
         ],
         perks_title: "I vantaggi",
         perks: [
-          { k: "-15%", v: "Sulla prossima sessione dopo 3 adepti reclutati" },
-          { k: "-30%", v: "Flash esclusivi per i top-recruiter mensili" },
-          { k: "Priorità", v: "Slot dedicati fuori agenda pubblica" },
-          { k: "Aftercare pro", v: "Tracker rituale + reminder personalizzati" },
+          { k: "50€", v: "Bonus fisso per i primi 5 adepti reclutati" },
+          { k: "Mentore", v: "Grado sbloccato dopo i primi 5 reclutamenti" },
+          { k: "20–25€", v: "Per ogni nuovo adepto reclutato da Mentore" },
+          { k: "Gare a premi", v: "Sfide annuali su tutti i giochi presenti in Inkanimus" },
         ],
         note:
           "L'app non è pubblica: si sblocca solo entrando nel Podere. Il codice referral non si trova qui online — te lo consegno guardandoti negli occhi.",
@@ -209,7 +216,7 @@ export const translations = {
     nav: {
       experience: "3D Experience",
       gallery: "Gallery",
-      craft: "The Butcher",
+      craft: "InkMaster",
       inkanimus: "Inkanimus",
       booking: "Book",
     },
@@ -224,8 +231,9 @@ export const translations = {
       cta_book: "Book a session",
       selector_title: "Ritual style",
       styles: {
+        default: "Natural",
         polynesian: "Polynesian",
-        cyberpunk: "Cyberpunk-organic",
+        cyberpunk: "Cyberpunk",
         anime: "Anime",
         patutikon: "Patutikon",
       },
@@ -265,9 +273,9 @@ export const translations = {
       ],
     },
     craft: {
-      title: "The Butcher's craft",
+      title: "The art of Ink",
       p1:
-        "GemButcher is a tattooist by vocation, an ink-butcher by necessity. Born among the stones of Ozieri, he operates from Podere 173 translating personal stories into sacred scars.",
+        "GemButcher is a tattooist by vocation, an InkMaster by necessity. Born among the stones of Ozieri, he operates from Podere 173 translating personal stories into sacred scars.",
       p2:
         "His research gave birth to Patutikon: an esoteric hybrid grafting pop-culture icons onto the geometric bones of traditional Polynesian tattoo. Every session is a rite, every needle a verse.",
       p3:
@@ -293,8 +301,8 @@ export const translations = {
         bullets: [
           "Smart aftercare with streaks and Ink-points",
           "Personal adept code to recruit new clients",
-          "Real discounts (-15% / -30%) on future sessions",
-          "Monthly Battle Royale: artistic challenges voted by the community",
+          "Real bonuses: 50€ for the first 5, then Mentor rank",
+          "Yearly prize challenges on every Inkanimus game",
         ],
         cta_open: "Open InkAnimus",
         cta_secondary: "How it works",
@@ -312,6 +320,12 @@ export const translations = {
         relock: "Lock again",
         hint_cta: "No code yet? Book a session",
         pick_version: "// pick your version",
+        reveal_downloads: "Reveal downloads",
+        modal_title: "Download Terminal",
+        modal_subtitle: "Three versions. One ritual. Pick your aesthetic.",
+        modal_close: "Close terminal",
+        modal_open_cta: "Download",
+        modal_note: "Each version is the same app with a different aesthetic. Synced to your Ink-points.",
       },
       tabs: {
         aftercare: "Aftercare",
@@ -347,10 +361,10 @@ export const translations = {
         ],
         perks_title: "The perks",
         perks: [
-          { k: "-15%", v: "On your next session after 3 recruited adepts" },
-          { k: "-30%", v: "Exclusive flashes for monthly top-recruiters" },
-          { k: "Priority", v: "Reserved slots outside the public schedule" },
-          { k: "Aftercare pro", v: "Ritual tracker + personalized reminders" },
+          { k: "50€", v: "Flat bonus for your first 5 recruited adepts" },
+          { k: "Mentor", v: "Rank unlocked after your first 5 recruitments" },
+          { k: "20–25€", v: "For each new adept recruited as a Mentor" },
+          { k: "Prize challenges", v: "Yearly tournaments across every Inkanimus game" },
         ],
         note:
           "The app is not public: you unlock it only by walking into the Podere. Your referral code isn't here online — I hand it to you looking you in the eyes.",
