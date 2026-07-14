@@ -1,0 +1,132 @@
+{
+  "theme": "Dark Cyberpunk + Neo-Tokyo + Sacred Polynesian Geometry",
+  "palette": {
+    "background": {
+      "dark": "#050512",
+      "surface": "#0d0d12",
+      "panel": "rgba(13, 13, 18, 0.7)"
+    },
+    "primary": {
+      "cyan": "#00f0ff",
+      "magenta": "#ff007f",
+      "toxic_green": "#00ff41"
+    },
+    "text": {
+      "main": "#e0e0e8",
+      "dim": "#666680",
+      "dark": "#050512"
+    }
+  },
+  "typography": {
+    "headings": {
+      "font": "Chakra Petch",
+      "fallback": "sans-serif",
+      "usage": "H1, H2, Section titles. Represents Neo-Tokyo/Cyberpunk aesthetic."
+    },
+    "heavy_impact": {
+      "font": "Rubik Mono One",
+      "usage": "Use for massive kinetic text backgrounds or 'BATTLE ROYALE' style headers."
+    },
+    "body": {
+      "font": "Manrope",
+      "fallback": "sans-serif",
+      "usage": "All standard paragraphs and descriptions for clean legibility."
+    },
+    "terminal": {
+      "font": "JetBrains Mono",
+      "fallback": "monospace",
+      "usage": "Encrypted booking portal, loyalty hub data points, tech-labels."
+    }
+  },
+  "visual_enhancers": {
+    "holographic_frames": "Containers should use clipped corners (`clip-path: polygon(...)`), 1px solid cyan/magenta borders, and inner glowing drop shadows.",
+    "scanlines": "Overlay a faint repeating linear gradient `linear-gradient(to bottom, transparent 50%, rgba(0,240,255,0.03) 51%)` on backgrounds or specific panels.",
+    "glitch_effects": "Use CSS animations for subtle text shifting (chromatic aberration) on hover for primary headings or CTAs.",
+    "glassmorphism": "Use `backdrop-blur-xl bg-black/60` with a 1px `border-cyan/20` for floating panels so the 3D background remains visible but text is readable."
+  },
+  "layouts": {
+    "hero": {
+      "structure": "Full viewport height. 3D WebGL scene centered (humanoid arm). Absolute positioned UI overlays.",
+      "elements": [
+        "Language Toggle (ITA/ENG) in top right.",
+        "Kinetic Typography in background.",
+        "Tattoo Style Selector (Polynesian, Cyberpunk, Anime, Patutikon) styled as holographic buttons on the side."
+      ]
+    },
+    "patutikon_gallery": {
+      "structure": "Horizontal scroll section.",
+      "elements": [
+        "Cards displaying tattoo images with Neo-Tokyo frames.",
+        "Custom tooltips appearing on hover explaining the Patutikon philosophy (modern cartoon/movie icons in tribal symbols)."
+      ]
+    },
+    "the_butchers_craft": {
+      "structure": "Asymmetrical Bento Grid or 2-column layout.",
+      "elements": [
+        "Dark moody portrait of the artist with cyan neon underlighting.",
+        "Biography text.",
+        "Studio address (Podere 173, Ozieri, Piazza Francesco Ignazio Mannu 4) styled as terminal data output.",
+        "Stylized neon map placeholder."
+      ]
+    },
+    "inkanimus_loyalty_hub": {
+      "structure": "Tabbed Interface (Terminal aesthetic).",
+      "elements": [
+        "Tab 1: Aftercare Companion (Checklist with toxic green custom checkboxes).",
+        "Tab 2: Recruitment Terminal (Referral codes, ink-points balance with glowing numbers).",
+        "Tab 3: Battle Royale Arcade (Leaderboard list)."
+      ]
+    },
+    "booking_portal": {
+      "structure": "Centered terminal window layout.",
+      "elements": [
+        "Encrypted-style form inputs with blinking cursors.",
+        "Command-line style label text.",
+        "WhatsApp CTA button featuring a heavy magenta box-shadow glow and glitch hover state."
+      ]
+    }
+  },
+  "components": {
+    "buttons": "Angular shape (clip-path corners), 1px solid neon border. On hover, background fills with neon color and text turns dark.",
+    "cards": "Dark surface (`#0d0d12`), neon cyan/magenta border, inner glow (`box-shadow: inset 0 0 20px rgba(0,240,255,0.1)`).",
+    "tabs": "Shadcn tabs customized. Active tab gets a glowing underline and terminal font highlight."
+  },
+  "3d_libraries": {
+    "engine": "react-three-fiber and @react-three/drei",
+    "instructions": "Use a basic 3D model (like a cylinder or arm if available, otherwise abstract geometry) to represent the humanoid bust/arm. Map different textures or glowing decals when the user clicks the Style Selector. Ensure lighting uses a mix of Cyan and Magenta point lights."
+  },
+  "media": {
+    "image_urls": {
+      "cyberpunk_portrait": "https://images.unsplash.com/photo-1698647861553-54943df8212b",
+      "tattoo_studio_1": "https://images.unsplash.com/photo-1568515045052-f9a854d70bfd",
+      "tattoo_studio_2": "https://images.unsplash.com/photo-1654338776478-b8f90696fd15",
+      "tattoo_art_1": "https://images.unsplash.com/photo-1519822356-4853be4346a8",
+      "tattoo_art_2": "https://images.unsplash.com/photo-1704345911815-5d9aa04aeb80",
+      "tattoo_art_3": "https://images.unsplash.com/photo-1601848714157-d845bb5c11ff"
+    },
+    "instructions": "Use the cyberpunk portrait for 'The Butcher's Craft' bio. Use tattoo art images for the Patutikon Gallery. Use the studio images as background textures or in the booking section."
+  },
+  "accessibility": {
+    "contrast": "Ensure text over neon backgrounds uses the dark background color `#050512`. Text over dark backgrounds must be bright `#e0e0e8`.",
+    "testing": "All interactive elements, tabs, form inputs, and the style selector MUST have a `data-testid` attribute (e.g., `data-testid=\"style-selector-polynesian\"`).",
+    "motion": "Respect `prefers-reduced-motion` for glitch effects and 3D rotations."
+  },
+  "instructions_to_main_agent": [
+    "Build the application using React and Tailwind CSS.",
+    "Do not use generic layouts; apply Neo-Brutalist grid logic but with a dark Cyberpunk aesthetic (borders, sharp edges, clipping).",
+    "Integrate 'lucide-react' for tech-oriented icons.",
+    "Use 'framer-motion' for the horizontal gallery scroll and page transitions.",
+    "For the 3D Hero, implement a `<Canvas>` from `react-three-fiber`.",
+    "Ensure the Language Toggle switches content (you can mock the translation logic with state).",
+    "DO NOT use transparent backgrounds for text-heavy overlays. Use `bg-black/80 backdrop-blur-md`."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic outputs. Avoid 'AI slop' aesthetic.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts. Create depth through layered design elements with z-index hierarchy.",
+    "You MUST NOT apply universal transition (e.g., `transition: all`). Always add transitions for specific interactive elements.",
+    "NEVER use AI assistant Emoji characters for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Prioritize using pre-existing Shadcn components where applicable, but heavily customize them to fit the Cyberpunk/Terminal theme."
+  ]
+}
