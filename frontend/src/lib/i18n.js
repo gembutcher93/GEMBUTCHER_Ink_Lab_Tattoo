@@ -114,6 +114,14 @@ export const translations = {
         modal_close: "Chiudi terminale",
         modal_open_cta: "Scarica",
         modal_note: "Ogni versione è la stessa app con estetica differente. Sincronizzata ai tuoi Ink-points.",
+        instr_title: "Come installarla sul telefono",
+        instr_step0: "Tocca il colore della versione che preferisci: l'app si aprirà in una nuova scheda.",
+        instr_android_title: "Android · Google Chrome",
+        instr_android:
+          "In alto a destra tocca ⋮ (i 3 punti) → 'Aggiungi a schermata Home' oppure 'Installa app'.",
+        instr_ios_title: "iPhone · Safari",
+        instr_ios:
+          "In basso tocca l'icona Condividi ⤴ → scorri e tocca 'Aggiungi a Home'.",
       },
       tabs: {
         aftercare: "Aftercare",
@@ -326,6 +334,14 @@ export const translations = {
         modal_close: "Close terminal",
         modal_open_cta: "Download",
         modal_note: "Each version is the same app with a different aesthetic. Synced to your Ink-points.",
+        instr_title: "How to install it on your phone",
+        instr_step0: "Tap the colour of the version you want: the app opens in a new tab.",
+        instr_android_title: "Android · Google Chrome",
+        instr_android:
+          "Top-right tap ⋮ (the 3 dots) → 'Add to Home screen' or 'Install app'.",
+        instr_ios_title: "iPhone · Safari",
+        instr_ios:
+          "Tap the Share icon ⤴ at the bottom → scroll and tap 'Add to Home Screen'.",
       },
       tabs: {
         aftercare: "Aftercare",

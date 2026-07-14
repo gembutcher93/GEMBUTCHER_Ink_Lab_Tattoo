@@ -592,83 +592,127 @@ const DownloadModal = ({ onClose, onPick, selected, strings, gateStrings }) => {
             </form>
           </div>
         ) : (
-          <div className="px-6 md:px-8 py-6 grid sm:grid-cols-3 gap-4" data-testid="modal-versions">
+          <>
+            {/* Install instructions */}
+            <div className="px-6 md:px-8 pt-2 pb-4">
+              <div className="rounded-[6px] border border-white/8 bg-white/[0.02] p-4 md:p-5">
+                <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.28em] text-cyan-neon mb-3">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  {strings.instr_title}
+                </div>
+                <ol className="space-y-3 text-sm text-white/75 leading-relaxed">
+                  <li className="flex gap-3">
+                    <span
+                      className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono"
+                      style={{
+                        color: "var(--gb-cyan)",
+                        border: "1px solid var(--gb-cyan-line)",
+                        background: "rgba(34,211,238,0.08)",
+                      }}
+                    >
+                      1
+                    </span>
+                    <span>{strings.instr_step0}</span>
+                  </li>
+                  <li className="flex gap-3">
+                    <span
+                      className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono"
+                      style={{
+                        color: "var(--gb-cyan)",
+                        border: "1px solid var(--gb-cyan-line)",
+                        background: "rgba(34,211,238,0.08)",
+                      }}
+                    >
+                      2
+                    </span>
+                    <div>
+                      <div className="font-head text-white text-[13px] tracking-[0.02em] mb-1">
+                        {strings.instr_android_title}
+                      </div>
+                      <div className="text-white/65">{strings.instr_android}</div>
+                    </div>
+                  </li>
+                  <li className="flex gap-3">
+                    <span
+                      className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono"
+                      style={{
+                        color: "var(--gb-orange)",
+                        border: "1px solid var(--gb-orange-line)",
+                        background: "rgba(249,115,22,0.08)",
+                      }}
+                    >
+                      3
+                    </span>
+                    <div>
+                      <div className="font-head text-white text-[13px] tracking-[0.02em] mb-1">
+                        {strings.instr_ios_title}
+                      </div>
+                      <div className="text-white/65">{strings.instr_ios}</div>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <div className="px-6 md:px-8 pb-6 grid sm:grid-cols-3 gap-3" data-testid="modal-versions">
           {INKANIMUS_VERSIONS.map((v, i) => {
             const active = v.id === selected;
             return (
-              <div
+              <a
                 key={v.id}
-                data-testid={`download-version-${v.id}`}
-                className="relative rounded-[4px] border overflow-hidden transition-colors duration-200 group"
+                data-testid={`download-open-${v.id}`}
+                href={v.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => onPick(v.id)}
+                className="group relative flex items-center gap-3 rounded-[6px] border overflow-hidden px-4 py-3 transition-colors duration-200"
                 style={{
-                  borderColor: active ? v.color : "rgba(255,255,255,0.08)",
-                  background: "rgba(255,255,255,0.02)",
-                  boxShadow: active ? `inset 0 0 0 1px ${v.color}55, 0 20px 40px -20px ${v.color}` : "none",
+                  borderColor: active ? v.color : "rgba(255,255,255,0.10)",
+                  background: `linear-gradient(90deg, ${v.colorSoft} 0%, rgba(255,255,255,0.02) 60%)`,
+                  boxShadow: active ? `inset 0 0 0 1px ${v.color}55` : "none",
                 }}
               >
-                {/* Number strip */}
-                <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-white/45">
-                    ver.{String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ backgroundColor: v.color, boxShadow: `0 0 10px ${v.color}` }}
-                  />
-                </div>
-
-                {/* Color slab */}
                 <div
-                  className="h-24 relative overflow-hidden"
+                  aria-hidden
+                  className="absolute inset-0 opacity-30 pointer-events-none"
                   style={{
-                    background: `radial-gradient(circle at 30% 20%, ${v.colorSoft}, transparent 70%), linear-gradient(180deg, ${v.color}22 0%, transparent 100%)`,
+                    backgroundImage: `linear-gradient(${v.color}25 1px, transparent 1px), linear-gradient(90deg, ${v.color}25 1px, transparent 1px)`,
+                    backgroundSize: "14px 14px",
+                    maskImage: "linear-gradient(90deg, black, transparent 70%)",
+                    WebkitMaskImage: "linear-gradient(90deg, black, transparent 70%)",
                   }}
-                >
+                />
+                <span
+                  className="relative flex-shrink-0 w-2.5 h-2.5 rounded-full"
+                  style={{ backgroundColor: v.color, boxShadow: `0 0 10px ${v.color}` }}
+                />
+                <div className="relative flex-1 min-w-0">
                   <div
-                    aria-hidden
-                    className="absolute inset-0 opacity-40"
-                    style={{
-                      backgroundImage: `linear-gradient(${v.color}33 1px, transparent 1px), linear-gradient(90deg, ${v.color}33 1px, transparent 1px)`,
-                      backgroundSize: "16px 16px",
-                    }}
-                  />
-                  <div
-                    className="absolute bottom-2 left-3 font-head text-3xl tracking-[-0.02em]"
-                    style={{ color: v.color, textShadow: `0 0 24px ${v.color}` }}
+                    className="font-head text-lg leading-none"
+                    style={{ color: v.color, textShadow: `0 0 18px ${v.color}66` }}
                   >
                     {v.label}
                   </div>
-                </div>
-
-                {/* Body */}
-                <div className="px-4 py-4 space-y-3">
-                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
-                    {v.subtitle}
+                  <div className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/45 mt-1">
+                    ver.{String(i + 1).padStart(2, "0")} · {v.subtitle}
                   </div>
-                  <a
-                    data-testid={`download-open-${v.id}`}
-                    href={v.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => onPick(v.id)}
-                    className="flex items-center justify-between gap-2 rounded-full border px-4 py-2.5 transition-colors duration-200 group/btn"
-                    style={{
-                      background: v.color,
-                      color: "#050506",
-                      borderColor: "transparent",
-                      boxShadow: `0 10px 22px -10px ${v.color}`,
-                    }}
-                  >
-                    <span className="font-head text-[11px] uppercase tracking-[0.18em]">
-                      {strings.modal_open_cta}
-                    </span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
                 </div>
-              </div>
+                <span
+                  className="relative flex items-center gap-1.5 rounded-full px-3 py-1.5 font-head text-[10px] uppercase tracking-[0.2em]"
+                  style={{
+                    background: v.color,
+                    color: "#050506",
+                    boxShadow: `0 8px 20px -10px ${v.color}`,
+                  }}
+                >
+                  {strings.modal_open_cta}
+                  <ArrowUpRight className="w-3 h-3" />
+                </span>
+              </a>
             );
           })}
           </div>
+          </>
         )}
 
         {/* Footer note */}
