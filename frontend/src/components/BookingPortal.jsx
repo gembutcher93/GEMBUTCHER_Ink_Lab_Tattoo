@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useLang } from "@/context/LangContext";
-import { Send, ShieldCheck, MessageCircle, Loader2, ArrowRight } from "lucide-react";
+import { Send, ShieldCheck, MessageCircle, Loader2, ArrowRight, Mail } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-const WHATSAPP_NUMBER = "393518282771"; // Studio number visible in reference photo
+const WHATSAPP_NUMBER = "393498290606"; // Studio WhatsApp
+const CONTACT_EMAIL = "gembutcher93@gmail.com"; // Studio inbox
 
 export const BookingPortal = () => {
   const { t, lang } = useLang();
@@ -55,6 +56,26 @@ export const BookingPortal = () => {
         }`
   );
   const waHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMessage}`;
+
+  const emailSubject = encodeURIComponent(
+    lang === "it"
+      ? `Prenotazione tatuaggio · ${form.name || "adepto"} · ${form.style}`
+      : `Tattoo booking · ${form.name || "adept"} · ${form.style}`
+  );
+  const emailBody = encodeURIComponent(
+    (lang === "it"
+      ? `Ciao GemButcher,\n\nVorrei prenotare una sessione:\n\n`
+      : `Hi GemButcher,\n\nI'd like to book a session:\n\n`) +
+      `${lang === "it" ? "Nome" : "Name"}: ${form.name}\n` +
+      `Email: ${form.email}\n` +
+      `${lang === "it" ? "Telefono" : "Phone"}: ${form.phone || "—"}\n` +
+      `${lang === "it" ? "Stile" : "Style"}: ${form.style}\n` +
+      `${lang === "it" ? "Zona corpo" : "Placement"}: ${form.body_placement || "—"}\n` +
+      `${lang === "it" ? "Dimensione" : "Size"}: ${form.size || "—"}\n` +
+      `${lang === "it" ? "Data preferita" : "Preferred date"}: ${form.preferred_date || "—"}\n\n` +
+      `${lang === "it" ? "Visione" : "Vision"}:\n${form.description}\n`
+  );
+  const mailHref = `mailto:${CONTACT_EMAIL}?subject=${emailSubject}&body=${emailBody}`;
 
   const styleOptions = [
     { v: "patutikon", label: t.hero.styles.patutikon },
@@ -128,6 +149,14 @@ export const BookingPortal = () => {
                 >
                   <MessageCircle className="w-4 h-4" />
                   {t.booking.whatsapp}
+                </a>
+                <a
+                  data-testid="booking-email-after"
+                  href={mailHref}
+                  className="neon-btn"
+                >
+                  <Mail className="w-4 h-4" />
+                  {t.booking.email_cta}
                 </a>
                 <button
                   data-testid="booking-reset"
@@ -265,6 +294,15 @@ export const BookingPortal = () => {
                 >
                   <MessageCircle className="w-4 h-4" />
                   {t.booking.whatsapp}
+                </a>
+
+                <a
+                  data-testid="booking-email"
+                  href={mailHref}
+                  className="neon-btn"
+                >
+                  <Mail className="w-4 h-4" />
+                  {t.booking.email_cta}
                 </a>
 
                 <div className="font-mono text-[10px] text-white/35 tracking-[0.25em] ml-auto uppercase">

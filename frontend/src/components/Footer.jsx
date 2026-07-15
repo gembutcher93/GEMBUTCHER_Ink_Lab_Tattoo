@@ -70,7 +70,7 @@ export const Footer = () => {
               <Instagram className="w-4 h-4" />
             </a>
             <a
-              href="https://wa.me/393518282771"
+              href="https://wa.me/393498290606"
               target="_blank"
               rel="noreferrer"
               data-testid="footer-whatsapp"
