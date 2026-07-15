@@ -60,20 +60,20 @@ export const ButcherCraft = () => {
             <div className="kinetic-title" data-testid="kinetic-hero-title">
               <span
                 className="kinetic-title__layer"
-                style={{ fontSize: "clamp(2rem, 11vw, 9.5rem)" }}
+                style={{ fontSize: "clamp(2.4rem, 14vw, 9.5rem)" }}
               >
                 GEMBUTCHER
               </span>
               <span
                 className="kinetic-title__mint kinetic-title__layer"
-                style={{ fontSize: "clamp(2rem, 11vw, 9.5rem)" }}
+                style={{ fontSize: "clamp(2.4rem, 14vw, 9.5rem)" }}
                 aria-hidden
               >
                 GEMBUTCHER
               </span>
               <span
                 className="kinetic-title__magenta kinetic-title__layer"
-                style={{ fontSize: "clamp(2rem, 11vw, 9.5rem)" }}
+                style={{ fontSize: "clamp(2.4rem, 14vw, 9.5rem)" }}
                 aria-hidden
               >
                 GEMBUTCHER
