@@ -1,9 +1,12 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, BackgroundTasks
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import smtplib
+from email.message import EmailMessage
+from email.utils import formatdate
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
@@ -19,8 +22,61 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# SMTP config (optional — booking works even if email fails)
+SMTP_HOST = os.environ.get('SMTP_HOST', '').strip()
+SMTP_PORT = int(os.environ.get('SMTP_PORT', '587').strip() or '587')
+SMTP_USER = os.environ.get('SMTP_USER', '').strip()
+SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '').strip().replace(' ', '')
+NOTIFY_EMAIL = os.environ.get('NOTIFY_EMAIL', SMTP_USER).strip()
+
 app = FastAPI(title="GemButcher API")
 api_router = APIRouter(prefix="/api")
+
+
+def send_booking_email(booking: 'Booking') -> None:
+    """Send booking notification to studio inbox via Gmail SMTP.
+    Runs in a BackgroundTask so the API responds fast even if SMTP is slow.
+    Silently logs on failure — booking is already persisted in Mongo.
+    """
+    if not (SMTP_HOST and SMTP_USER and SMTP_PASSWORD and NOTIFY_EMAIL):
+        logger.warning("SMTP not fully configured — skipping email notification")
+        return
+    try:
+        msg = EmailMessage()
+        msg['Subject'] = f"[GemButcher] Nuova prenotazione · {booking.name} · {booking.style}"
+        msg['From'] = f"GemButcher Booking <{SMTP_USER}>"
+        msg['To'] = NOTIFY_EMAIL
+        msg['Reply-To'] = booking.email
+        msg['Date'] = formatdate(localtime=True)
+
+        lines = [
+            f"Nuova richiesta di prenotazione — {booking.created_at.isoformat()}",
+            "",
+            f"Nome:           {booking.name}",
+            f"Email:          {booking.email}",
+            f"Telefono:       {booking.phone or '—'}",
+            f"Stile:          {booking.style}",
+            f"Zona corpo:     {booking.body_placement or '—'}",
+            f"Dimensione:     {booking.size or '—'}",
+            f"Data preferita: {booking.preferred_date or '—'}",
+            f"Lingua:         {booking.language}",
+            "",
+            "Visione / descrizione:",
+            booking.description,
+            "",
+            f"— ID interno: {booking.id}",
+        ]
+        msg.set_content("\n".join(lines))
+
+        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=15) as s:
+            s.ehlo()
+            s.starttls()
+            s.ehlo()
+            s.login(SMTP_USER, SMTP_PASSWORD)
+            s.send_message(msg)
+        logger.info(f"Booking email sent for {booking.id}")
+    except Exception as exc:  # noqa: BLE001
+        logger.exception(f"Failed to send booking email for {booking.id}: {exc}")
 
 
 # ---- Models ----
