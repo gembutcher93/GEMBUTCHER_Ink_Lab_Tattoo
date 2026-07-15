@@ -106,8 +106,10 @@ gh repo create gembutcher --private --source=. --push
    - **Environment variables**:
      ```
      REACT_APP_BACKEND_URL = https://gembutcher-production.up.railway.app
+     NPM_FLAGS = --legacy-peer-deps
+     NODE_VERSION = 20
      ```
-     (usa l'URL del backend dallo step 2)
+     (usa l'URL del backend dallo step 2. Il flag `NPM_FLAGS` evita conflitti di peer dependencies durante il build.)
 4. **Save and Deploy** → attendi ~2 minuti
 5. Il sito è online su: `https://gembutcher.pages.dev`
 
