@@ -20,9 +20,6 @@ export const ScrollFX = () => {
     const root = document.documentElement;
     let ticking = false;
 
-    const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
@@ -36,91 +33,17 @@ export const ScrollFX = () => {
     const onMove = (e) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
-      const mx = (e.clientX - cx) / cx;
+      const mx = (e.clientX - cx) / cx; // -1..1
       const my = (e.clientY - cy) / cy;
       root.style.setProperty("--mx", mx.toFixed(3));
       root.style.setProperty("--my", my.toFixed(3));
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    // Mouse tilt only on real pointer devices — on mobile it would fight the gyro
-    if (hasFinePointer) {
-      window.addEventListener("mousemove", onMove, { passive: true });
-    }
-
-    // --- MOBILE: device gyroscope drives --mx / --my ---
-    let gyroRAF = null;
-    let targetMX = 0;
-    let targetMY = 0;
-    let currMX = 0;
-    let currMY = 0;
-    let lastGyroTime = 0;
-
-    const onOrientation = (e) => {
-      const g = e.gamma;
-      const b = e.beta;
-      if (g == null || b == null) return;
-      // Compensate for screen orientation (landscape vs portrait)
-      const angle = (window.screen && window.screen.orientation && window.screen.orientation.angle) || 0;
-      let gx = g;
-      let by = b - 45; // natural resting angle ~ 45°
-      if (angle === 90)  { gx = by;   by = -g; }
-      if (angle === -90 || angle === 270) { gx = -by; by =  g; }
-      if (angle === 180) { gx = -g;   by = -by; }
-      targetMX = Math.max(-1, Math.min(1, gx / 25));
-      targetMY = Math.max(-1, Math.min(1, by / 25));
-      lastGyroTime = performance.now();
-    };
-    const gyroTick = () => {
-      currMX += (targetMX - currMX) * 0.10;
-      currMY += (targetMY - currMY) * 0.10;
-      root.style.setProperty("--mx", currMX.toFixed(3));
-      root.style.setProperty("--my", currMY.toFixed(3));
-      gyroRAF = requestAnimationFrame(gyroTick);
-    };
-
-    const startGyro = () => {
-      // Both events for maximum device coverage
-      window.addEventListener("deviceorientation", onOrientation, true);
-      window.addEventListener("deviceorientationabsolute", onOrientation, true);
-      if (!gyroRAF) gyroRAF = requestAnimationFrame(gyroTick);
-    };
-
-    const enableGyro = () => {
-      const iosPerm =
-        typeof DeviceOrientationEvent !== "undefined" &&
-        typeof DeviceOrientationEvent.requestPermission === "function";
-      if (iosPerm) {
-        DeviceOrientationEvent.requestPermission()
-          .then((r) => { if (r === "granted") startGyro(); })
-          .catch(() => {});
-      } else {
-        startGyro();
-      }
-    };
-
-    if (!hasFinePointer && !prefersReduce) {
-      // Android + non-iOS: start immediately
-      if (typeof DeviceOrientationEvent === "undefined" ||
-          typeof DeviceOrientationEvent.requestPermission !== "function") {
-        startGyro();
-      }
-      // iOS: needs a user tap to request permission
-      const kick = () => {
-        enableGyro();
-        window.removeEventListener("touchend", kick);
-        window.removeEventListener("click", kick);
-      };
-      window.addEventListener("touchend", kick, { passive: true, once: true });
-      window.addEventListener("click", kick, { once: true });
-    }
-
+    window.addEventListener("mousemove", onMove, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      if (hasFinePointer) window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("deviceorientation", onOrientation, true);
-      window.removeEventListener("deviceorientationabsolute", onOrientation, true);
-      if (gyroRAF) cancelAnimationFrame(gyroRAF);
+      window.removeEventListener("mousemove", onMove);
     };
   }, []);
 
@@ -222,98 +145,3 @@ export const ScrollFX = () => {
     />
   );
 };
-
-/** Debug overlay — enable with ?debug=gyro in URL. */
-function GyroDebug() {
-  const [state, setState] = React.useState(null);
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("debug") !== "gyro") return;
-
-    const info = {
-      support: "DeviceOrientationEvent" in window,
-      iosPermFn:
-        typeof DeviceOrientationEvent !== "undefined" &&
-        typeof DeviceOrientationEvent.requestPermission === "function",
-      isSecure: window.isSecureContext,
-      inIframe: window.self !== window.top,
-      pointer: window.matchMedia("(hover: hover) and (pointer: fine)").matches ? "fine" : "coarse",
-      angle: (window.screen && window.screen.orientation && window.screen.orientation.angle) || 0,
-      gamma: null,
-      beta: null,
-      mx: 0,
-      my: 0,
-      fires: 0,
-    };
-    setState({ ...info });
-
-    const onOr = (e) => {
-      info.gamma = e.gamma;
-      info.beta = e.beta;
-      info.fires += 1;
-      setState({ ...info });
-    };
-    const readCSS = () => {
-      const root = document.documentElement;
-      info.mx = parseFloat(getComputedStyle(root).getPropertyValue("--mx")) || 0;
-      info.my = parseFloat(getComputedStyle(root).getPropertyValue("--my")) || 0;
-      setState({ ...info });
-    };
-
-    window.addEventListener("deviceorientation", onOr, true);
-    window.addEventListener("deviceorientationabsolute", onOr, true);
-    const t = setInterval(readCSS, 300);
-    return () => {
-      window.removeEventListener("deviceorientation", onOr, true);
-      window.removeEventListener("deviceorientationabsolute", onOr, true);
-      clearInterval(t);
-    };
-  }, []);
-
-  if (!state) return null;
-
-  const row = (k, v) => (
-    <div style={{ display: "flex", gap: 8 }}>
-      <span style={{ color: "#00ffb3", minWidth: 76 }}>{k}</span>
-      <span>{String(v)}</span>
-    </div>
-  );
-
-  return (
-    <div
-      data-testid="gyro-debug"
-      style={{
-        position: "fixed",
-        top: 80,
-        left: 12,
-        zIndex: 9999,
-        padding: "10px 12px",
-        background: "rgba(0,0,0,0.85)",
-        color: "#f0f0f2",
-        border: "1px solid #00ffb3",
-        borderRadius: 8,
-        fontFamily: "monospace",
-        fontSize: 11,
-        lineHeight: 1.55,
-        pointerEvents: "none",
-        boxShadow: "0 0 20px rgba(0,255,179,0.4)",
-        maxWidth: 260,
-      }}
-    >
-      <div style={{ color: "#ff2d95", fontWeight: 700, marginBottom: 4 }}>GYRO DEBUG</div>
-      {row("support", state.support)}
-      {row("iOSperm", state.iosPermFn)}
-      {row("secure", state.isSecure)}
-      {row("iframe", state.inIframe)}
-      {row("pointer", state.pointer)}
-      {row("angle", state.angle)}
-      {row("gamma", state.gamma == null ? "—" : state.gamma.toFixed(1))}
-      {row("beta", state.beta == null ? "—" : state.beta.toFixed(1))}
-      {row("events", state.fires)}
-      {row("--mx", state.mx.toFixed(3))}
-      {row("--my", state.my.toFixed(3))}
-    </div>
-  );
-}

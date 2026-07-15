@@ -340,46 +340,6 @@ body::before {
     transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* ===== MOBILE / TOUCH: amplify tilt because gyro range is subtle ===== */
-@media (hover: none) and (pointer: coarse) {
-    /* Scroll parallax boosted so background blobs move noticeably */
-    .parallax-slow { transform: translate3d(0, calc(var(--scroll-y) * 0.10px), 0); }
-    .parallax-med  { transform: translate3d(0, calc(var(--scroll-y) * 0.22px), 0); }
-    .parallax-fast { transform: translate3d(0, calc(var(--scroll-y) * 0.40px), 0); }
-
-    /* Kinetic title reacts more strongly to phone tilt */
-    .kinetic-title {
-        transform:
-            rotateX(calc(var(--my) * -7deg))
-            rotateY(calc(var(--mx) * 12deg))
-            translate3d(calc(var(--mx) * -14px), calc(var(--my) * -10px), 0);
-    }
-    /* Cards tilt visibly */
-    .tilt-card {
-        transform:
-            perspective(900px)
-            rotateX(calc(var(--my) * -9deg))
-            rotateY(calc(var(--mx) * 12deg));
-    }
-    /* Extend tilt to hero 3D viewport frame + social proof cards + glass cards */
-    #viewport-3d,
-    .sp-card,
-    .qq-result__card {
-        will-change: transform;
-        transform:
-            perspective(1200px)
-            rotateX(calc(var(--my) * -3deg))
-            rotateY(calc(var(--mx) * 4deg));
-        transition: transform 500ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-    /* Ambient glow blobs parallax with tilt too */
-    .glow-blob {
-        transform:
-            translate3d(calc(var(--mx) * 20px), calc(var(--my) * 14px), 0);
-        transition: transform 600ms cubic-bezier(0.22, 0.61, 0.36, 1);
-    }
-}
-
 /* Background marquee — slow horizontal drift */
 @keyframes marquee-drift {
     from { transform: translateX(0); }
