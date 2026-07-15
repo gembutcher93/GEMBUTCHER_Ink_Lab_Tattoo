@@ -41,9 +41,65 @@ export const ScrollFX = () => {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("mousemove", onMove, { passive: true });
+
+    // --- MOBILE: use device gyroscope in place of mouse tilt ---
+    const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let gyroRAF = null;
+    let targetMX = 0;
+    let targetMY = 0;
+    let currMX = 0;
+    let currMY = 0;
+
+    const onOrientation = (e) => {
+      // gamma: -90..90 (left-right tilt), beta: -180..180 (front-back tilt)
+      const g = e.gamma || 0;
+      const b = (e.beta || 0) - 45; // 45° = typical natural holding angle
+      targetMX = Math.max(-1, Math.min(1, g / 25));
+      targetMY = Math.max(-1, Math.min(1, b / 25));
+    };
+    const gyroTick = () => {
+      // ease toward target for smooth motion
+      currMX += (targetMX - currMX) * 0.08;
+      currMY += (targetMY - currMY) * 0.08;
+      root.style.setProperty("--mx", currMX.toFixed(3));
+      root.style.setProperty("--my", currMY.toFixed(3));
+      gyroRAF = requestAnimationFrame(gyroTick);
+    };
+    const enableGyro = () => {
+      if (typeof DeviceOrientationEvent !== "undefined" &&
+          typeof DeviceOrientationEvent.requestPermission === "function") {
+        // iOS 13+ requires explicit permission on user gesture
+        DeviceOrientationEvent.requestPermission()
+          .then((r) => {
+            if (r === "granted") {
+              window.addEventListener("deviceorientation", onOrientation, true);
+              gyroRAF = requestAnimationFrame(gyroTick);
+            }
+          })
+          .catch(() => {});
+      } else {
+        // Android + older iOS
+        window.addEventListener("deviceorientation", onOrientation, true);
+        gyroRAF = requestAnimationFrame(gyroTick);
+      }
+    };
+    if (!hasFinePointer && !prefersReduce) {
+      // First user gesture unlocks gyro (required by iOS)
+      const kick = () => {
+        enableGyro();
+        window.removeEventListener("touchstart", kick);
+        window.removeEventListener("click", kick);
+      };
+      window.addEventListener("touchstart", kick, { passive: true });
+      window.addEventListener("click", kick);
+    }
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("deviceorientation", onOrientation, true);
+      if (gyroRAF) cancelAnimationFrame(gyroRAF);
     };
   }, []);
 
