@@ -48,3 +48,10 @@ Build an ultra-modern, high-fidelity landing page + web app for "GemButcher" tat
 - P2: Real leaderboard backend
 - P2: Instagram feed integration
 - P2: Portfolio detail pages
+
+## 2026-02 · Pro Polish Pass
+- Preloader cinematico HUD (Preloader.jsx) — 2.6s con logo glitch, glyph feed, progress bar
+- Custom cursor neon a doppio strato (CustomCursor.jsx) — solo desktop, disabilitato per touch
+- SoundEngine Web Audio API (SoundEngine.jsx) — SFX click/hover + ambient drone, muted by default, persistente in localStorage
+- SEO completo: title, description, Open Graph, Twitter Card, JSON-LD `TattooParlor`, favicon SVG cyberpunk, sitemap.xml, robots.txt
+- Accessibilità: `prefers-reduced-motion` disabilita tutte le animazioni; `:focus-visible` outline neon; `alt`/ARIA-friendly
