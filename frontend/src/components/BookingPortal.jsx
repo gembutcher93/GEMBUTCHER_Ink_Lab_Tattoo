@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useLang } from "@/context/LangContext";
@@ -24,6 +24,37 @@ export const BookingPortal = () => {
   });
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [prefillBanner, setPrefillBanner] = useState(null);
+
+  // Read pending quote (from QuickQuote) and pre-fill the form
+  useEffect(() => {
+    const apply = () => {
+      try {
+        const raw = sessionStorage.getItem("gb_pending_quote");
+        if (!raw) return;
+        const q = JSON.parse(raw);
+        setForm((prev) => ({
+          ...prev,
+          style: q.style_id || prev.style,
+          size: q.size_label || prev.size,
+          body_placement: q.placement_label || prev.body_placement,
+          description: prev.description
+            ? prev.description
+            : `${t.quickQuote.booking_prefill_note}: ${q.range}\n\n`,
+        }));
+        setPrefillBanner({
+          range: q.range,
+          style: q.style_label,
+          size: q.size_label,
+          placement: q.placement_label,
+        });
+      } catch (_) {}
+    };
+    apply();
+    window.addEventListener("gb:quote-applied", apply);
+    return () => window.removeEventListener("gb:quote-applied", apply);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setField = (k) => (e) => setForm((s) => ({ ...s, [k]: e.target.value }));
 
@@ -112,6 +143,28 @@ export const BookingPortal = () => {
         </div>
 
         <div className="glass-card corner-brackets relative p-7 md:p-10 rounded-2xl">
+          {prefillBanner && (
+            <div
+              data-testid="booking-prefill-banner"
+              className="mb-7 px-4 py-3 rounded-xl border flex flex-wrap items-center gap-x-4 gap-y-2"
+              style={{
+                borderColor: "var(--gb-orange-line)",
+                background: "linear-gradient(90deg, rgba(255,45,149,0.10), rgba(255,45,149,0.03))",
+              }}
+            >
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-magenta-neon flex items-center gap-2">
+                <span className="dot dot-orange" />
+                {t.quickQuote.result_range_label}
+                <span className="font-head text-[1.1rem] text-white ml-1 tracking-tight">{prefillBanner.range}</span>
+              </span>
+              <span className="text-[12px] text-white/60">
+                {prefillBanner.style} · {prefillBanner.size} · {prefillBanner.placement}
+              </span>
+              <span className="ml-auto font-mono text-[9px] uppercase tracking-[0.22em] text-white/45">
+                {t.quickQuote.booking_prefill_note}
+              </span>
+            </div>
+          )}
           <div className="flex items-center justify-between border-b border-white/5 pb-5 mb-7">
             <div className="flex items-center gap-2.5 font-mono text-[10px] text-white/60 uppercase tracking-[0.28em]">
               <ShieldCheck className="w-4 h-4 text-cyan-neon" />

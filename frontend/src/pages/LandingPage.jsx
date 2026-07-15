@@ -8,6 +8,7 @@ import { InkanimusLaunch } from "@/components/InkanimusLaunch";
 import { InkanimusHub } from "@/components/InkanimusHub";
 import { Faq } from "@/components/Faq";
 import { BookingPortal } from "@/components/BookingPortal";
+import { QuickQuote } from "@/components/QuickQuote";
 import { Footer } from "@/components/Footer";
 import { ScrollFX } from "@/components/ScrollFX";
 import { Preloader } from "@/components/Preloader";
@@ -31,6 +32,7 @@ export default function LandingPage() {
         <BookingPortal />
       </main>
       <Footer />
+      <QuickQuote />
       <SoundEngine />
       <Toaster
         position="top-right"

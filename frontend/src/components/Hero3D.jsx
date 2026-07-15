@@ -4,7 +4,7 @@ import { OrbitControls, Float, useTexture } from "@react-three/drei";
 import { OBJLoader } from "three-stdlib";
 import * as THREE from "three";
 import { useLang } from "@/context/LangContext";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const OBJ_URL =
   "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/8k8t8gsc_11535_arm_V3_.obj";
@@ -225,6 +225,14 @@ export const Hero3D = () => {
               className="neon-btn neon-btn--magenta"
             >
               {t.hero.cta_book}
+            </button>
+            <button
+              data-testid="cta-quick-quote"
+              onClick={() => window.dispatchEvent(new CustomEvent("gb:quote-open"))}
+              className="neon-btn"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              {t.quickQuote.cta_open}
             </button>
           </div>
 
