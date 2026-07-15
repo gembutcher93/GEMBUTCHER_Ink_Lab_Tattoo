@@ -734,6 +734,88 @@ body::before {
 }
 
 /* =====================================================
+   FAQ — cyberpunk accordion
+   ===================================================== */
+.faq-item {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008));
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 260ms ease, background-color 260ms ease;
+}
+.faq-item:hover {
+    border-color: rgba(0,255,179,0.28);
+}
+.faq-item--open {
+    border-color: var(--gb-cyan-line);
+    box-shadow: 0 20px 40px -24px rgba(0,255,179,0.28);
+}
+.faq-item__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 22px;
+    background: none;
+    border: 0;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+}
+.faq-item__num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--gb-dim);
+    min-width: 22px;
+}
+.faq-item--open .faq-item__num { color: var(--gb-cyan); }
+.faq-item__q {
+    flex: 1;
+    font-size: 0.98rem;
+    letter-spacing: -0.005em;
+    font-weight: 500;
+    color: #f0f0f2;
+}
+.faq-item__chev {
+    display: grid;
+    place-items: center;
+    width: 30px; height: 30px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--gb-text-2);
+    transition: transform 260ms cubic-bezier(0.22, 0.61, 0.36, 1), color 220ms ease, border-color 220ms ease, background-color 220ms ease;
+    flex-shrink: 0;
+}
+.faq-item--open .faq-item__chev {
+    transform: rotate(180deg);
+    color: var(--gb-cyan);
+    border-color: var(--gb-cyan-line);
+    background: rgba(0,255,179,0.08);
+}
+.faq-item__body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.faq-item--open .faq-item__body {
+    grid-template-rows: 1fr;
+}
+.faq-item__body-inner {
+    overflow: hidden;
+}
+.faq-item__body p {
+    padding: 0 22px 22px 62px;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--gb-text-2);
+    max-width: 620px;
+    margin: 0;
+}
+
+/* =====================================================
    SOCIAL PROOF — animated counter cards
    ===================================================== */
 .social-proof {

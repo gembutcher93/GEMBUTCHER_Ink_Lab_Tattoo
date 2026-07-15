@@ -79,12 +79,10 @@ export const ButcherCraft = () => {
                 GEMBUTCHER
               </span>
             </div>
-            <div className="pt-2 font-head text-2xl md:text-3xl lg:text-4xl text-white/90 tracking-tight leading-[1.05]">
-              {t.craft.title.split(" ").map((w, i) => (
-                <span key={i} className={i === 2 ? "text-magenta-neon italic" : ""}>
-                  {w}{" "}
-                </span>
-              ))}
+            <div className="pt-2 font-head text-2xl md:text-3xl lg:text-4xl tracking-[0.4em] leading-[1.05]" data-testid="hero-tagline">
+              <span className="text-white/30">|</span>
+              <span className="text-cyan-neon glow-cyan mx-1">TATTOOER</span>
+              <span className="text-white/30">|</span>
             </div>
           </div>
 

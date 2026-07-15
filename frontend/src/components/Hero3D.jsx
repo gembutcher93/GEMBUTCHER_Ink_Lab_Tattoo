@@ -211,7 +211,7 @@ export const Hero3D = () => {
             <button
               data-testid="cta-enter-experience"
               onClick={() =>
-                document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" })
+                document.getElementById("viewport-3d")?.scrollIntoView({ behavior: "smooth", block: "center" })
               }
               className="neon-btn neon-btn--solid"
             >
@@ -240,6 +240,7 @@ export const Hero3D = () => {
         {/* RIGHT — 3D viewport */}
         <div className="lg:col-span-7 relative" data-reveal="stagger-2">
           <div
+            id="viewport-3d"
             data-testid="hero-3d-viewport"
             className="relative aspect-[4/5] md:aspect-[5/5] lg:aspect-[4/5] w-full rounded-2xl overflow-hidden glass-card corner-brackets"
           >

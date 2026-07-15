@@ -22,7 +22,47 @@ export const translations = {
       years: "Anni di attività",
       studies: "Anni di studi artistici e di settore",
       rating: "Recensioni verificate",
-      rating_source: "Google Reviews",
+      rating_source: "Podere 173 · Google",
+    },
+    faq: {
+      eyebrow: "domande frequenti",
+      title_pre: "Prima di",
+      title_hl: "prenotare",
+      subtitle:
+        "Tutto quello che i clienti chiedono più spesso prima di sedersi sulla mia poltrona. Se non trovi la tua risposta, scrivimi direttamente su WhatsApp.",
+      footer_note: "AGGIORNATO · 2026",
+      items: [
+        {
+          q: "Quanto costa una sessione?",
+          a:
+            "Ogni tatuaggio è un pezzo unico. Il preventivo si costruisce in base a dimensioni, dettaglio, posizione sul corpo e ore di lavoro. Dopo la prima richiesta ti mando un range chiaro. Sessione minima: 100€. Ora di lavoro: da 80€ a 120€ a seconda del rito.",
+        },
+        {
+          q: "Quanto dura una sessione?",
+          a:
+            "Una sessione standard va da 2 a 5 ore. Per pezzi grandi (sleeve, back piece, patutikon completi) lavoriamo su più sedute distanziate almeno 3 settimane per lasciare guarire la pelle.",
+        },
+        {
+          q: "Come funziona l'aftercare?",
+          a:
+            "Dopo la sessione ricevi le istruzioni scritte e l'accesso a InkAnimus, la mia app che ti guida giorno per giorno nel rituale di guarigione (pulizia, pomata, protezione UV, cose da evitare). Guarigione media: 15-20 giorni.",
+        },
+        {
+          q: "Serve un acconto per prenotare?",
+          a:
+            "Sì. Per bloccare la data serve un acconto (di solito il 30% del preventivo, minimo 50€) che scala dal totale. L'acconto è non rimborsabile in caso di disdetta a meno di 72 ore, perché quel tempo lo tolgo ad altri clienti.",
+        },
+        {
+          q: "Che stili fai?",
+          a:
+            "Patutikon (la mia firma: geometria polinesiana intrecciata con icone pop), Patutiki tradizionale, cyberpunk-organico, blackwork tribale e ritratti scuri. Se cerchi realismo a colori o old school americano, non sono la mano giusta.",
+        },
+        {
+          q: "Posso proporre il mio disegno?",
+          a:
+            "Puoi (e devi) mandarmi tutti i riferimenti che hai. Poi però il disegno finale lo faccio io: adatto la tua idea al mio linguaggio e alla tua anatomia. Ricevi la bozza prima della sessione: se qualcosa non torna, si aggiusta insieme.",
+        },
+      ],
     },
     hero: {
       tag: "// ozieri — sardegna — italia",
@@ -259,7 +299,47 @@ export const translations = {
       years: "Years in the studio",
       studies: "Years of art & industry studies",
       rating: "Verified reviews",
-      rating_source: "Google Reviews",
+      rating_source: "Podere 173 · Google",
+    },
+    faq: {
+      eyebrow: "frequently asked",
+      title_pre: "Before you",
+      title_hl: "book",
+      subtitle:
+        "Everything clients ask most before sitting on my chair. If you don't find your answer, drop me a message on WhatsApp directly.",
+      footer_note: "UPDATED · 2026",
+      items: [
+        {
+          q: "How much does a session cost?",
+          a:
+            "Every tattoo is a one-off. The quote is built on size, detail, body placement and hours of work. After your first request I send you a clear range. Minimum session: 100€. Hourly rate: between 80€ and 120€ depending on the rite.",
+        },
+        {
+          q: "How long does a session last?",
+          a:
+            "A standard session runs 2 to 5 hours. Larger pieces (sleeves, back pieces, full patutikon) span multiple sittings at least 3 weeks apart so the skin can heal.",
+        },
+        {
+          q: "How does aftercare work?",
+          a:
+            "After your session you get written instructions and access to InkAnimus, my app that walks you day by day through the healing ritual (cleaning, ointment, UV protection, things to avoid). Average healing: 15-20 days.",
+        },
+        {
+          q: "Do I need a deposit to book?",
+          a:
+            "Yes. To lock the date I ask for a deposit (usually 30% of the quote, minimum 50€) that will be subtracted from the total. The deposit is non-refundable for cancellations under 72 hours, because that slot is taken away from other clients.",
+        },
+        {
+          q: "What styles do you tattoo?",
+          a:
+            "Patutikon (my signature: Polynesian geometry woven with pop icons), traditional Patutiki, cyberpunk-organic, tribal blackwork and dark portraits. If you're after full-color realism or American old-school, I'm not the right hand.",
+        },
+        {
+          q: "Can I bring my own design?",
+          a:
+            "You can (and should) send me every reference you have. Then I draw the final piece: I adapt your idea to my language and to your anatomy. You get the sketch before the session — if something doesn't feel right, we adjust together.",
+        },
+      ],
     },
     hero: {
       tag: "// ozieri — sardinia — italy",

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Star, Flame, Palette, GraduationCap } from "lucide-react";
 import { useLang } from "@/context/LangContext";
+import { SITE_METRICS } from "@/config/site";
 
 /**
  * Animated counter that starts when the element enters the viewport.
@@ -74,33 +75,33 @@ export function SocialProof() {
   const metrics = [
     {
       key: "sessions",
-      value: 380,
+      value: SITE_METRICS.sessions,
       suffix: "+",
       label: s.sessions,
       accent: "cyan",
     },
     {
       key: "years",
-      value: 5,
+      value: SITE_METRICS.years_active,
       suffix: "+",
       label: s.years,
       accent: "magenta",
     },
     {
       key: "studies",
-      value: 15,
+      value: SITE_METRICS.years_studying,
       suffix: "+",
       label: s.studies,
       accent: "cyan",
     },
     {
       key: "rating",
-      value: 4.9,
+      value: SITE_METRICS.rating,
       decimals: 1,
       suffix: "",
       label: s.rating,
       accent: "magenta",
-      href: "https://www.google.com/search?q=Podere+173+Tattoo+Studio+Ozieri",
+      href: SITE_METRICS.rating_source_url,
       isRating: true,
     },
   ];

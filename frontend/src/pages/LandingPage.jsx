@@ -6,6 +6,7 @@ import { InstagramFeed } from "@/components/InstagramFeed";
 import { ButcherCraft } from "@/components/ButcherCraft";
 import { InkanimusLaunch } from "@/components/InkanimusLaunch";
 import { InkanimusHub } from "@/components/InkanimusHub";
+import { Faq } from "@/components/Faq";
 import { BookingPortal } from "@/components/BookingPortal";
 import { Footer } from "@/components/Footer";
 import { ScrollFX } from "@/components/ScrollFX";
@@ -26,6 +27,7 @@ export default function LandingPage() {
         <Hero3D />
         <InkanimusLaunch />
         <InkanimusHub />
+        <Faq />
         <BookingPortal />
       </main>
       <Footer />
