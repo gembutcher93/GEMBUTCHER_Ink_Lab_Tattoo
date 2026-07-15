@@ -10,7 +10,6 @@ import { BookingPortal } from "@/components/BookingPortal";
 import { Footer } from "@/components/Footer";
 import { ScrollFX } from "@/components/ScrollFX";
 import { Preloader } from "@/components/Preloader";
-import { CustomCursor } from "@/components/CustomCursor";
 import { SoundEngine } from "@/components/SoundEngine";
 import { Toaster } from "sonner";
 
@@ -18,7 +17,6 @@ export default function LandingPage() {
   return (
     <div data-testid="landing-page" className="bg-obsidian text-white min-h-screen relative">
       <Preloader />
-      <CustomCursor />
       <ScrollFX />
       <Navbar />
       <main>

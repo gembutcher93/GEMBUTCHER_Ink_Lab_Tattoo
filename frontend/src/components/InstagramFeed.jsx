@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Instagram, ArrowUpRight } from "lucide-react";
 import { useLang } from "@/context/LangContext";
+import { SocialProof } from "@/components/SocialProof";
 
 /**
  * Instagram feed — official Meta embed method.
@@ -201,6 +202,8 @@ export function InstagramFeed() {
             <ArrowUpRight size={13} strokeWidth={1.8} className="opacity-70 group-hover:opacity-100 transition-opacity" />
           </a>
         </div>
+
+        <SocialProof />
 
         <div className="ig-grid" data-testid="instagram-grid">
           {POSTS.map((post, i) => (

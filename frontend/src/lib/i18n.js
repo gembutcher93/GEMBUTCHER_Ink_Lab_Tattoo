@@ -17,6 +17,13 @@ export const translations = {
       footer_note: "// feed sincronizzato dai post più recenti",
       footer_cta: "Segui su Instagram",
     },
+    socialProof: {
+      sessions: "Sessioni completate",
+      years: "Anni di attività",
+      studies: "Anni di studi artistici e di settore",
+      rating: "Recensioni verificate",
+      rating_source: "Google Reviews",
+    },
     hero: {
       tag: "// ozieri — sardegna — italia",
       title1: "GemButcher.",
@@ -81,9 +88,9 @@ export const translations = {
       studio_name: "Podere 173 Tattoo Studio",
       studio_addr: "Piazza Francesco Ignazio Mannu, 4 — Ozieri (SS), Italia",
       stats: [
-        { k: "Anni di lama", v: "12+" },
-        { k: "Sessioni completate", v: "740+" },
-        { k: "Culture studiate", v: "9" },
+        { k: "Anni di attività", v: "5+" },
+        { k: "Sessioni completate", v: "380+" },
+        { k: "Anni di studi", v: "15+" },
       ],
     },
     inkanimus: {
@@ -247,6 +254,13 @@ export const translations = {
       footer_note: "// feed synced with the latest posts",
       footer_cta: "Follow on Instagram",
     },
+    socialProof: {
+      sessions: "Completed sessions",
+      years: "Years in the studio",
+      studies: "Years of art & industry studies",
+      rating: "Verified reviews",
+      rating_source: "Google Reviews",
+    },
     hero: {
       tag: "// ozieri — sardinia — italy",
       title1: "GemButcher.",
@@ -311,9 +325,9 @@ export const translations = {
       studio_name: "Podere 173 Tattoo Studio",
       studio_addr: "Piazza Francesco Ignazio Mannu, 4 — Ozieri (SS), Italy",
       stats: [
-        { k: "Years on the blade", v: "12+" },
-        { k: "Completed sessions", v: "740+" },
-        { k: "Cultures studied", v: "9" },
+        { k: "Years in the studio", v: "5+" },
+        { k: "Completed sessions", v: "380+" },
+        { k: "Years of studies", v: "15+" },
       ],
     },
     inkanimus: {
