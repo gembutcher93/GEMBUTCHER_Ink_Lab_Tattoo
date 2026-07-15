@@ -187,7 +187,7 @@ export const Hero3D = () => {
 
       <div className="relative max-w-[1440px] mx-auto px-5 md:px-10 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         {/* LEFT — Text */}
-        <div className="lg:col-span-5 space-y-7 relative z-10">
+        <div className="lg:col-span-5 space-y-7 relative z-10" data-reveal>
           <div className="flex items-center gap-3 font-mono text-[11px] text-white/60 uppercase tracking-[0.35em]">
             <span className="dot dot-cyan" />
             <span data-testid="hero-tag">{t.hero.tag}</span>
@@ -238,7 +238,7 @@ export const Hero3D = () => {
         </div>
 
         {/* RIGHT — 3D viewport */}
-        <div className="lg:col-span-7 relative">
+        <div className="lg:col-span-7 relative" data-reveal="stagger-2">
           <div
             data-testid="hero-3d-viewport"
             className="relative aspect-[4/5] md:aspect-[5/5] lg:aspect-[4/5] w-full rounded-2xl overflow-hidden glass-card corner-brackets"

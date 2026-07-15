@@ -34,18 +34,24 @@ export const ButcherCraft = () => {
       {/* Ambient glows */}
       <div
         aria-hidden
-        className="absolute -top-40 -left-20 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.12] pointer-events-none"
+        className="absolute -top-40 -left-20 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.12] pointer-events-none parallax-slow"
         style={{ backgroundColor: "var(--gb-orange)" }}
       />
       <div
         aria-hidden
-        className="absolute -bottom-20 -right-32 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.10] pointer-events-none"
+        className="absolute -bottom-20 -right-32 w-[600px] h-[600px] rounded-full blur-[160px] opacity-[0.10] pointer-events-none parallax-med"
         style={{ backgroundColor: "var(--gb-cyan)" }}
       />
 
+      {/* Background marquee ticker */}
+      <div className="marquee-bg parallax-slow" aria-hidden>
+        <span>PATUTIKON · NEO-TRIBAL · INK &amp; CHROME · PODERE 173 · </span>
+        <span>PATUTIKON · NEO-TRIBAL · INK &amp; CHROME · PODERE 173 · </span>
+      </div>
+
       <div className="relative max-w-[1440px] mx-auto px-5 md:px-10">
         {/* --- KINETIC HERO TITLE --- */}
-        <div className="pb-10 md:pb-14 flex items-end justify-between flex-wrap gap-6">
+        <div className="pb-10 md:pb-14 flex items-end justify-between flex-wrap gap-6" data-reveal>
           <div className="space-y-5 max-w-3xl">
             <div className="flex items-center gap-3 font-mono text-[11px] text-white/50 uppercase tracking-[0.35em]">
               <span className="dot dot-cyan" />
@@ -103,9 +109,9 @@ export const ButcherCraft = () => {
 
         <div className="grid lg:grid-cols-12 gap-10">
           {/* Portrait carousel */}
-          <div className="lg:col-span-5 space-y-5">
+          <div className="lg:col-span-5 space-y-5" data-reveal="stagger-1">
             <div
-              className="glass-card corner-brackets aspect-[3/4] overflow-hidden relative rounded-2xl"
+              className="glass-card corner-brackets aspect-[3/4] overflow-hidden relative rounded-2xl tilt-card"
               data-testid="portrait-carousel"
             >
             {PORTRAITS.map((p, i) => (

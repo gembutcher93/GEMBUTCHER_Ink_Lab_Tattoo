@@ -299,6 +299,72 @@ body::before {
 }
 .pulse-ring { animation: ring-pulse 2.8s ease-out infinite; }
 
+/* ---- Immersive scroll + parallax utilities ---- */
+:root { --scroll-y: 0; --mx: 0; --my: 0; }
+
+[data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition: opacity 800ms ease, transform 800ms cubic-bezier(0.22, 0.61, 0.36, 1);
+    will-change: opacity, transform;
+}
+[data-reveal].is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+[data-reveal="stagger-1"].is-visible { transition-delay: 120ms; }
+[data-reveal="stagger-2"].is-visible { transition-delay: 240ms; }
+[data-reveal="stagger-3"].is-visible { transition-delay: 360ms; }
+
+.parallax-slow { will-change: transform; transform: translate3d(0, calc(var(--scroll-y) * 0.06px), 0); }
+.parallax-med  { will-change: transform; transform: translate3d(0, calc(var(--scroll-y) * 0.14px), 0); }
+.parallax-fast { will-change: transform; transform: translate3d(0, calc(var(--scroll-y) * 0.28px), 0); }
+
+/* Mouse tilt for the big landing title (uses global --mx/--my) */
+.kinetic-title {
+    animation: none !important;
+    transform:
+        rotateX(calc(var(--my) * -3deg))
+        rotateY(calc(var(--mx) * 5deg))
+        translate3d(calc(var(--mx) * -6px), calc(var(--my) * -4px), 0);
+    transition: transform 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* 3D tilt card — apply .tilt-card to any element to make it react to mouse */
+.tilt-card {
+    transform-style: preserve-3d;
+    transform:
+        perspective(1000px)
+        rotateX(calc(var(--my) * -4deg))
+        rotateY(calc(var(--mx) * 6deg));
+    transition: transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Background marquee — slow horizontal drift */
+@keyframes marquee-drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+.marquee-bg {
+    position: absolute;
+    inset: auto 0 8% 0;
+    z-index: 0;
+    display: flex;
+    white-space: nowrap;
+    opacity: 0.07;
+    pointer-events: none;
+    user-select: none;
+    animation: marquee-drift 80s linear infinite;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 1;
+    color: #fafafa;
+}
+.marquee-bg > span { padding-right: 6vw; }
+
+
 /* ---- Cyberpunk kinetic hero title ---- */
 @keyframes kinetic-drift {
     0%, 100% { transform: translate3d(0, 0, 0) rotateX(0deg); }

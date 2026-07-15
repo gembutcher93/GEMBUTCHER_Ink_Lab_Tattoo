@@ -410,7 +410,7 @@ export const InkanimusHub = () => {
       />
 
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 relative">
-        <div className="mb-12 md:mb-16 max-w-3xl">
+        <div className="mb-12 md:mb-16 max-w-3xl" data-reveal>
           <div className="font-mono text-[11px] text-cyan-neon uppercase tracking-[0.35em] mb-4">
             04 / loyalty hub
           </div>

@@ -103,7 +103,7 @@ export const InkanimusLaunch = () => {
       />
 
       <div className="max-w-[1440px] mx-auto px-5 md:px-10 relative">
-        <div className="glass-card corner-brackets rounded-3xl overflow-hidden">
+        <div className="glass-card corner-brackets rounded-3xl overflow-hidden" data-reveal>
           <div className="grid lg:grid-cols-12 gap-0">
             {/* Left column — copy */}
             <div className="lg:col-span-7 p-8 md:p-12 lg:p-14 flex flex-col justify-between gap-10 border-b lg:border-b-0 lg:border-r border-white/5">

@@ -39,7 +39,7 @@ export const PatutikonGallery = () => {
         style={{ backgroundColor: "var(--gb-magenta)" }}
       />
 
-      <div className="max-w-[1440px] mx-auto px-5 md:px-10 mb-12 md:mb-16">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 mb-12 md:mb-16" data-reveal>
         <div className="flex items-end justify-between gap-8 flex-wrap">
           <div className="max-w-2xl">
             <div className="font-mono text-[11px] text-magenta-neon uppercase tracking-[0.35em] mb-4">

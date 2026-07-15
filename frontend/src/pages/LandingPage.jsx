@@ -7,11 +7,13 @@ import { InkanimusLaunch } from "@/components/InkanimusLaunch";
 import { InkanimusHub } from "@/components/InkanimusHub";
 import { BookingPortal } from "@/components/BookingPortal";
 import { Footer } from "@/components/Footer";
+import { ScrollFX } from "@/components/ScrollFX";
 import { Toaster } from "sonner";
 
 export default function LandingPage() {
   return (
     <div data-testid="landing-page" className="bg-obsidian text-white min-h-screen relative">
+      <ScrollFX />
       <Navbar />
       <main>
         <ButcherCraft />
