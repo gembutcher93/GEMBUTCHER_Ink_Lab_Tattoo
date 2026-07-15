@@ -1,0 +1,102 @@
+{
+  "summary": "Frontend-only targeted verification of GEMBUTCHER kinetic hero title mobile overflow fix + smoke tests on booking form, nav order, and Inkanimus 2-stage download gate. All checks PASSED across 360/390/768/1440 viewports. Mobile overflow bug is fully resolved.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {
+        "screen": "kinetic hero title (all viewports)",
+        "issues": [
+          "Minor cosmetic: chromatic mint & magenta layers are offset by ~4-6px from the base layer at tablet/desktop (768: +/-5.7px, 1440: +/-4px). This is caused by transform translations in the chroma animation and matches the intended glitch/chromatic-aberration effect. Within the 'few pixels' tolerance specified. No misalignment issue."
+        ]
+      },
+      {
+        "screen": "Landing (mobile 360/390)",
+        "issues": [
+          "Note (not a bug): document.body.scrollWidth reports 630px at vw=360 (and 645 at vw=390) because some deep child extends. However documentElement.scrollWidth == viewport width, so overflow-x is being clipped upstream and there is NO visible horizontal scroll on the page. Not user-facing, but worth verifying if you later change overflow rules on <body> or ancestors."
+        ]
+      }
+    ]
+  },
+  "test_report_links": [
+    "/app/test_reports/kinetic_mobile_360.png",
+    "/app/test_reports/kinetic_mobile_390.png",
+    "/app/test_reports/kinetic_tablet_768.png",
+    "/app/test_reports/kinetic_desktop_1440.png",
+    "/app/test_reports/modal_unlocked.png"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "InkanimusLaunch.jsx (~736 lines) exceeds the 700-line guideline; consider extracting <DownloadModal /> into its own file (e.g. components/InkanimusDownloadModal.jsx) — it is a self-contained ~290-line subcomponent with its own state.",
+    "Two-stage password gate uses the same ADEPT_PASSWORD for both the inline gate AND the modal re-auth. Once the user has unlocked the outer section, the modal re-prompt duplicates the same secret and is redundant UX-wise. Consider either removing the modal gate for already-unlocked users, or using a distinct secondary code, otherwise the extra step feels arbitrary.",
+    "ButcherCraft.jsx uses inline style fontSize clamp(2rem, 11vw, 9.5rem) on 3 span layers — good, but the value is duplicated 3 times. Moving it into a CSS custom property (e.g. --kinetic-fs) on .kinetic-title and letting .kinetic-title__layer inherit font-size ensures the 3 layers stay perfectly synced if the clamp is ever tweaked."
+  ],
+  "verification_details": {
+    "mobile_360x800": {
+      "container": {"left": 20.0, "right": 260.2, "width": 240.2},
+      "viewport_innerWidth": 360,
+      "documentElement_scrollWidth": 360,
+      "fontSize": "39.6px",
+      "layers_matching_fontSize": true,
+      "overflow_right": false,
+      "overflow_left": false,
+      "horizontal_scrollbar": false,
+      "result": "PASS"
+    },
+    "mobile_390x844": {
+      "container": {"left": 20.0, "right": 280.8, "width": 260.8},
+      "viewport_innerWidth": 390,
+      "documentElement_scrollWidth": 390,
+      "fontSize": "42.9px",
+      "layers_matching_fontSize": true,
+      "overflow_right": false,
+      "result": "PASS"
+    },
+    "tablet_768x1024": {
+      "container": {"left": 40.0, "right": 554.2, "width": 514.2},
+      "viewport_innerWidth": 768,
+      "fontSize": "84.48px",
+      "layers_matching_fontSize": true,
+      "overflow_right": false,
+      "result": "PASS"
+    },
+    "desktop_1440x900": {
+      "container": {"left": 40.0, "right": 808.0, "width": 768.0},
+      "viewport_innerWidth": 1440,
+      "fontSize": "152px (== 9.5rem max clamp value)",
+      "layers_matching_fontSize": true,
+      "overflow_right": false,
+      "result": "PASS"
+    },
+    "nav_order": {
+      "expected": ["nav-link-craft (InkMaster)", "nav-link-gallery (Gallery)", "nav-link-hero (3D Experience)", "nav-link-inkanimus (Inkanimus)", "nav-link-booking (Prenota)"],
+      "observed_by_left_position": ["InkMaster @489", "Gallery @606", "3D Experience @704", "Inkanimus @858", "Prenota @975"],
+      "result": "PASS"
+    },
+    "booking_form": {
+      "whatsapp_href_prefix": "https://wa.me/393498290606 (verified starts with)",
+      "email_href_prefix": "mailto:gembutcher93@gmail.com (verified starts with)",
+      "form_present": true,
+      "result": "PASS"
+    },
+    "inkanimus_download_gate": {
+      "stage1_inline_gate_password": "CrYpt0.N3XuS.1nK (from REACT_APP_INKANIMUS_PASSWORD env)",
+      "stage1_unlock_success": true,
+      "launch_cta_open_appears_after_unlock": true,
+      "modal_opens_on_cta_click": true,
+      "modal_gate_input_present": true,
+      "stage2_password_success": true,
+      "download_cards_visible": {"download-open-blue": true, "download-open-bio": true, "download-open-sakura": true},
+      "wrong_password_shows_error": true,
+      "result": "PASS"
+    }
+  },
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100% (all 7 requested checks pass)"},
+  "test_credentials": "Inkanimus adept password: CrYpt0.N3XuS.1nK (from /app/frontend/.env REACT_APP_INKANIMUS_PASSWORD)",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Kinetic hero title fix (clamp 2rem/11vw/9.5rem on .kinetic-title__layer, max-width:100%, white-space:nowrap) is fully verified across 360/390/768/1440. The 3-layer chromatic effect is intentional; small (<10px) layer offset at tablet/desktop is the glitch animation and NOT overflow. If you touch overflow rules on body, re-verify body.scrollWidth (currently >viewport on mobile due to overflow-x hidden upstream — no visible scroll). Inkanimus flow is a 2-stage gate: inline launch-gate (unlocks) -> launch-cta-open button -> download-modal -> modal-gate-input -> 3 download-open-{blue,bio,sakura} cards. Both stages use the same env password."
+}

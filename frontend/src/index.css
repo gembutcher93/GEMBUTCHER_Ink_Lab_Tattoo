@@ -323,6 +323,7 @@ body::before {
     position: relative;
     display: inline-block;
     perspective: 1200px;
+    max-width: 100%;
     animation: kinetic-drift 5.5s ease-in-out infinite;
     will-change: transform;
 }
@@ -331,9 +332,10 @@ body::before {
     line-height: 0.9;
     font-family: 'Space Grotesk', sans-serif;
     font-weight: 700;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     color: #fafafa;
     text-shadow: 0 0 40px rgba(255,255,255,0.08);
+    white-space: nowrap;
 }
 .kinetic-title__mint,
 .kinetic-title__magenta {
