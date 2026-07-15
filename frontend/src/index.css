@@ -1492,7 +1492,30 @@ a.sp-card:hover {
     .ig-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
-    .ig-grid { grid-template-columns: 1fr; gap: 18px; }
+    .ig-grid {
+        display: flex;
+        grid-template-columns: none;
+        gap: 14px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-padding-left: 20px;
+        padding: 4px 20px 22px;
+        margin: 0 -20px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .ig-grid::-webkit-scrollbar { display: none; }
+    .ig-card {
+        flex: 0 0 82%;
+        min-width: 82%;
+        scroll-snap-align: start;
+    }
+    .ig-card__frame--auto {
+        height: 460px;
+        min-height: 460px;
+        max-height: 460px;
+    }
 }
 .ig-card {
     position: relative;
