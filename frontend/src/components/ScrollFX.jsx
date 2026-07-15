@@ -15,10 +15,12 @@ import React, { useEffect, useRef } from "react";
 export const ScrollFX = () => {
   const canvasRef = useRef(null);
 
-  // Global scroll + mouse listeners
+  // Global scroll + mouse + gyro listeners
   useEffect(() => {
     const root = document.documentElement;
     let ticking = false;
+    const hasFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    const prefersReduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const onScroll = () => {
       if (ticking) return;
@@ -33,17 +35,63 @@ export const ScrollFX = () => {
     const onMove = (e) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
-      const mx = (e.clientX - cx) / cx; // -1..1
-      const my = (e.clientY - cy) / cy;
-      root.style.setProperty("--mx", mx.toFixed(3));
-      root.style.setProperty("--my", my.toFixed(3));
+      root.style.setProperty("--mx", ((e.clientX - cx) / cx).toFixed(3));
+      root.style.setProperty("--my", ((e.clientY - cy) / cy).toFixed(3));
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("mousemove", onMove, { passive: true });
+    if (hasFinePointer) window.addEventListener("mousemove", onMove, { passive: true });
+
+    // Mobile gyroscope → --mx / --my
+    let gyroRAF = null;
+    let tMX = 0, tMY = 0, cMX = 0, cMY = 0;
+    const onOr = (e) => {
+      if (e.gamma == null || e.beta == null) return;
+      const angle = (window.screen?.orientation?.angle) || 0;
+      let gx = e.gamma;
+      let by = e.beta - 45;
+      if (angle === 90) { gx = by; by = -e.gamma; }
+      if (angle === 270 || angle === -90) { gx = -by; by = e.gamma; }
+      if (angle === 180) { gx = -e.gamma; by = -(e.beta - 45); }
+      tMX = Math.max(-1, Math.min(1, gx / 20));
+      tMY = Math.max(-1, Math.min(1, by / 20));
+    };
+    const gyroTick = () => {
+      cMX += (tMX - cMX) * 0.12;
+      cMY += (tMY - cMY) * 0.12;
+      root.style.setProperty("--mx", cMX.toFixed(3));
+      root.style.setProperty("--my", cMY.toFixed(3));
+      gyroRAF = requestAnimationFrame(gyroTick);
+    };
+    const startGyro = () => {
+      window.addEventListener("deviceorientation", onOr, true);
+      window.addEventListener("deviceorientationabsolute", onOr, true);
+      if (!gyroRAF) gyroRAF = requestAnimationFrame(gyroTick);
+    };
+    if (!hasFinePointer && !prefersReduce) {
+      const iosPerm = typeof DeviceOrientationEvent !== "undefined" &&
+        typeof DeviceOrientationEvent.requestPermission === "function";
+      if (!iosPerm) {
+        startGyro();
+      } else {
+        const kick = () => {
+          DeviceOrientationEvent.requestPermission()
+            .then((r) => { if (r === "granted") startGyro(); })
+            .catch(() => {});
+          window.removeEventListener("touchend", kick);
+          window.removeEventListener("click", kick);
+        };
+        window.addEventListener("touchend", kick, { passive: true, once: true });
+        window.addEventListener("click", kick, { once: true });
+      }
+    }
+
     return () => {
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("mousemove", onMove);
+      if (hasFinePointer) window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("deviceorientation", onOr, true);
+      window.removeEventListener("deviceorientationabsolute", onOr, true);
+      if (gyroRAF) cancelAnimationFrame(gyroRAF);
     };
   }, []);
 
