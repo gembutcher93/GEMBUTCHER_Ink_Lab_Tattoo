@@ -1,7 +1,7 @@
 /**
  * QuickQuote pricing config — Podere 173 · GemButcher
- * Edit ranges here to keep the "60 second quote" tool in sync with reality.
- * All amounts in EUR. Ranges are inclusive.
+ * Edit these values whenever prices change.
+ * All amounts in EUR. Ranges inclusive.
  */
 export const PRICING = {
   sizes: [
@@ -10,28 +10,34 @@ export const PRICING = {
     { id: "large",  min: 250, max: 400, gate: true  },
     { id: "xl",     min: 500, max: 700, gate: true  }, // Full day sitting (~8h)
   ],
+  // `boost` = extra complexity uplift applied only when size.gate = true (medium+)
   styles: [
-    { id: "patutikon",          patutikonBoost: true  },
-    { id: "patutiki",           patutikonBoost: false },
-    { id: "cyberpunk-organic",  patutikonBoost: false },
-    { id: "blackwork",          patutikonBoost: false },
+    { id: "patutikon",         boost: 0.20 },
+    { id: "patutiki",          boost: 0.10 },
+    { id: "samoano",           boost: 0.12 },
+    { id: "giapponese",        boost: 0.05 },
+    { id: "cyberpunk-organic", boost: 0    },
+    { id: "blackwork",         boost: 0    },
+    { id: "lettering",         boost: 0    },
+    { id: "figurativo",        boost: 0    },
+    { id: "anime",             boost: 0    },
+    { id: "floreale",          boost: 0    },
+    { id: "ornamentale",       boost: 0    },
   ],
   placements: [
-    { id: "standard", multiplier: 1.0 },
-    { id: "chest",    multiplier: 1.0 },
+    { id: "standard", multiplier: 1.0  },
+    { id: "chest",    multiplier: 1.0  },
     { id: "ribs",     multiplier: 1.15 },
     { id: "neck",     multiplier: 1.20 },
     { id: "head",     multiplier: 1.15 },
     { id: "hand",     multiplier: 1.10 },
     { id: "foot",     multiplier: 1.10 },
   ],
-  // Patutikon complexity uplift only kicks in for medium+ pieces
-  patutikon_multiplier: 1.20,
 };
 
 /**
  * Compute a rounded price range for the chosen combo.
- * Returns { min, max, currency }
+ * Style boost only kicks in for pieces medium and above (size.gate).
  */
 export function computeQuote({ sizeId, styleId, placementId }) {
   const size = PRICING.sizes.find((s) => s.id === sizeId);
@@ -40,8 +46,8 @@ export function computeQuote({ sizeId, styleId, placementId }) {
   if (!size || !style || !placement) return null;
 
   let multiplier = placement.multiplier;
-  if (style.patutikonBoost && size.gate) {
-    multiplier *= PRICING.patutikon_multiplier;
+  if (style.boost > 0 && size.gate) {
+    multiplier *= 1 + style.boost;
   }
 
   const round5 = (v) => Math.round(v / 5) * 5;

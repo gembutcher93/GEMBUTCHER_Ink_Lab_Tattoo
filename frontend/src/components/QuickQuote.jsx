@@ -183,8 +183,10 @@ export function QuickQuote() {
                     >
                       <span className="qq-opt__label">{meta.label}</span>
                       <span className="qq-opt__desc">{meta.desc}</span>
-                      {st.patutikonBoost && (
-                        <span className="qq-opt__tag">+20% {s.complexity_tag}</span>
+                      {st.boost > 0 && (
+                        <span className="qq-opt__tag">
+                          +{Math.round(st.boost * 100)}% {s.complexity_tag}
+                        </span>
                       )}
                     </button>
                   );

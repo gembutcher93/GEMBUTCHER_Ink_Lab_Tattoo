@@ -157,6 +157,49 @@ function InstagramCard({ post, index }) {
 export function InstagramFeed() {
   const { t } = useLang();
   const s = t.instagram;
+  const gridRef = useRef(null);
+  const [activeIdx, setActiveIdx] = useState(0);
+
+  // Track scroll position for mobile pagination indicator
+  useEffect(() => {
+    const el = gridRef.current;
+    if (!el) return;
+    let raf;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = null;
+        const cards = el.querySelectorAll(".ig-card");
+        if (!cards.length) return;
+        const rect = el.getBoundingClientRect();
+        const gridCenter = rect.left + rect.width / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        cards.forEach((c, i) => {
+          const cr = c.getBoundingClientRect();
+          const dist = Math.abs(cr.left + cr.width / 2 - gridCenter);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = i;
+          }
+        });
+        setActiveIdx(best);
+      });
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const scrollToCard = (i) => {
+    const el = gridRef.current;
+    if (!el) return;
+    const card = el.querySelectorAll(".ig-card")[i];
+    if (card) card.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  };
 
   return (
     <section
@@ -205,10 +248,33 @@ export function InstagramFeed() {
 
         <SocialProof />
 
-        <div className="ig-grid" data-testid="instagram-grid">
+        <div ref={gridRef} className="ig-grid" data-testid="instagram-grid">
           {POSTS.map((post, i) => (
             <InstagramCard key={post.code} post={post} index={i} />
           ))}
+        </div>
+
+        {/* Mobile-only pagination dots */}
+        <div
+          className="ig-dots"
+          data-testid="instagram-dots"
+          role="tablist"
+          aria-label="Instagram carousel pagination"
+        >
+          {POSTS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollToCard(i)}
+              className={`ig-dot ${i === activeIdx ? "ig-dot--active" : ""}`}
+              aria-label={`Vai al post ${i + 1}`}
+              aria-selected={i === activeIdx}
+              role="tab"
+              data-testid={`ig-dot-${i}`}
+            />
+          ))}
+          <span className="ig-dots__counter" aria-live="polite">
+            {String(activeIdx + 1).padStart(2, "0")} / {String(POSTS.length).padStart(2, "0")}
+          </span>
         </div>
 
         <div className="mt-14 flex flex-wrap items-center justify-between gap-6 border-t border-white/5 pt-6">
