@@ -215,14 +215,11 @@ export const ScrollFX = () => {
   }, []);
 
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        aria-hidden
-        className="fixed inset-0 pointer-events-none z-[1] opacity-70 mix-blend-screen"
-      />
-      <GyroDebug />
-    </>
+    <canvas
+      ref={canvasRef}
+      aria-hidden
+      className="fixed inset-0 pointer-events-none z-[1] opacity-70 mix-blend-screen"
+    />
   );
 };
 
