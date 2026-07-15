@@ -8,6 +8,15 @@ export const translations = {
       inkanimus: "Inkanimus",
       booking: "Prenota",
     },
+    instagram: {
+      eyebrow: "feed live · @gembutchertattoo",
+      title_pre: "Il rito",
+      title_hl: "in tempo reale",
+      subtitle:
+        "Ogni sessione, ogni disegno, ogni frame. Le ultime opere uscite dall'ago del Podere 173 — direttamente da Instagram.",
+      footer_note: "// feed sincronizzato dai post più recenti",
+      footer_cta: "Segui su Instagram",
+    },
     hero: {
       tag: "// ozieri — sardegna — italia",
       title1: "GemButcher.",
@@ -228,6 +237,15 @@ export const translations = {
       craft: "InkMaster",
       inkanimus: "Inkanimus",
       booking: "Book",
+    },
+    instagram: {
+      eyebrow: "live feed · @gembutchertattoo",
+      title_pre: "The rite",
+      title_hl: "in real time",
+      subtitle:
+        "Every session, every design, every frame. The latest work coming off the needles of Podere 173 — straight from Instagram.",
+      footer_note: "// feed synced with the latest posts",
+      footer_cta: "Follow on Instagram",
     },
     hero: {
       tag: "// ozieri — sardinia — italy",

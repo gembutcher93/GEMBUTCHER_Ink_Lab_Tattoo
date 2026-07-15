@@ -2,6 +2,7 @@ import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { Hero3D } from "@/components/Hero3D";
 import { PatutikonGallery } from "@/components/PatutikonGallery";
+import { InstagramFeed } from "@/components/InstagramFeed";
 import { ButcherCraft } from "@/components/ButcherCraft";
 import { InkanimusLaunch } from "@/components/InkanimusLaunch";
 import { InkanimusHub } from "@/components/InkanimusHub";
@@ -23,6 +24,7 @@ export default function LandingPage() {
       <main>
         <ButcherCraft />
         <PatutikonGallery />
+        <InstagramFeed />
         <Hero3D />
         <InkanimusLaunch />
         <InkanimusHub />
