@@ -348,9 +348,9 @@ body::before {
 
     .kinetic-title {
         transform:
-            rotateX(calc(var(--my) * -14deg))
-            rotateY(calc(var(--mx) * 22deg))
-            translate3d(calc(var(--mx) * -28px), calc(var(--my) * -20px), 0) !important;
+            rotateX(calc(var(--my) * -7deg))
+            rotateY(calc(var(--mx) * 11deg))
+            translate3d(calc(var(--mx) * -14px), calc(var(--my) * -10px), 0) !important;
     }
     .tilt-card {
         transform:
