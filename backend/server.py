@@ -39,7 +39,7 @@ def send_booking_email(booking: 'Booking') -> None:
     Silently logs on failure — booking is already persisted in Mongo.
     """
     if not (SMTP_HOST and SMTP_USER and SMTP_PASSWORD and NOTIFY_EMAIL):
-        logger.warning("SMTP not fully configured — skipping email notification")
+        print("[BOOKING-EMAIL] SMTP not fully configured — skipping", flush=True)
         return
     try:
         msg = EmailMessage()
@@ -74,9 +74,9 @@ def send_booking_email(booking: 'Booking') -> None:
             s.ehlo()
             s.login(SMTP_USER, SMTP_PASSWORD)
             s.send_message(msg)
-        logger.info(f"Booking email sent for {booking.id}")
+        print(f"[BOOKING-EMAIL] sent for booking {booking.id} to {NOTIFY_EMAIL}", flush=True)
     except Exception as exc:  # noqa: BLE001
-        logger.exception(f"Failed to send booking email for {booking.id}: {exc}")
+        print(f"[BOOKING-EMAIL] FAILED for booking {booking.id}: {type(exc).__name__}: {exc}", flush=True)
 
 
 # ---- Models ----
@@ -149,6 +149,7 @@ async def create_booking(payload: BookingCreate):
     doc = booking.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.bookings.insert_one(doc)
+    send_booking_email(booking)  # synchronous — Gmail SMTP < 2s
     return booking
 
 
