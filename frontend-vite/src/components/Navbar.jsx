@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLang } from "@/context/LangContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const LOGO_URL =
   "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/9zwdzt75_logo.png";
@@ -75,6 +76,8 @@ export const Navbar = () => {
           ))}
         </div>
 
+        <div className="flex items-center gap-2">
+        <ThemeToggle />
         <div
           data-testid="lang-switcher"
           className="relative flex items-center rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md p-0.5 font-mono text-[10px] uppercase"
@@ -115,6 +118,7 @@ export const Navbar = () => {
           >
             ENG
           </button>
+        </div>
         </div>
       </div>
     </nav>
