@@ -96,9 +96,9 @@ const ArmModel = ({ style }) => {
   });
 
   return (
-    <group ref={group} rotation={[-Math.PI / 2, -0.3, 0]} position={[0, 0, 0]}>
-      <primitive object={processed} />
-    </group>
+<group ref={group} rotation={[0, 0, 0]} position={[0, 0, 0]}>
+  <primitive object={processed} />
+</group>
   );
 };
 
