@@ -167,26 +167,41 @@ export const Hero3D = () => {
             </button>
           </div>
         </div>
-        <div className="lg:col-span-7 relative">
-          <div id="viewport-3d" className="relative aspect-[4/5] w-full rounded-2xl overflow-hidden glass-card corner-brackets">
-            <Canvas
-              camera={{ position: [0, 0, 7.5], fov: 40 }}
-              dpr={[1, 2]}
-              gl={{ antialias: true, alpha: true }} 
-              style={{ background: "transparent" }}
-            >
-              <Scene style={style} />
-              <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 3.2} maxPolarAngle={Math.PI / 1.6} target={[0, 0, 0]} />
-            </Canvas>
-          </div>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {STYLE_KEYS.map((k) => (
-              <button key={k} onClick={() => setStyle(k)} className={`px-4 py-2.5 rounded-full border ${style === k ? "text-black border-transparent" : "text-white/60 border-white/10"}`} style={style === k ? { background: "var(--gb-cyan)" } : {}}>
-                {t.hero.styles[k]}
-              </button>
-            ))}
-          </div>
-        </div>
+      <div className="lg:col-span-7 relative">
+  <div 
+    id="viewport-3d" 
+    className="relative aspect-[4/5] w-full max-h-[50vh] max-w-full rounded-2xl overflow-hidden glass-card corner-brackets"
+    style={{ touchAction: 'none' }}
+  >
+    <Canvas
+      camera={{ position: [0, 0, 7.5], fov: 40 }}
+      dpr={[1, 2]}
+      gl={{ antialias: true, alpha: true }} 
+      style={{ background: "transparent" }}
+    >
+      <Scene style={style} />
+      <OrbitControls 
+        enablePan={false} 
+        enableZoom={false} 
+        minPolarAngle={Math.PI / 3.2} 
+        maxPolarAngle={Math.PI / 1.6} 
+        target={[0, 0, 0]} 
+      />
+    </Canvas>
+  </div>
+  <div className="mt-5 flex flex-wrap gap-2">
+    {STYLE_KEYS.map((k) => (
+      <button 
+        key={k} 
+        onClick={() => setStyle(k)} 
+        className={`px-4 py-2.5 rounded-full border ${style === k ? "text-black border-transparent" : "text-white/60 border-white/10"}`} 
+        style={style === k ? { background: "var(--gb-cyan)" } : {}}
+      >
+        {t.hero.styles[k]}
+      </button>
+    ))}
+  </div>
+</div>
       </div>
     </section>
   );
