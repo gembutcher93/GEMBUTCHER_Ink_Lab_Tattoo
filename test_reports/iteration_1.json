@@ -81,7 +81,7 @@
       "result": "PASS"
     },
     "inkanimus_download_gate": {
-      "stage1_inline_gate_password": "CrYpt0.N3XuS.1nK (from REACT_APP_INKANIMUS_PASSWORD env)",
+      "stage1_inline_gate_password": "CRYPTO.N3XUS.1NK (from REACT_APP_INKANIMUS_PASSWORD env)",
       "stage1_unlock_success": true,
       "launch_cta_open_appears_after_unlock": true,
       "modal_opens_on_cta_click": true,
@@ -94,7 +94,7 @@
   },
   "updated_files": [],
   "success_rate": {"backend": "N/A (skipped per request)", "frontend": "100% (all 7 requested checks pass)"},
-  "test_credentials": "Inkanimus adept password: CrYpt0.N3XuS.1nK (from /app/frontend/.env REACT_APP_INKANIMUS_PASSWORD)",
+  "test_credentials": "Inkanimus adept password: CRYPTO.N3XUS.1NK (from /app/frontend/.env REACT_APP_INKANIMUS_PASSWORD)",
   "seed_data_creation": "None",
   "retest_needed": false,
   "main_agent_can_self_test": true,
