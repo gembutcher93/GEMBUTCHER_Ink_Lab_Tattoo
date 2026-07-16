@@ -1,0 +1,311 @@
+diff --git a/frontend-vite/src/App.jsx b/frontend-vite/src/App.jsx
+index 83bf899..297ace6 100644
+--- a/frontend-vite/src/App.jsx
++++ b/frontend-vite/src/App.jsx
+@@ -1,11 +1,13 @@
+ import "@/App.css";
+ import { BrowserRouter, Routes, Route } from "react-router-dom";
+ import { LangProvider } from "@/context/LangContext";
++import { ThemeProvider } from "@/context/ThemeContext";
+ import LandingPage from "@/pages/LandingPage";
+ 
+ function App() {
+   return (
+     <div className="App">
++      <ThemeProvider>
+       <LangProvider>
+         <BrowserRouter>
+           <Routes>
+@@ -14,6 +16,7 @@ function App() {
+           </Routes>
+         </BrowserRouter>
+       </LangProvider>
++      </ThemeProvider>
+     </div>
+   );
+ }
+diff --git a/frontend-vite/src/components/Navbar.jsx b/frontend-vite/src/components/Navbar.jsx
+index f8d75c1..7409b64 100644
+--- a/frontend-vite/src/components/Navbar.jsx
++++ b/frontend-vite/src/components/Navbar.jsx
+@@ -1,5 +1,6 @@
+ import React, { useEffect, useState } from "react";
+ import { useLang } from "@/context/LangContext";
++import { ThemeToggle } from "@/components/ThemeToggle";
+ 
+ const LOGO_URL =
+   "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/9zwdzt75_logo.png";
+@@ -75,6 +76,8 @@ export const Navbar = () => {
+           ))}
+         </div>
+ 
++        <div className="flex items-center gap-2">
++        <ThemeToggle />
+         <div
+           data-testid="lang-switcher"
+           className="relative flex items-center rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md p-0.5 font-mono text-[10px] uppercase"
+@@ -116,6 +119,7 @@ export const Navbar = () => {
+             ENG
+           </button>
+         </div>
++        </div>
+       </div>
+     </nav>
+   );
+diff --git a/frontend-vite/src/components/ThemeToggle.jsx b/frontend-vite/src/components/ThemeToggle.jsx
+new file mode 100644
+index 0000000..d12ec59
+--- /dev/null
++++ b/frontend-vite/src/components/ThemeToggle.jsx
+@@ -0,0 +1,38 @@
++import React from "react";
++import { Sun, Moon } from "lucide-react";
++import { useTheme } from "@/context/ThemeContext";
++
++export const ThemeToggle = () => {
++  const { theme, toggleTheme } = useTheme();
++  const isLight = theme === "light";
++
++  return (
++    <button
++      data-testid="theme-toggle"
++      onClick={toggleTheme}
++      aria-label={isLight ? "Passa al tema scuro" : "Passa al tema chiaro"}
++      title={isLight ? "Tema scuro" : "Tema chiaro"}
++      className="relative flex items-center justify-center w-9 h-9 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors duration-200 hover:border-cyan-neon/40 focus-visible:outline-none focus-visible:ring-2"
++      style={{ borderColor: "var(--gb-line)" }}
++    >
++      <Sun
++        className="w-4 h-4 absolute transition-all duration-300"
++        style={{
++          color: "var(--gb-orange)",
++          opacity: isLight ? 0 : 1,
++          transform: isLight ? "rotate(90deg) scale(0.5)" : "rotate(0) scale(1)",
++        }}
++      />
++      <Moon
++        className="w-4 h-4 absolute transition-all duration-300"
++        style={{
++          color: "var(--gb-cyan)",
++          opacity: isLight ? 1 : 0,
++          transform: isLight ? "rotate(0) scale(1)" : "rotate(-90deg) scale(0.5)",
++        }}
++      />
++    </button>
++  );
++};
++
++export default ThemeToggle;
+diff --git a/frontend-vite/src/context/ThemeContext.jsx b/frontend-vite/src/context/ThemeContext.jsx
+new file mode 100644
+index 0000000..efa61db
+--- /dev/null
++++ b/frontend-vite/src/context/ThemeContext.jsx
+@@ -0,0 +1,40 @@
++import React, { createContext, useContext, useMemo, useState, useEffect } from "react";
++
++const ThemeContext = createContext(null);
++
++const STORAGE_KEY = "gb.theme";
++const defaultTheme = "dark";
++
++export const ThemeProvider = ({ children }) => {
++  const [theme, setTheme] = useState(() => {
++    if (typeof window === "undefined") return defaultTheme;
++    const saved = localStorage.getItem(STORAGE_KEY);
++    if (saved === "dark" || saved === "light") return saved;
++    // Rispetta la preferenza di sistema al primo accesso
++    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : defaultTheme;
++  });
++
++  useEffect(() => {
++    localStorage.setItem(STORAGE_KEY, theme);
++    document.documentElement.setAttribute("data-theme", theme);
++    document.documentElement.style.colorScheme = theme;
++  }, [theme]);
++
++  const value = useMemo(
++    () => ({
++      theme,
++      setTheme,
++      toggleTheme: () => setTheme((p) => (p === "dark" ? "light" : "dark")),
++      isLight: theme === "light",
++    }),
++    [theme]
++  );
++
++  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
++};
++
++export const useTheme = () => {
++  const ctx = useContext(ThemeContext);
++  if (!ctx) throw new Error("useTheme must be used inside ThemeProvider");
++  return ctx;
++};
+diff --git a/frontend-vite/src/index.css b/frontend-vite/src/index.css
+index b809a84..10bbcc2 100644
+--- a/frontend-vite/src/index.css
++++ b/frontend-vite/src/index.css
+@@ -31,8 +31,162 @@
+     --gb-text: #fafafa;
+     --gb-text-2: #d4d4d8;
+     --gb-dim: #71717a;
++
++    /* "bianco" del tema — usato dal bridge. DEVE stare qui,
++       prima di [data-theme="light"], o l'override non vince. */
++    --gb-fg-rgb: 255, 255, 255;
++}
++
++/* ============================================================
++   TEMA LIGHT  —  incolla questo blocco in src/index.css
++   subito DOPO la chiusura del :root esistente (dopo la riga 34)
++   ============================================================ */
++
++/* Transizione morbida allo switch */
++html, body, .cyber-input, [class*="neon-btn"] {
++    transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease;
++}
++@media (prefers-reduced-motion: reduce) {
++    html, body, .cyber-input, [class*="neon-btn"] { transition: none; }
++}
++
++/* ------------------------------------------------------------
++   1) PALETTE LIGHT — override delle variabili
++   ------------------------------------------------------------ */
++[data-theme="light"] {
++    --gb-bg: #f7f7f5;
++    --gb-bg-2: #ffffff;
++    --gb-surface: #ffffff;
++    --gb-glass: rgba(0, 0, 0, 0.025);
++    --gb-glass-strong: rgba(0, 0, 0, 0.045);
++    --gb-line: rgba(0, 0, 0, 0.10);
++    --gb-line-strong: rgba(0, 0, 0, 0.18);
++
++    /* Teal profondo — contrasto 5.39:1 su bianco (WCAG AA) */
++    --gb-cyan: #00786b;
++    --gb-cyan-soft: rgba(0, 120, 107, 0.10);
++    --gb-cyan-line: rgba(0, 120, 107, 0.45);
++
++    /* Arancione bruciato — contrasto 5.18:1 su bianco (WCAG AA) */
++    --gb-orange: #c2410c;
++    --gb-orange-soft: rgba(194, 65, 12, 0.10);
++    --gb-orange-line: rgba(194, 65, 12, 0.5);
++
++    --gb-magenta: var(--gb-orange);
++    --gb-toxic: var(--gb-cyan);
++
++    --gb-text: #16161a;
++    --gb-text-2: #3f3f46;
++    --gb-dim: #71717a;
++
++    /* Usata dal bridge qui sotto: il "bianco" del tema */
++    --gb-fg-rgb: 22, 22, 26;
+ }
+ 
++
++/* ------------------------------------------------------------
++   2) BRIDGE — rimappa le classi Tailwind hardcoded.
++   Serve perché nei componenti ci sono ~108 text-white, bg-white/x
++   e border-white/x che ignorano le variabili.
++   Specificità (0,2,0) > (0,1,0) delle utility Tailwind: vincono
++   senza bisogno di !important.
++   ------------------------------------------------------------ */
++[data-theme="light"] .text-white     { color: rgb(var(--gb-fg-rgb)); }
++[data-theme="light"] .text-white\/95 { color: rgba(var(--gb-fg-rgb), 0.95); }
++[data-theme="light"] .text-white\/90 { color: rgba(var(--gb-fg-rgb), 0.90); }
++[data-theme="light"] .text-white\/85 { color: rgba(var(--gb-fg-rgb), 0.85); }
++[data-theme="light"] .text-white\/80 { color: rgba(var(--gb-fg-rgb), 0.82); }
++[data-theme="light"] .text-white\/75 { color: rgba(var(--gb-fg-rgb), 0.78); }
++[data-theme="light"] .text-white\/70 { color: rgba(var(--gb-fg-rgb), 0.75); }
++[data-theme="light"] .text-white\/65 { color: rgba(var(--gb-fg-rgb), 0.72); }
++[data-theme="light"] .text-white\/60 { color: rgba(var(--gb-fg-rgb), 0.70); }
++[data-theme="light"] .text-white\/55 { color: rgba(var(--gb-fg-rgb), 0.66); }
++[data-theme="light"] .text-white\/50 { color: rgba(var(--gb-fg-rgb), 0.62); }
++[data-theme="light"] .text-white\/45 { color: rgba(var(--gb-fg-rgb), 0.58); }
++[data-theme="light"] .text-white\/40 { color: rgba(var(--gb-fg-rgb), 0.55); }
++[data-theme="light"] .text-white\/35 { color: rgba(var(--gb-fg-rgb), 0.50); }
++[data-theme="light"] .text-white\/30 { color: rgba(var(--gb-fg-rgb), 0.48); }
++
++/* NB: le opacità basse sono state ALZATE apposta.
++   text-white/40 su nero funziona; 0.40 su bianco è illeggibile. */
++
++[data-theme="light"] .text-gray-300 { color: #3f3f46; }
++[data-theme="light"] .text-gray-400 { color: #52525b; }
++[data-theme="light"] .text-gray-500 { color: #52525b; }
++
++[data-theme="light"] .bg-black             { background-color: var(--gb-bg); }
++[data-theme="light"] .bg-white\/\[0\.02\]  { background-color: rgba(0, 0, 0, 0.022); }
++[data-theme="light"] .bg-white\/\[0\.03\]  { background-color: rgba(0, 0, 0, 0.032); }
++[data-theme="light"] .bg-white\/5          { background-color: rgba(0, 0, 0, 0.05); }
++[data-theme="light"] .bg-white\/25         { background-color: rgba(0, 0, 0, 0.06); }
++[data-theme="light"] .bg-white\/40         { background-color: rgba(0, 0, 0, 0.07); }
++
++[data-theme="light"] .border-white\/5  { border-color: rgba(0, 0, 0, 0.07); }
++[data-theme="light"] .border-white\/8  { border-color: rgba(0, 0, 0, 0.09); }
++[data-theme="light"] .border-white\/10 { border-color: rgba(0, 0, 0, 0.11); }
++[data-theme="light"] .border-white\/15 { border-color: rgba(0, 0, 0, 0.14); }
++[data-theme="light"] .border-white\/20 { border-color: rgba(0, 0, 0, 0.18); }
++
++/* ------------------------------------------------------------
++   3) EFFETTI NEON — vanno spenti sul chiaro.
++   Un glow luminoso su bianco fa solo sfocatura sporca.
++   ------------------------------------------------------------ */
++[data-theme="light"] .glow-cyan,
++[data-theme="light"] .glow-magenta,
++[data-theme="light"] .glow-orange {
++    text-shadow: none;
++}
++
++[data-theme="light"] .cyber-input {
++    background: #ffffff;
++    border-color: var(--gb-line-strong);
++    color: var(--gb-text);
++}
++[data-theme="light"] .cyber-input::placeholder { color: var(--gb-dim); }
++
++/* ------------------------------------------------------------
++   4) FIX MIRATI — elementi con colori hardcoded / blend mode
++   ------------------------------------------------------------ */
++
++/* Titolo kinetic GEMBUTCHER: il layer base aveva color:#fafafa fisso */
++[data-theme="light"] .kinetic-title__layer {
++    color: var(--gb-text);
++    text-shadow: 0 0 40px rgba(0, 0, 0, 0.05);
++}
++
++/* I layer glitch usano mix-blend-mode:screen, che su fondo CHIARO
++   e' matematicamente invisibile (screen su bianco = bianco).
++   Su chiaro il complementare e' multiply. */
++[data-theme="light"] .kinetic-title__mint,
++[data-theme="light"] .kinetic-title__magenta {
++    mix-blend-mode: multiply;
++}
++[data-theme="light"] .kinetic-title__mint {
++    text-shadow: 0 0 18px rgba(0, 120, 107, 0.25);
++}
++[data-theme="light"] .kinetic-title__magenta {
++    text-shadow: 0 0 18px rgba(194, 65, 12, 0.25);
++}
++
++/* FAQ: le domande avevano color:#f0f0f2 fisso */
++[data-theme="light"] .faq-item__q {
++    color: var(--gb-text);
++}
++
++/* Il preloader resta volutamente scuro: e' una splash a se stante,
++   ha il suo gradient nero e il glitch ci sta bene. Se lo vuoi chiaro
++   anche lui, scommenta:
++[data-theme="light"] .preloader {
++    background: radial-gradient(120% 90% at 50% 40%, #ffffff 0%, #f7f7f5 55%, #eeeeec 100%);
++    color: var(--gb-text);
++}
++[data-theme="light"] .preloader__logo-layer { color: var(--gb-text); }
++[data-theme="light"] .preloader__logo-layer--mint,
++[data-theme="light"] .preloader__logo-layer--magenta { mix-blend-mode: multiply; }
++*/
++
++
++
+ * {
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
