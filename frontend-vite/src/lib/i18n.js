@@ -125,8 +125,8 @@ export const translations = {
     hero: {
       tag: "// ozieri — sardegna — italia",
       title1: "GemButcher.",
-      title2: "Intessi la tua storia",
-      title3: "in inchiostro & cromo.",
+      title2: "Incidi la tua storia",
+      title3: "raccontala con l'inchiostro.",
       subtitle:
         "Patutikon — dove la geometria sacra della Polinesia incontra le icone della tua vita. Seleziona uno stile e proiettalo sull'anatomia sintetica.",
       cta_enter: "Entra nell'esperienza",
@@ -142,7 +142,7 @@ export const translations = {
       hint: "Trascina per ruotare",
     },
     gallery: {
-      title: "La galleria Patutikon",
+      title: "La galleria e il Patutikon",
       subtitle:
         "Tatuaggi che intrecciano la storia del cliente rendendo icone moderne — cartoni, film, anime — attraverso simboli tribali sacri.",
       scroll_hint: "Scorri lateralmente",
