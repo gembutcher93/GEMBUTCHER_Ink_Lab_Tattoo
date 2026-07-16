@@ -1805,3 +1805,7 @@ img { max-width: 100%; height: auto; }
         --radius: 0.75rem;
     }
 }
+
+input[type="password"] {
+    text-transform: none !important;
+}
