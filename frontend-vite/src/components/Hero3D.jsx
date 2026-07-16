@@ -183,8 +183,6 @@ export const Hero3D = () => {
       <OrbitControls 
         enablePan={false} 
         enableZoom={false} 
-        minPolarAngle={Math.PI / 3.2} 
-        maxPolarAngle={Math.PI / 1.6} 
         target={[0, 0, 0]} 
       />
     </Canvas>
