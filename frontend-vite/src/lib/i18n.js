@@ -4,7 +4,7 @@ export const translations = {
     nav: {
       experience: "3D Experience",
       gallery: "Gallery",
-      craft: "InkMaster",
+      craft: "Tattooer",
       inkanimus: "Inkanimus",
       booking: "Prenota",
     },
@@ -13,7 +13,7 @@ export const translations = {
       title_pre: "Il rito",
       title_hl: "in tempo reale",
       subtitle:
-        "Ogni sessione, ogni disegno, ogni frame. Le ultime opere uscite dall'ago del Podere 173 — direttamente da Instagram.",
+        "Ogni sessione, ogni disegno, ogni frame. Rimani aggiornato seguendo la mia pagina Instagram — direttamente da Instagram.",
       footer_note: "// feed sincronizzato dai post più recenti",
       footer_cta: "Segui su Instagram",
     },
@@ -22,7 +22,7 @@ export const translations = {
       years: "Anni di attività",
       studies: "Anni di studi artistici e di settore",
       rating: "Recensioni verificate",
-      rating_source: "Podere 173 · Google",
+      rating_source: "Podere 173 tattoo Studio · Google",
     },
     faq: {
       eyebrow: "domande frequenti",
@@ -35,7 +35,7 @@ export const translations = {
         {
           q: "Quanto costa una sessione?",
           a:
-            "Ogni tatuaggio è un pezzo unico. Il preventivo si costruisce in base a dimensioni, dettaglio, posizione sul corpo e ore di lavoro. Dopo la prima richiesta ti mando un range chiaro. Sessione minima: 100€. Ora di lavoro: da 80€ a 120€ a seconda del rito.",
+            "Ogni tatuaggio è un pezzo unico. Il preventivo si costruisce in base a dimensioni, dettaglio, posizione sul corpo e ore di lavoro. Dopo la prima richiesta ti mando un range chiaro. Sessione minima: 70€. Ora di lavoro: da 70€ a 120€ a seconda del Tattoo.",
         },
         {
           q: "Quanto dura una sessione?",
@@ -50,12 +50,12 @@ export const translations = {
         {
           q: "Serve un acconto per prenotare?",
           a:
-            "Sì. Per bloccare la data serve un acconto (di solito il 30% del preventivo, minimo 50€) che scala dal totale. L'acconto è non rimborsabile in caso di disdetta a meno di 72 ore, perché quel tempo lo tolgo ad altri clienti.",
+            "Sì. Per bloccare la data serve un acconto (di solito il 30% del preventivo, minimo 50€) che scala dal totale. L'acconto è non rimborsabile in caso di disdetta a meno di 48 ore, perché quel tempo lo tolgo ad altri clienti.",
         },
         {
           q: "Che stili fai?",
           a:
-            "Patutikon (la mia firma: geometria polinesiana intrecciata con icone pop), Patutiki tradizionale, cyberpunk-organico, blackwork tribale e ritratti scuri. Se cerchi realismo a colori o old school americano, non sono la mano giusta.",
+            "Patutikon (la mia firma: geometria polinesiana intrecciata con icone pop), Patutiki tradizionale, cyberpunk-organico, blackwork tribale e Anime. Se cerchi realismo a colori o old school americano, non sono la mano giusta.",
         },
         {
           q: "Posso proporre il mio disegno?",
@@ -76,7 +76,7 @@ export const translations = {
       step_result: "Range",
       complexity_tag: "complessità",
       q_style: "Che stile hai in mente?",
-      q_style_sub: "Ogni linguaggio ha la sua densità di lavoro. Scegli il rito.",
+      q_style_sub: "Ogni linguaggio ha la sua densità di lavoro. Scegli il Tattoo.",
       q_size: "Quanto grande sarà il pezzo?",
       q_size_sub: "Misura sul corpo, dal punto più alto al più basso.",
       q_placement: "Su quale zona del corpo?",
@@ -123,10 +123,10 @@ export const translations = {
       booking_prefill_note: "Preventivo indicativo generato dal calcolatore rapido",
     },
     hero: {
-      tag: "// ozieri — sardegna — italia",
+      tag: "// Ozieri — Sardegna — Italia",
       title1: "GemButcher.",
-      title2: "Incidi la tua storia",
-      title3: "raccontala con l'inchiostro.",
+    title2: "Progetti su misura",
+title3: "Dalla tua idea al progetto definitivo.",
       subtitle:
         "Patutikon — dove la geometria sacra della Polinesia incontra le icone della tua vita. Seleziona uno stile e proiettalo sull'anatomia sintetica.",
       cta_enter: "Entra nell'esperienza",
@@ -142,7 +142,7 @@ export const translations = {
       hint: "Trascina per ruotare",
     },
     gallery: {
-      title: "La galleria e il Patutikon",
+      title: "La galleria",
       subtitle:
         "Tatuaggi che intrecciano la storia del cliente rendendo icone moderne — cartoni, film, anime — attraverso simboli tribali sacri.",
       scroll_hint: "Scorri lateralmente",
@@ -163,7 +163,7 @@ export const translations = {
           desc: "Corazza dorsale meccanica con innesti cristallini rossi. Anatomia riscritta come circuito.",
         },
         {
-          title: "Musa d'Ombra",
+          title: "Marilyn Blackwork",
           tag: "Dark Portrait • Blackwork",
           desc: "Ritratto gotico immerso in una cornice tribale spinata. Icona horror rinata come reliquia.",
         },
@@ -175,13 +175,13 @@ export const translations = {
       ],
     },
     craft: {
-      title: "Nato nell'inchiostro",
+title: "Profilo Professionale",
       p1:
-        "GemButcher è tatuatore per vocazione, InkMaster per necessità. Nato tra le pietre di Ozieri, opera dal Podere 173 traducendo storie personali in cicatrici sacre.",
+        "GemButcher (Giuseppe Manunta), classe '93, è un tatuatore professionista attivo a Ozieri presso il Podere 173 Tattoo Studio. Con una laurea in Nuove Tecnologie dell'Arte presso l'Accademia di Belle Arti, è specializzato nella personalizzazione di progetti su misura e trasforma le idee dei clienti in elaborati grafici stabili e curati nei dettagli.",
       p2:
-        "La sua ricerca ha dato vita al Patutikon: un ibrido esoterico che innesta le icone della cultura pop dentro l'ossatura geometrica del tatuaggio polinesiano tradizionale. Ogni sessione è un rito, ogni ago un verso.",
+        "Il suo stile unisce elementi della cultura pop a strutture geometriche ispirate alla tradizione polinesiana, dando vita a composizioni originali e curate sotto il profilo tecnico e visivo.",
       p3:
-        "Non è un servizio, è una trasfigurazione. Se cerchi qualcosa di ordinario, hai sbagliato indirizzo.",
+        "Ogni progetto viene sviluppato attraverso un percorso di consulenza mirato per garantire un risultato unico e di alto livello. Se cerchi un lavoro eseguito con precisione e professionalità, prenota una consulenza in studio.",
       studio_label: "Studio",
       studio_name: "Podere 173 Tattoo Studio",
       studio_addr: "Piazza Francesco Ignazio Mannu, 4 — Ozieri (SS), Italia",
@@ -246,7 +246,7 @@ export const translations = {
         title: "Aftercare Companion",
         desc: "La tua routine di guarigione, giorno dopo giorno. Spunta ogni passo per non perdere Ink-points.",
         teaser_desc:
-          "Il tuo rituale di guarigione vive dentro InkAnimus. Traccia giorno per giorno, streak e Ink-points direttamente nell'app degli adepti.",
+          "Il tuo rituale di guarigione vive dentro InkAnimus. Traccia giorno per giorno, Guadagna Sconti e Crediti CR direttamente nell'app degli adepti.",
         teaser_label: "Anteprima rituale",
         cta_full: "Apri InkAnimus",
         more_in_app: "step nell'app",
@@ -254,14 +254,14 @@ export const translations = {
         day: "Giorno",
         streak_label: "Rituale consecutivo",
         tasks: [
-          "Rimuovi il film protettivo dopo 24h",
+          "Rimuovi il film protettivo dopo 2h",
           "Lavaggio delicato con sapone neutro",
           "Applica pomata sottile (2x al giorno)",
           "Nessun sole diretto o UV",
           "Niente piscina/mare per 15 giorni",
           "Nessun grattamento sulle croste",
         ],
-        completed: "Rituale completato",
+        completed: "Tatuaggio completato",
       },
       app: {
         badge: "// solo per iniziati del podere",
@@ -307,7 +307,7 @@ export const translations = {
       badge: "// portale crittografato",
       title: "Prenotazione sicura",
       subtitle:
-        "Trasmetti la tua richiesta all'InkMaster. Ti risponderà entro 72 ore. Nessuna traccia superflua.",
+        "Trasmetti la tua richiesta al tatuatore. Ti risponderà entro 72 ore. Nessuna traccia superflua.",
       name: "Nome & cognome",
       email: "Email",
       phone: "Telefono / WhatsApp",
@@ -339,7 +339,7 @@ export const translations = {
     nav: {
       experience: "3D Experience",
       gallery: "Gallery",
-      craft: "InkMaster",
+      craft: "Tattoer",
       inkanimus: "Inkanimus",
       booking: "Book",
     },
@@ -348,7 +348,7 @@ export const translations = {
       title_pre: "The rite",
       title_hl: "in real time",
       subtitle:
-        "Every session, every design, every frame. The latest work coming off the needles of Podere 173 — straight from Instagram.",
+        "Every session, every drawing, every frame. Stay updated by following my Instagram page. — straight from Instagram.",
       footer_note: "// feed synced with the latest posts",
       footer_cta: "Follow on Instagram",
     },
@@ -370,7 +370,7 @@ export const translations = {
         {
           q: "How much does a session cost?",
           a:
-            "Every tattoo is a one-off. The quote is built on size, detail, body placement and hours of work. After your first request I send you a clear range. Minimum session: 100€. Hourly rate: between 80€ and 120€ depending on the rite.",
+            "Every tattoo is a one-off. The quote is built on size, detail, body placement and hours of work. After your first request I send you a clear range. Minimum session: 70€. Hourly rate: between 70€ and 120€ depending on the Tattoo.",
         },
         {
           q: "How long does a session last?",
@@ -390,7 +390,7 @@ export const translations = {
         {
           q: "What styles do you tattoo?",
           a:
-            "Patutikon (my signature: Polynesian geometry woven with pop icons), traditional Patutiki, cyberpunk-organic, tribal blackwork and dark portraits. If you're after full-color realism or American old-school, I'm not the right hand.",
+            "Patutikon (my signature: Polynesian geometry woven with pop icons), traditional Patutiki, cyberpunk-organic, tribal blackwork and Anime. If you're after full-color realism or American old-school, I'm not the right hand.",
         },
         {
           q: "Can I bring my own design?",
@@ -459,8 +459,8 @@ export const translations = {
     hero: {
       tag: "// ozieri — sardinia — italy",
       title1: "GemButcher.",
-      title2: "Weave your story",
-      title3: "in ink & chrome.",
+     title2: "Tailor-made projects",
+    title3: "From your idea to the final design."
       subtitle:
         "Patutikon — where Polynesian sacred geometry meets the icons of your life. Pick a style and project it onto the synthetic anatomy.",
       cta_enter: "Enter the experience",
@@ -497,7 +497,7 @@ export const translations = {
           desc: "Mechanical back armor with crystalline red implants. Anatomy rewritten as circuitry.",
         },
         {
-          title: "Shadow Muse",
+          title: "Marilyn Blackwork",
           tag: "Dark Portrait • Blackwork",
           desc: "Gothic portrait held in a thorned tribal frame. A horror icon reborn as a relic.",
         },
@@ -509,13 +509,13 @@ export const translations = {
       ],
     },
     craft: {
-      title: "Born in ink",
+     title: "Professional Profile",
       p1:
-        "GemButcher is a tattooist by vocation, an InkMaster by necessity. Born among the stones of Ozieri, he operates from Podere 173 translating personal stories into sacred scars.",
+        "GemButcher (Giuseppe Manunta), born in 1993, is a professional tattoo artist working at Podere 173 Tattoo Studio in Ozieri. Holding a degree in New Arts Technologies from the Academy of Fine Arts, he specializes in custom projects, translating clients' ideas into precise, high-quality visual designs.",
       p2:
-        "His research gave birth to Patutikon: an esoteric hybrid grafting pop-culture icons onto the geometric bones of traditional Polynesian tattoo. Every session is a rite, every needle a verse.",
+        "His artistic style blends pop culture elements with geometric structures inspired by traditional Polynesian tattooing, creating original compositions focused on technical and visual excellence.",
       p3:
-        "It is not a service, it's a transfiguration. If you're looking for ordinary — wrong address.",
+        "Every project is developed through a targeted consultation process to ensure a unique, top-tier result. If you are looking for precise and professional work, book a studio consultation.",
       studio_label: "Studio",
       studio_name: "Podere 173 Tattoo Studio",
       studio_addr: "Piazza Francesco Ignazio Mannu, 4 — Ozieri (SS), Italy",
@@ -582,14 +582,14 @@ export const translations = {
         day: "Day",
         streak_label: "Ritual streak",
         tasks: [
-          "Remove the protective film after 24h",
+          "Remove the protective film after 2h",
           "Gentle wash with neutral soap",
           "Apply a thin layer of ointment (2x a day)",
           "No direct sun or UV",
           "No pool/sea for 15 days",
           "Do not scratch the scabs",
         ],
-        completed: "Ritual completed",
+        completed: "Tattoo completed",
       },
       app: {
         badge: "// initiates of the podere only",
@@ -635,7 +635,7 @@ export const translations = {
       badge: "// encrypted portal",
       title: "Secure booking",
       subtitle:
-        "Transmit your request to the InkMaster. He'll reply within 72 hours. No unnecessary trace.",
+        "Transmit your request to the Tattoer. He'll reply within 72 hours. No unnecessary trace.",
       name: "First & last name",
       email: "Email",
       phone: "Phone / WhatsApp",
