@@ -48,7 +48,7 @@ export const PatutikonGallery = () => {
             <h2 className="font-head font-bold text-4xl md:text-5xl lg:text-[3.75rem] leading-[1.05] tracking-tight">
               <span className="text-white/95">La </span>
               <span className="text-magenta-neon glow-magenta italic">galleria</span>
-              <span className="text-white/95"> Patutikon</span>
+              <span className="text-white/95">di Gembutcher</span>
             </h2>
             <p className="mt-5 text-gray-400 max-w-xl text-[15px] leading-relaxed">
               {t.gallery.subtitle}
