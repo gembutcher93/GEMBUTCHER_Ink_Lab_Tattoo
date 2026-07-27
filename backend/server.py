@@ -4,9 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
-import smtplib
-from email.message import EmailMessage
-from email.utils import formatdate
+import requests
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
@@ -22,33 +20,25 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# SMTP config (optional — booking works even if email fails)
-SMTP_HOST = os.environ.get('SMTP_HOST', '').strip()
-SMTP_PORT = int(os.environ.get('SMTP_PORT', '587').strip() or '587')
-SMTP_USER = os.environ.get('SMTP_USER', '').strip()
-SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '').strip().replace(' ', '')
-NOTIFY_EMAIL = os.environ.get('NOTIFY_EMAIL', SMTP_USER).strip()
+# Brevo API config
+BREVO_API_KEY = os.environ.get('BREVO_API_KEY', '').strip()
+NOTIFY_EMAIL = os.environ.get('NOTIFY_EMAIL', 'gembutcher93@gmail.com').strip()
 
 app = FastAPI(title="GemButcher API")
 api_router = APIRouter(prefix="/api")
 
 
 def send_booking_email(booking: 'Booking') -> None:
-    """Send booking notification to studio inbox via Gmail SMTP.
-    Runs in a BackgroundTask so the API responds fast even if SMTP is slow.
+    """Send booking notification to studio inbox via Brevo API.
     Silently logs on failure — booking is already persisted in Mongo.
     """
-    if not (SMTP_HOST and SMTP_USER and SMTP_PASSWORD and NOTIFY_EMAIL):
-        print("[BOOKING-EMAIL] SMTP not fully configured — skipping", flush=True)
+    if not BREVO_API_KEY:
+        print("[BOOKING-EMAIL] BREVO_API_KEY not configured — skipping", flush=True)
         return
+        
     try:
-        msg = EmailMessage()
-        msg['Subject'] = f"[GemButcher] Nuova prenotazione · {booking.name} · {booking.style}"
-        msg['From'] = f"GemButcher Booking <{SMTP_USER}>"
-        msg['To'] = NOTIFY_EMAIL
-        msg['Reply-To'] = booking.email
-        msg['Date'] = formatdate(localtime=True)
-
+        url = "https://api.brevo.com/v3/smtp/email"
+        
         lines = [
             f"Nuova richiesta di prenotazione — {booking.created_at.isoformat()}",
             "",
@@ -66,15 +56,30 @@ def send_booking_email(booking: 'Booking') -> None:
             "",
             f"— ID interno: {booking.id}",
         ]
-        msg.set_content("\n".join(lines))
-
-        with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=15) as s:
-            s.ehlo()
-            s.starttls()
-            s.ehlo()
-            s.login(SMTP_USER, SMTP_PASSWORD)
-            s.send_message(msg)
-        print(f"[BOOKING-EMAIL] sent for booking {booking.id} to {NOTIFY_EMAIL}", flush=True)
+        
+        email_content = "\n".join(lines)
+        
+        payload = {
+            "sender": {"name": "GemButcher Booking", "email": NOTIFY_EMAIL},
+            "to": [{"email": NOTIFY_EMAIL}],
+            "replyTo": {"email": booking.email, "name": booking.name},
+            "subject": f"[GemButcher] Nuova prenotazione · {booking.name} · {booking.style}",
+            "textContent": email_content
+        }
+        
+        headers = {
+            "accept": "application/json",
+            "api-key": BREVO_API_KEY,
+            "content-type": "application/json"
+        }
+        
+        response = requests.post(url, json=payload, headers=headers, timeout=15)
+        
+        if response.status_code not in [200, 201]:
+            print(f"[BOOKING-EMAIL] FAILED for booking {booking.id}: Brevo status {response.status_code} - {response.text}", flush=True)
+        else:
+            print(f"[BOOKING-EMAIL] sent successfully via Brevo for booking {booking.id} to {NOTIFY_EMAIL}", flush=True)
+            
     except Exception as exc:  # noqa: BLE001
         print(f"[BOOKING-EMAIL] FAILED for booking {booking.id}: {type(exc).__name__}: {exc}", flush=True)
 
@@ -149,7 +154,7 @@ async def create_booking(payload: BookingCreate):
     doc = booking.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
     await db.bookings.insert_one(doc)
-    send_booking_email(booking)  # synchronous — Gmail SMTP < 2s
+    send_booking_email(booking)  # Chiama Brevo via HTTP
     return booking
 
 
