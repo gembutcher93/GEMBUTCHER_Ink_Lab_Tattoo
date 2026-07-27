@@ -1,6 +1,6 @@
 # 🚀 Deploy Guide — GemButcher
 
-Deploy completo del sito a **~zero costi** usando:
+Deploy completo del sito a **~zero costi** usando: 
 
 - **Frontend** → Cloudflare Pages (gratis, banda illimitata)
 - **Backend** → Railway (~5$/mese hobby) o **Render.com** (gratis con cold-start)
