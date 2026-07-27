@@ -3,7 +3,7 @@ import { useLang } from "@/context/LangContext";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const LOGO_URL =
-  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/9zwdzt75_logo.png";
+  "images/9zwdzt75_logo.png";
 
 export const Navbar = () => {
   const { lang, setLang, t } = useLang();
