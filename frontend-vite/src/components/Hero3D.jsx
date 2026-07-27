@@ -6,17 +6,17 @@ import * as THREE from "three";
 import { useLang } from "@/context/LangContext";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-const OBJ_URL = "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/8k8t8gsc_11535_arm_V3_.obj";
+const OBJ_URL = "models/8k8t8gsc_11535_arm_V3_.obj";
 
 const TEXTURES = {
-  default: { color: "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/1c3nkxuc__11535_arm_V3_FINALdefault-color.webp" },
-  polynesian: { color: "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/oym8zk3u__11535_arm_V3_FINALpolynesian-color.webp" },
-  cyberpunk: { color: "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/ymbxx386__11535_arm_V3_FINALcybertattoo-color.webp" },
-  patutikon: { color: "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/qt9rqmrk__11535_arm_V3_FINALpatutikon-color.webp" },
+  default: { color: "models/textures/1c3nkxuc__11535_arm_V3_FINALdefault-color.webp" },
+  polynesian: { color: "models/textures/oym8zk3u__11535_arm_V3_FINALpolynesian-color.webp" },
+  cyberpunk: { color: "models/textures/ymbxx386__11535_arm_V3_FINALcybertattoo-color.webp" },
+  patutikon: { color: "models/textures/qt9rqmrk__11535_arm_V3_FINALpatutikon-color.webp" },
 };
 
-const ROUGHNESS_URL = "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/dffvjzoz__11535_arm_V3_FINALdefault-roughness.webp";
-const METALLIC_URL = "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/ffuty8ur__11535_arm_V3_FINALdefault-metallic.webp";
+const ROUGHNESS_URL = "models/textures/dffvjzoz__11535_arm_V3_FINALdefault-roughness.webp";
+const METALLIC_URL = "models/textures/ffuty8ur__11535_arm_V3_FINALdefault-metallic.webp";
 
 const STYLE_KEYS = ["default", "polynesian", "cyberpunk", "patutikon"];
 
