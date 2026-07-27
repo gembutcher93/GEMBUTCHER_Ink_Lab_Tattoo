@@ -45,8 +45,8 @@ export const ButcherCraft = () => {
 
       {/* Background marquee ticker */}
       <div className="marquee-bg parallax-slow" aria-hidden>
-        <span>PATUTIKON · NEO-TRIBAL · INK &amp; CHROME · PODERE 173 · </span>
-        <span>PATUTIKON · NEO-TRIBAL · INK &amp; CHROME · PODERE 173 · </span>
+        <span>PATUTIKON · NEO-TRIBAL · INK &amp; TITANIUM · PODERE 173 · </span>
+        <span>PATUTIKON · NEO-TRIBAL · INK &amp; TITANIUM · PODERE 173 · </span>
       </div>
 
       <div className="relative max-w-[1440px] mx-auto px-5 md:px-10">
@@ -209,7 +209,7 @@ export const ButcherCraft = () => {
         {/* Text */}
         <div className="lg:col-span-7 space-y-7 lg:pt-4">
           <div className="font-mono text-[11px] text-cyan-neon uppercase tracking-[0.35em]">
-            01 / NATO NELL'INCHIOSTRO
+            01 / PSICOLOGIA DELLA FORMA
           </div>
 
           <div className="space-y-5 text-white/70 leading-relaxed max-w-2xl text-[15px] md:text-base">
