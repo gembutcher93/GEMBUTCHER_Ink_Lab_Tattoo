@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useLang } from "@/context/LangContext";
 import { Send, ShieldCheck, MessageCircle, Loader2, ArrowRight, Mail } from "lucide-react";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://gembutcher-ink-lab-tattoo.onrender.com";
 const API = `${BACKEND_URL}/api`;
 
 const WHATSAPP_NUMBER = "393498290606"; // Studio WhatsApp
