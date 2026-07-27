@@ -460,7 +460,7 @@ title: "Profilo Professionale",
       tag: "// ozieri — sardinia — italy",
       title1: "GemButcher.",
      title2: "Tailor-made projects",
-    title3: "From your idea to the final design."
+    title3: "From your idea to the final design.",
       subtitle:
         "Patutikon — where Polynesian sacred geometry meets the icons of your life. Pick a style and project it onto the synthetic anatomy.",
       cta_enter: "Enter the experience",
