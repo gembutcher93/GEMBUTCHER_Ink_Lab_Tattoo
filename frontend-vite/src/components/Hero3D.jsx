@@ -150,8 +150,8 @@ export const Hero3D = () => {
             <span className="block text-white/85 mt-1">{t.hero.title2}</span>
             <span className="block mt-1">
               <span className="text-cyan-neon">from Design </span>
-              <span className="text-white/40">&amp;</span>
-              <span className="text-magenta-neon"> to Skin.</span>
+              <span className="text-white/40">To;</span>
+              <span className="text-magenta-neon"> Skin.</span>
             </span>
           </h1>
           <p className="text-white/55 max-w-md text-[15px] md:text-base leading-relaxed">{t.hero.subtitle}</p>
