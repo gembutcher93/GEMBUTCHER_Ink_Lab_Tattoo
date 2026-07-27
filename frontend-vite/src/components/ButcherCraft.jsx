@@ -4,12 +4,12 @@ import { MapPin, ChevronLeft, ChevronRight } from "lucide-react";
 
 const PORTRAITS = [
   {
-    src: "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/273zn4so_Copertina_Cyber.png",
+    src: "images/273zn4so_Copertina_Cyber.png",
     label: "NEO-SAPIEN",
     caption: { it: "Persona cyberpunk", en: "Cyberpunk persona" },
   },
   {
-    src: "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/ty3eomcf_Copertina_classica.webp",
+    src: "images/ty3eomcf_Copertina_classica.webp",
     label: "GEMBUTCHER",
     caption: { it: "Il tatuatore, senza maschera", en: "The tattooist, unmasked" },
   },
