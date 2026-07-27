@@ -13,7 +13,7 @@ export const translations = {
       title_pre: "I Tattoo",
       title_hl: "in tempo reale",
       subtitle:
-        "Ogni sessione, ogni disegno, ogni frame. Rimani aggiornato seguendo la mia pagina Instagram — direttamente da Instagram.",
+        "Ogni sessione, ogni disegno, ogni Reel. Rimani aggiornato seguendo la mia pagina Instagram — direttamente da Instagram.",
       footer_note: "// feed sincronizzato dai post più recenti",
       footer_cta: "Segui su Instagram",
     },
