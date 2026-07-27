@@ -5,15 +5,15 @@ import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
 // Ordered to match i18n gallery.items (5 items — no duplicate portrait)
 const IMAGES = [
   // Rick Patutikon
-  "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/i2j7zr51_img3%20Rick_Patutikon.webp",
+  "images/i2j7zr51_img3%20Rick_Patutikon.webp",
   // Guardian of the Seas — Patutiki leg
-  "https://customer-assets.emergentagent.com/job_42dd445a-6c2b-4455-84f6-cdc8d007d62e/artifacts/45gjta57_img1%20Patutiki%20front.webp",
+  "images/45gjta57_img1%20Patutiki%20front.webp",
   // Cyber Back Rig — mechanical back tattoo
-  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/m8cxc3yb_IMG20230402174952.webp",
+  "images/m8cxc3yb_IMG20230402174952.webp",
   // Shadow Muse — dark portrait
-  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/smc2ygxl_IMG20221022181905.webp",
+  "images/smc2ygxl_IMG20221022181905.webp",
   // Cyber Tribal Leg — hexagonal + tribal
-  "https://customer-assets.emergentagent.com/job_neon-ink-lab-1/artifacts/fvm8lxn6_IMG_20240423_174328.jpg",
+  "images/fvm8lxn6_IMG_20240423_174328.jpg",
 ];
 
 export const PatutikonGallery = () => {
