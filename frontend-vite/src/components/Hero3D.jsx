@@ -63,7 +63,7 @@ const ArmModel = ({ style }) => {
     box.getSize(size);
     const center = new THREE.Vector3();
     box.getCenter(center);
-    const targetHeight = 3.5;
+    const targetHeight = 6;
     const scale = targetHeight / (size.y || 1);
     cloned.scale.setScalar(scale);
     cloned.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
